@@ -1,5 +1,4 @@
 
-# **How I Scraped Data from EEX**
 
 While building my Clean Spark Spread Dashboard ([check it here](https://css-calculator.streamlit.app/)), I needed up-to-date natural gas spot prices. I wanted a free, automated way to pull this data — and ended up trying to scrape it from the EEX website: [https://www.eex.com/en/market-data/market-data-hub/natural-gas/spot](https://www.eex.com/en/market-data/market-data-hub/natural-gas/spot).
 
@@ -52,7 +51,7 @@ driver = webdriver.Chrome(options=options)
 
 The data can be found at [EEX Natural Gas Spot Market](https://www.eex.com/en/market-data/market-data-hub/natural-gas/spot). There is a table, updated every day, which contains prices for different spot products (TTF, NBP, PEG...).
 
-![EEX Table](../images/2025-05-26_eex_table.png)
+![EEX Table](images/2025-05-26_eex_table.png)
 
 I started by connecting to the page:
 
