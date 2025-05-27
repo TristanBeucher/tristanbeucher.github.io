@@ -51,7 +51,7 @@ driver = webdriver.Chrome(options=options)
 
 The data can be found at [EEX Natural Gas Spot Market](https://www.eex.com/en/market-data/market-data-hub/natural-gas/spot). There is a table, updated every day, which contains prices for different spot products (TTF, NBP, PEG...).
 
-![EEX Table](images/2025-05-26_eex_table.png)
+![EEX Table](../images/2025-05-26-eex_table.png)
 
 I started by connecting to the page:
 
