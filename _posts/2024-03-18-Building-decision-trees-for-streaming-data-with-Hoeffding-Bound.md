@@ -94,7 +94,8 @@ The case of Classification Error is more trivial, as we only need to store a cla
 
 Overall, we recompute the measure every time we evaluate a split, but we don’t touch the raw data anymore. Instead, we use the small counters (like class frequencies per attribute value) we've been updating incrementally, and that greatly reduce the computation time.
 
-### When to split a node : the Hoeffding bound
+
+## When to split a node : the Hoeffding bound
 
 Imagine you're a judge in a cooking contest, and you’re trying to choose the best soup among many. You can’t drink the whole pot and you are only able to taste a spoonful from each. After a few sips, one soup clearly seems better than the others. But before declaring a winner, you ask yourself: "Am I confident this one is truly better, or could it be luck? Should I taste more?"
 
@@ -113,7 +114,8 @@ Observing the bound, we can note that:
 - A smaller \(\delta\) (more confidence) makes \(\varepsilon\) larger — we need more data to be sure.
 - \(R\) is a normalizing factor: if the scores vary widely, we need more samples to be confident.
 
-## The Algorithm and its Variants
+
+# The Algorithm and its Variants
 
 **Parameters**: define evaluation measure, delta, tree parameters (depth, etc.)
 
@@ -124,7 +126,8 @@ Observing the bound, we can note that:
 4) If the condition is met, split the node using the best attribute.  
 Repeat the process for each new node and incoming data.
 
-### Variants
+
+## Variants
 
 Several variants of Hoeffding Trees exist to address the specific challenges of learning from data streams, such as evolving distributions, early predictions, and handling continuous targets.
 
