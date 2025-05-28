@@ -128,7 +128,7 @@ Observing the bound, we can note that:
 
 Below, we can observe how the bound decreases with the number of sample, for several confidence levels, in the case of a binary classification problem with Gini index as evaluation measure (and therefore R = 0,5)
 
-![Tree](../images/hoeffding-bound.png)
+![Tree](../images/2024-hoeffding-bound.png)
 
 
 # The Algorithm and its Variants
