@@ -1,4 +1,11 @@
 
+The family of decision tree algorithms is widely used to tackle supervised learning problems. Essentially, it mimics human decision-making by dividing data based on certain criteria, as shown in the illustration below:
+
+![Tree](../images/2024-decision-tree.png)
+
+Generally, predictions are made more accurate thanks to ensemble methods such as bagging (used in the Random Forest algorithm) or boosting (e.g., XGBoost).
+
+In what follows, we’ll explore how traditional decision trees work and why they struggle with streaming data. Then, we’ll introduce Hoeffding Trees, which address these challenges with a clever use of statistics.
 
 In this article, I'll use the vocabulary linked to decision trees algorithms: 
 - **Node**: A point in the tree where data is split based on a condition.
@@ -7,23 +14,20 @@ In this article, I'll use the vocabulary linked to decision trees algorithms:
 - **Split**: A decision rule that separates the data based on attribute values.
 
 
-The family of decision tree algorithms is widely used to tackle supervised learning problems. Essentially, it mimics human decision-making by dividing data based on certain criteria, as shown in the illustration below:
+# Why traditional decision trees fail with real-time data
 
-
-Generally, predictions are made more accurate thanks to ensemble methods such as bagging (used in the Random Forest algorithm) or boosting (e.g., XGBoost).
-
-However, despite their performance and efficiency, traditional decision trees face certain limitations when deployed in production and confronted with a continuous flow of data:
+Despite their performance and efficiency, traditional decision trees face certain limitations when deployed in production and confronted with a continuous flow of data:
 
 - **Memory and learning speed**: Decision trees are designed to work with datasets that can be fully loaded into memory. This is not the case with streaming data, which is potentially infinite. As a result, traditional learning approaches are too slow and impractical for real-time applications.
 - **Dynamic updates**: Traditional trees lack a mechanism for updating the model incrementally as new data arrives. They require a complete reconstruction of the tree when new data is incorporated, which is computationally expensive and impractical for real-time updates.
 - **Data drift management**: In streaming environments, the distribution of underlying data can change over time, a phenomenon known as data drift. Traditional decision trees do not intrinsically adapt to these changes, which can lead to a drop in model accuracy over time.
 
-What I aim to describe in this article is an algorithm, called Hoeffding Tree, that addresses these limitations by using a statistical method to make decisions incrementally without waiting to see all the data.
+What I aim to describe in this article is an algorithm, called Hoeffding Tree, that addresses these limitations by using a statistical method to make decisions incrementally without waiting to see all the data. 
 
 
-# Hoeffding trees' math
+# The Math Behind Hoeffding Trees - How They Decide When to Split
 
-## How to split a node : the Evaluation Measures
+## Choosing the Best Split: IG, Gini, and More
 
 To split a node in a decision tree, we need an evaluation measure to define which attribute provides the "best" division for our classification problem. Of course, the notion of "best" here depends on the evaluation measure. Some common measures are:
 
@@ -81,8 +85,16 @@ $$
 
 Where $$(p_i\)$$ is the proportion of the most frequent class.
 
+### Comparison
 
-## Updating the evaluation measures
+The following plot shows how the Entropy, Gini Index, and Classification Error vary as the class distribution changes in a binary classification setting. The x-axis gives the probability of one class (let’s say Class 1), ranging from 0 to 1, while the y-axis is the measure.
+
+![Tree](../images/2024-evaluation-measures.png)
+
+All measures peak at p = 0,5 and are 0 at the extremes. Entropy is the most sensitive measure; it penalizes mixed distributions more strongly. Gini tends to behave similarly but less aggressively (but is computationally simpler than entropy). Classification error is the less sensitive of the three.
+
+
+## How Hoeffding Trees Update in Real Time
 
 For each of the previous measures, we can store statistics allowing us to recompute them quickly.
 
@@ -95,7 +107,7 @@ The case of Classification Error is more trivial, as we only need to store a cla
 Overall, we recompute the measure every time we evaluate a split, but we don’t touch the raw data anymore. Instead, we use the small counters (like class frequencies per attribute value) we've been updating incrementally, and that greatly reduce the computation time.
 
 
-## When to split a node : the Hoeffding bound
+## How Many Samples Are Enough? Use the Hoeffding Bound
 
 Imagine you're a judge in a cooking contest, and you’re trying to choose the best soup among many. You can’t drink the whole pot and you are only able to taste a spoonful from each. After a few sips, one soup clearly seems better than the others. But before declaring a winner, you ask yourself: "Am I confident this one is truly better, or could it be luck? Should I taste more?"
 
@@ -114,20 +126,31 @@ Observing the bound, we can note that:
 - A smaller \(\delta\) (more confidence) makes \(\varepsilon\) larger — we need more data to be sure.
 - \(R\) is a normalizing factor: if the scores vary widely, we need more samples to be confident.
 
+Below, we can observe how the bound decreases with the number of sample, for several confidence levels, in the case of a binary classification problem with Gini index as evaluation measure (and therefore R = 0,5)
+
+![Tree](../images/hoeffding-bound.png)
+
 
 # The Algorithm and its Variants
 
-**Parameters**: define evaluation measure, delta, tree parameters (depth, etc.)
+## How Hoeffding Trees Work 
 
-0) Start with an empty tree (root node).  
-1) For each incoming data sample, update the statistics at the relevant node.  
-2) Calculate the evaluation measures (like Information Gain) for each attribute.  
-3) Use the Hoeffding bound to determine if the best attribute's measure is significantly better than the second-best.  
-4) If the condition is met, split the node using the best attribute.  
-Repeat the process for each new node and incoming data.
+Before initializing a Hoeffding Tree, it's important to define a set of key parameters that influence its learning behavior:
+
+- **Maximum Tree Depth**: The maximum number of levels the tree can grow. Controls model complexity and overfitting.
+- **Minimum Samples per Node**: Minimum number of samples required at a node before considering a split.
+- **Grace Period**: Number of instances a leaf should observe between split attempts. Higher values reduce computation but slow down responsiveness.
+- **Split Confidence (δ)**: The confidence level used in the Hoeffding bound to determine when a split is statistically justified (commonly δ = 10⁻⁷).
+- **Evaluation Measure**: The metric used to choose the best split (e.g., Information Gain, Gini Index, Gain Ratio).
+- **Nominal vs. Numeric Attributes**: Strategy for handling numeric attributes (e.g., using histograms or binary splits).
+- **Memory Limit**: Optional constraint to limit the memory usage of the model.
+
+These parameters can be adjusted depending on the trade-offs between accuracy, speed, and computational resources. Then you can run the algorithm summarized in the picture below:
+
+![Tree](../images/2024-algorithm.png)
 
 
-## Variants
+## 4 Variants for Real-World Problems
 
 Several variants of Hoeffding Trees exist to address the specific challenges of learning from data streams, such as evolving distributions, early predictions, and handling continuous targets.
 
@@ -151,3 +174,8 @@ HATTs are designed to provide reasonable predictions at any moment during traini
 *Addresses inability to handle continuous target variables.*
 
 While classic Hoeffding Trees are designed for classification, HRTs adapt the same online learning framework for regression tasks. Instead of tracking class counts, they maintain sufficient statistics (e.g., sums, means, variances) to predict continuous outcomes at each node using regression models like linear models or averages.
+
+# Conclusion
+
+Hoeffding Trees show how decision trees can be adapted for the modern world of streaming data. By combining simple statistical principles with clever data structures, they remain fast and effective, even as data keeps flowing in. It's then a reliable foundation for real-time learning. 
+
