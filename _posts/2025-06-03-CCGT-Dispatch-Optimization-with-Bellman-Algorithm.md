@@ -1,4 +1,4 @@
-> **Disclaimer**: The theoretical asset used as an example in this article has technical constraints which aim to be        > realistic but are not derived from the technical constraints of an existing asset. The code for the optimization has been > produced from scratch and is available on demand. The market prices have been collected from entso-e transparency platform (for power) and eex website (for gas and CO2).
+> **Disclaimer**: The theoretical asset used as an example in this article has technical constraints which aim to be realistic but are not derived from the technical constraints of an existing asset. The code for the optimization has been produced from scratch and is available on demand. The market prices have been collected from entso-e transparency platform (for power) and eex website (for gas and CO2).
 
 
 ## Combined-cycle Gas Turbines and Flexibility
