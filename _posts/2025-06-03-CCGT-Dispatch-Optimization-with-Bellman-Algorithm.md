@@ -1,4 +1,4 @@
-> **Disclaimer**: The theoretical asset used as an example in this article has technical constraints which aim to be        > realistic but are not derived from the technical constraints of an existing asset. The code for the optimization has been > produced from scratch and is available on demand.
+> **Disclaimer**: The theoretical asset used as an example in this article has technical constraints which aim to be        > realistic but are not derived from the technical constraints of an existing asset. The code for the optimization has been > produced from scratch and is available on demand. The market prices have been collected from entso-e transparency platform (for power) and eex website (for gas and CO2).
 
 
 ## Combined-cycle Gas Turbines and Flexibility
@@ -93,18 +93,14 @@ We can see with this example that it is profitable not to start the plant too ea
 
 ![Bellman](../images/2025-06-03-bellman-example.png)
 
-The algorithm we’ll use in our case follows the exact same logic as the example above, just on a bigger scale.
-
-We still work backward, hour by hour, but here’s the twist: in our real setup, the list of possible states is more complex.  
-We’re not just tracking whether the plant is `"on"` or `"off"`, we also need to keep track of how long it's been off, which affects whether we can do a hot, warm, or cold start.
+The algorithm we’ll use in our case follows the exact same logic as the example above, just on a bigger scale. We still work backward, hour by hour, but here’s the twist: in our real setup, the list of possible states is more complex.  We’re not just tracking whether the plant is `"on"` or `"off"`, we also need to keep track of how long it's been off, which affects whether we can do a hot, warm, or cold start.
 
 That’s why our transition table is more detailed: it includes ramp types, hours since shutdown, and additional constraints such as the minimum time `"on"` in case of a start. All of that feeds into Bellman’s logic to make sure we only consider valid transitions, and choose the path that brings the most value in the end.
 
 
 ## Application
 
-To put all this into practice, we run the optimization on a realistic example:  
-**The month of May 2025**, for a CCGT plant located in Belgium.  
+To put all this into practice, we run the optimization on a realistic example: **The month of May 2025**, for a CCGT plant located in Belgium.  
 - Power prices come from the ENTSO-E Day-Ahead prices for Belgium  
 - Gas prices are based on the ZTP hub, sourced from EEX  
 - Carbon prices (UKA) also come from EEX
@@ -114,3 +110,7 @@ The asset itself has been described earlier with ramp-up delays, startup costs, 
 We assume the plant is off for 20 hours when the month begins.
 
 ![Results](../images/2025-06-03-results-bellman.png)
+
+By running this optimization, we can visualize how a theoretically simple dispatch decision is in fact deeply influenced by the technical constraints and path dependencies of the asset. The result: a plant that starts and stops in a way that aligns not just with market prices, but with deeper economic and operational logic. This type of analysis is a valuable tool for plant operators and analysts alike, helping them understand when flexibility creates value, and how to unlock it.
+
+P.S: I first tried to apply the algorithm for a CCGT in France in the same month of May 2025 but the best path was to stay off for the whole month. Indeed, Clean Spark Spreads were not high enough to allow a plant to start: you can check CLean Spark Spreads in France and Belgium in my dashboard -> https://css-calculator.streamlit.app/
