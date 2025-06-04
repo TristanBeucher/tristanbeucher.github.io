@@ -16,9 +16,9 @@ If we don't take these costs into account, we're missing a critical part of the 
 ## Designing our asset
 
 To keep things simple, I model a theoretical CCGT (Combined Cycle Gas Turbine) with a handful of discrete operating states:  
-- RAMP_H, RAMP_W, and RAMP_C represent hot, warm, and cold startups, respectively. These are triggered depending on how long the unit has been offline (e.g., hot if it's been off less than 10 hours, warm if less than 40, cold otherwise).  
+- RAMP_H, RAMP_W, and RAMP_C represent hot, warm, and cold startups, respectively. These are triggered depending on how long the unit has been offline (e.g., hot if it's been off less than 10 hours, warm if less than 40, cold otherwise).
+- Once the unit is running, it can operate at FULL_LOAD (400 MW at 51% efficiency) or MIN_LOAD (250 MW at 40% efficiency). Minimum Load (or partial load) is used when it's not profitable to run the plant at full load but it would be more costly to stop it and restart later.
 - Each ramp type has a different time to reach full load: 1 hour for hot, 2 for warm, and 3 for cold.  
-- Once the unit is running, it can operate at FULL_LOAD (400 MW at 51% efficiency) or MIN_LOAD (250 MW at 40% efficiency).  
 - There's also a STOP state, representing the plant being in the process of shutting down generation  
 
 Below is the plot showing the ramp-up profiles for hot, warm, and cold starts. You can see how the unit reaches full load faster with a hot start, while cold starts take longer and climb more gradually.
@@ -27,8 +27,7 @@ Below is the plot showing the ramp-up profiles for hot, warm, and cold starts. Y
 
 On top of that, I’ve defined a few basic constraints:  
 - The unit must stay on for at least 4 consecutive hours once started, and off for at least 4 hours after shutdown.  
-- Starting the unit costs €2500, plus there’s a variable cost of €0.5 per MWh and a fixed hourly cost of €250  
-  applied to operated hours to model maintenance costs.  
+- Starting the unit costs 2500€, whatever the type of ramp, plus there’s a variable cost of 0.5€ per MWh and a fixed hourly cost of 250€ applied to operated hours to model maintenance costs.  
 - Finally, emissions are included at 0.18 tons of CO₂ per MWh_gas, so CO₂ prices can impact dispatch decisions too.
 
 The focus here isn’t on modeling every physical detail but on creating a simplified structure that captures the essential trade-offs: startup cost vs. expected profit, ramp delays vs. market timing, and efficiency vs. fuel/emission cost.
@@ -39,15 +38,13 @@ The focus here isn’t on modeling every physical detail but on creating a simpl
 Let’s define exactly what we’re doing — and just as importantly, what we’re not doing.
 
 In a real-world setup, plant operators submit bids ahead of time for Day-Ahead markets, often dealing with uncertainty around prices, demand, outages, and other risks. Here, I’m simplifying things a lot: I’ll assume we already know the market prices (electricity, gas, CO₂), and I’ll use those realized prices directly. This lets me focus on one core question:  
-**Given a starting state, what’s the most profitable operating plan over the next 24 hours?**
+**Given a starting state, what’s the most profitable operating plan over the next month?**
 
 That means:  
 - No forecasting or probabilistic price modeling  
-- No real-time adjustments or rescheduling based on forecast errors  
-- No consideration of capacity markets, balancing services, or ancillary revenues (it could  
-  have been interesting to run the plant even under unprofitable Day-Ahead conditions  
-  to be able to participate in the balancing mechanism for example)  
-- No portfolio effects — we’re looking at a single unit in isolation, not part of an aggregated fleet
+- No real-time adjustments or rescheduling based on forecast errors
+- No consideration of capacity markets, balancing services, or ancillary revenues (it could have been interesting to run the plant even under unprofitable Day-Ahead conditions to be able to participate in the balancing mechanism for example)  
+- No portfolio effects : we’re looking at a single unit in isolation, not part of an aggregated fleet
 
 The goal is to isolate and explore the logic behind optimal dispatch, under clear operational constraints, using a deterministic and simplified framework.
 
@@ -107,9 +104,11 @@ To put all this into practice, we run the optimization on a realistic example: *
 
 The asset itself has been described earlier with ramp-up delays, startup costs, efficiency curves, and emissions taken into account. The goal is to determine the optimal dispatch strategy hour by hour over the full month, which includes **744 hourly decisions**.
 
-We assume the plant is off for 20 hours when the month begins.
+We assume the plant is off for 20 hours when the month begins and the algorithm gives us the following production profile (which is compared with Clean Spark Spread in the picture below). You can observe that the captured Clean Spark Spread (i.e. the CSS when the plant is running) is well above the average CSS of the month.
 
 ![Results](../images/2025-06-03-results-bellman.png)
+
+The application of this program would generate around 2.8M euros for the asset's owner. Of course, this program is never perfectly applied because of operational aleas. Moreover the flexibility of the plant allow it to derive revenues from the participation in balancing mechanism or ancillary services.
 
 By running this optimization, we can visualize how a theoretically simple dispatch decision is in fact deeply influenced by the technical constraints and path dependencies of the asset. The result: a plant that starts and stops in a way that aligns not just with market prices, but with deeper economic and operational logic. This type of analysis is a valuable tool for plant operators and analysts alike, helping them understand when flexibility creates value, and how to unlock it.
 
