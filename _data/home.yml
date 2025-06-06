@@ -5,8 +5,8 @@ navbar_entries:
   - title: blog
     url: blog
 
-  - title: linkedin
-    url: https://www.linkedin.com/in/tristanbeucher/
+  - title: notes
+    url: notes
 
 project_entries:
 
