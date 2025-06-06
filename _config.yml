@@ -2,7 +2,7 @@ title: Tristan Beucher
 author: Tristan Beucher
 url: https://tristanbeucher.github.io # root address of the site
 description: > # description of the site (multiple lines allowed)
-  Welcome! I'm Tristan Beucher,  an engineer specialized in data science, with 5+ years of experience in consulting across the insurance and energy sectors. You can learn more about me on the [About](/about) page, connect with me on [LinkedIn](https://www.linkedin.com/in/tristan-beucher), or explore the topics I'm passionate about through my [Blog](/blog) and [Notes](/notes).
+I'm Tristan Beucher, an engineer specialized in data science, with 5+ years of experience in consulting across the insurance and energy sectors. You can learn more about me on the <a href="/about">About</a> page, connect with me on <a href="https://www.linkedin.com/in/tristan-beucher">LinkedIn</a>, or explore the topics I'm passionate about through my <a href="/blog">Blog</a> and <a href="/notes">Notes</a>.
 
 permalink: /:slug
 
