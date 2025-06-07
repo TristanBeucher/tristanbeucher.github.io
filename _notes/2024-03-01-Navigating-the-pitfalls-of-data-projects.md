@@ -1,6 +1,6 @@
 ---
 layout: post
-title: My First Note
+title: Navigating the putfalls of data projects
 date: 2024-03-01
 ---
 
