@@ -3,7 +3,7 @@ layout: post
 title: About
 ---
 
-Hi! I'm Tristan, an engineer specialized in data science, with a strong interest in economics and the dynamics of complex markets — especially in the energy sector. On this site, I share some of the tools and ideas I’ve built or explored. Feel free to browse through the [Blog](/blog), explore the [Notes](/notes), or check out some of my projects on the [home](/home) page — and don’t hesitate to [connect on LinkedIn](https://www.linkedin.com/in/tristan-beucher/).
+Hi! I'm Tristan, an engineer specialized in data science, with a strong interest in economics and the dynamics of complex markets — especially in the energy sector. On this site, I share some of the tools and ideas I’ve built or explored. Feel free to browse through the [Blog](/blog), explore the [Notes](/notes), or check out some of my projects on the home page — and don’t hesitate to [connect on LinkedIn](https://www.linkedin.com/in/tristan-beucher/).
 
 > *"If you can't explain it simply, you don't understand it well enough."*  
 > — Albert Einstein
