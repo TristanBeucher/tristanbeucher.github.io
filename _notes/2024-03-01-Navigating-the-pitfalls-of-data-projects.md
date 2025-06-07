@@ -1,3 +1,9 @@
+---
+layout: post
+title: My First Note
+date: 2024-03-01
+---
+
 
 This note is based on an [article](https://seattledataguy.substack.com/p/navigating-the-pitfalls-of-data-projects) from the Seattle Data Guy’s newsletter, a publication about data engineering and data project management. I keep the steps defined in the article and add my own remarks.
 
