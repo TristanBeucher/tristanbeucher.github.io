@@ -51,3 +51,8 @@ sass:
 plugins:
   - jekyll-feed
   - jekyll-soopr-seo-tag
+
+collections:
+  notes:
+    output: true
+    permalink: /notes/:title/
