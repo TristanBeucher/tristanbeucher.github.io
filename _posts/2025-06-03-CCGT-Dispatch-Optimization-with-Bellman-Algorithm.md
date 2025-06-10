@@ -100,7 +100,7 @@ That’s why our transition table is more detailed: it includes ramp types, hour
 To put all this into practice, we run the optimization on a realistic example: **The month of May 2025**, for a CCGT plant located in Belgium.  
 - Power prices come from the ENTSO-E Day-Ahead prices for Belgium  
 - Gas prices are based on the ZTP hub, sourced from EEX  
-- Carbon prices (UKA) also come from EEX
+- Carbon prices (EUA) also come from EEX
 
 The asset itself has been described earlier with ramp-up delays, startup costs, efficiency curves, and emissions taken into account. The goal is to determine the optimal dispatch strategy hour by hour over the full month, which includes **744 hourly decisions**.
 
