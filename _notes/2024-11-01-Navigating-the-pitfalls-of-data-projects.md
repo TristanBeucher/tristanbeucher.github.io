@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Navigating the pitfalls of data projects
-date: 2024-03-01
+date: 2024-11-01
 ---
 
 
