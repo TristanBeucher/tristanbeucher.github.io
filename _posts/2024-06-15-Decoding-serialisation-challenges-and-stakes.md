@@ -6,7 +6,7 @@ Serialization is the process of converting an object into a format that can be s
 
 The reverse process, called **deserialization**, also exists and consists in reconstructing the initial object from its serialized form. By linking the two processes, you avoid having to rebuild the object from scratch as soon as it is needed, which is very useful when you need to deploy a model in production, or when two systems need to communicate with each other (in the latter case, serialization enables objects to be transferred in a structured and predictable way).
 
-![schema serialisation](./images/Serialisation/Part1/Serialisation schema.png)
+![schema serialisation](../images/Serialisation/Part1/Serialisation schema.png)
 
 
 The figure above gives a concise overview of the serialization and deserialization processes. To implement them, however, you need to understand the issues involved and ask yourself a number of questions.
@@ -17,13 +17,13 @@ The figure above gives a concise overview of the serialization and deserializati
 Serialization plays a central role and has a real business impact when developing a Machine Learning system. Depending on the system's needs, different strategies can be implemented, and the choice of serialization format must seek to optimize different criteria. Indeed, serialization has an impact on the following eight areas:
 
 - **Model preservation and deployment**: saves a model for future use and simplifies deployment.
--**Data exchange and communication between different systems**: facilitates data exchange and communication between different parts of a system, or between different systems.
--**Efficient storage and transmission**: reduces the storage space required and the bandwidth used for data transmission, thus saving money, improving performance and optimizing resources.
--**Data consistency and integrity**: guarantees the consistency and integrity of data as it flows through different parts of a system, or between different systems. It permits to maintain data accuracy and reliability.
--**Reproducibility and debugging**: In ML, the ability to reproduce experiments is essential for debugging and improvement. Serialization enables data and models to be stored in such a way that they can be reloaded and used at a later date.
--**Cross-platform compatibility**: provides a standardized means of encoding data, ensuring cross-platform compatibility.
--**Long-term data archiving**: useful when companies often need to archive long-term data for compliance or analysis purposes.
--**Data confidentiality and security**: Serialization can also play a role in data confidentiality and security, by enabling encryption and other security measures applied to serialized data prior to storage or transmission.
+- **Data exchange and communication between different systems**: facilitates data exchange and communication between different parts of a system, or between different systems.
+- **Efficient storage and transmission**: reduces the storage space required and the bandwidth used for data transmission, thus saving money, improving performance and optimizing resources.
+- **Data consistency and integrity**: guarantees the consistency and integrity of data as it flows through different parts of a system, or between different systems. It permits to maintain data accuracy and reliability.
+- **Reproducibility and debugging**: In ML, the ability to reproduce experiments is essential for debugging and improvement. Serialization enables data and models to be stored in such a way that they can be reloaded and used at a later date.
+- **Cross-platform compatibility**: provides a standardized means of encoding data, ensuring cross-platform compatibility.
+- **Long-term data archiving**: useful when companies often need to archive long-term data for compliance or analysis purposes.
+- **Data confidentiality and security**: Serialization can also play a role in data confidentiality and security, by enabling encryption and other security measures applied to serialized data prior to storage or transmission.
 
 By defining the constraints of your project and mastering its environment, you'll be able to choose one serialization method over another. Understanding the impact of serialization will help you determine the criteria for choosing the format best suited to your needs.
 
@@ -34,7 +34,7 @@ Before moving on to a comparison of serialization formats, let's take a look at 
 
 Depending on a company's use cases and issues, certain selection criteria become more or less decisive in the choice of serialization method. By way of example, here's a matrix of criteria I used for a past project:
 
-![schema serialisation](./images/Serialisation/Part1/Serialisation criteres.png)
+![schema serialisation](../images/Serialisation/Part1/Serialisation criteres.png)
 
 
 The selection criteria as I had defined them fell into three main categories: **Integration, Flexibility and Performance**. I also added an other category to include the criterion of **human readability**, which was relevant to my project. There is no one format that performs better than the others on all criteria, and the notion of prioritization of  criteria is missing from the list of criteria provided (prioritization depends on the project).
@@ -50,7 +50,7 @@ Finally, I had also added a **Human Readability** criterion that was important f
 
 ## The main serialization formats
 
-A comprehensive comparison of the different types of serialization formats can be found on Wikipedia: https://en.wikipedia.org/wiki/Comparison_of_data-serialization_formats
+A comprehensive comparison of the different types of serialization formats can be found on this [Wikipedia page](https://en.wikipedia.org/wiki/Comparison_of_data-serialization_formats).
 
 ### Text vs binary files
 
@@ -72,11 +72,11 @@ In concrete terms, it is possible for a human to read JSON files:
 
 But here is the same data in Parquet format, opened with Windows Notepad :
 
-![schema serialisation](./images/Serialisation/Part1/student parquet.png)
+![schema serialisation](../images/Serialisation/Part1/student parquet.png)
 
 The advantage of the binary format is that it's much more compact, requiring less storage space.
 
-![schema serialisation](./images/Serialisation/Part1/code csv parquet.png)
+![schema serialisation](../images/Serialisation/Part1/code csv parquet.png)
 
 **Text formats gain in simplicity and readability, while losing out in terms of performance**. Parquet, Avro and Protobuf are better suited to huge datasets, or where the speed of serialization or deserialization is important to system performance.
 
@@ -95,6 +95,7 @@ What's more, these formats don't offer native versioning functionality, which is
 
 To reinforce the management of schema evolution and versioning, the implementation of a schema registry, such as the one offered by Confluent in association with Apache Kafka and Avro, may prove useful. This registry centralizes schema management by storing them, versioning them and making them accessible as needed, thus harmonizing schema use across all systems. When the schema evolves, the new version is recorded in the registry, enabling the various schema versions to be tracked, and ensuring that the data corresponds to the correct schema. Data producers and consumers interact with the registry to serialize and deserialize data, ensuring compatibility by using the correct schema versions. The registry performs compatibility checks when schemas are registered, ensuring upward and downward compatibility between different schema evolutions. Thanks to this centralized management and version tracking, the schema registry helps minimize errors and improve data integrity, providing a robust solution for navigating the dynamic evolution of data schemas.
 Security
+
 XML, JSON and CSV formats do not natively offer security features such as encryption or access control. Security management must be orchestrated at application or system level. Nevertheless, XML is distinguished by a data validation mechanism via XML Schema Definition (XSD), helping to ensure that serialized data respects a given schema, thus guaranteeing a certain level of data integrity. However, XML, JSON and CSV are not free of vulnerabilities, and can be the target of injection attacks if not properly managed. XML External Entity (XXE) attacks illustrate a common security issue associated with the XML format. To enhance the security of data serialized in these formats, additional measures are essential, such as the use of encryption libraries or the transmission of data via secure channels like HTTPS.
 
 On the other hand, binary serialization formats such as Parquet, Avro or Protobuf can be integrated into environments that support encryption. For example, Parquet files can be encrypted within Hadoop environments. These formats can also be used in systems offering data integrity checks, even if this functionality is not intrinsic to the serialization format itself. As with encryption, access control must be managed within the frameworks or systems exploiting these serialization formats, and not at the level of the formats themselves. In secure environments or when transmitted via secure channels, these binary formats can offer a substantial level of security. What's more, their binary nature can reduce the attack surface compared with text formats, which are potentially more vulnerable to injection attacks. A concrete example of this improved security management is offered by Protocol Buffers' field masking function, which enables selective filtering of fields not to be exposed, thus ensuring greater control over data confidentiality.
