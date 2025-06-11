@@ -13,7 +13,7 @@ This type of format, discussed in Part 1, has the advantage of being a human-rea
 
 One (albeit fragile) solution is to integrate the object type into the Json file by creating functions for serialization:
 
-![JSON TUPLE WD](../images/Serialisation/Part2/Code tuto json tuple bien deserialise.png)
+![JSON TUPLE WD](../images/Serialisation/Part2/Code-tuto-json-tuple-bien-deserialise.png)
 
 Similarly, if you wish to serialize more complex objects such as your own classes and plan to use the Json format for serialization, consider integrating a "toJson" method to serialize and a "FromJson" method to deserialize as you see fit.
 
@@ -51,16 +51,15 @@ To conclude on the Pickle library:
 
 **Advantages**:
 
-1) **Ease of use**: Pickle is simple to use, and several tutorials are available online.
-2) **Integrated module**: Pickle requires no additional installation, being directly integrated into Python.
-3) **Serialization of custom objects**: Pickle can serialize a very wide range of objects, including user-customized objects.
-
+1. **Ease of use**: Pickle is simple to use, and several tutorials are available online.
+2. **Integrated module**: Pickle requires no additional installation, being directly integrated into Python.
+3. **Serialization of custom objects**: Pickle can serialize a very wide range of objects, including user-customized objects.
 
 **Disadvantages**:
 
-1) **Security risk**: Pickle should not be used to deserialize data from unknown sources.
-2) **Not human-readable**: The byte stream produced by Pickle is not human-readable, making debugging more difficult.
-3) **Python-specific**: Pickle is specific to Python, which may pose interoperability problems with systems implemented in other languages. You also need to ensure compatibility between the Pickle protocol used for serialization and the Python version of the deserialization environment.
+1. **Security risk**: Pickle should not be used to deserialize data from unknown sources.
+2. **Not human-readable**: The byte stream produced by Pickle is not human-readable, making debugging more difficult.
+3. **Python-specific**: Pickle is specific to Python, which may pose interoperability problems with systems implemented in other languages. You also need to ensure compatibility between the Pickle protocol used for serialization and the Python version of the deserialization environment.
 
 
 ## Joblib
