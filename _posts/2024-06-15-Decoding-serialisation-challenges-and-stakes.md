@@ -6,7 +6,7 @@ Serialization is the process of converting an object into a format that can be s
 
 The reverse process, called **deserialization**, also exists and consists in reconstructing the initial object from its serialized form. By linking the two processes, you avoid having to rebuild the object from scratch as soon as it is needed, which is very useful when you need to deploy a model in production, or when two systems need to communicate with each other (in the latter case, serialization enables objects to be transferred in a structured and predictable way).
 
-![schema serialisation](../images/Serialisation/Part1/Serialisation schema.png)
+![schema serialisation](../images/Serialisation/Part1/Serialisation-schema.png)
 
 
 The figure above gives a concise overview of the serialization and deserialization processes. To implement them, however, you need to understand the issues involved and ask yourself a number of questions.
@@ -34,7 +34,7 @@ Before moving on to a comparison of serialization formats, let's take a look at 
 
 Depending on a company's use cases and issues, certain selection criteria become more or less decisive in the choice of serialization method. By way of example, here's a matrix of criteria I used for a past project:
 
-![schema serialisation](../images/Serialisation/Part1/Serialisation criteres.png)
+![schema serialisation](../images/Serialisation/Part1/Serialisation-criteres.png)
 
 
 The selection criteria as I had defined them fell into three main categories: **Integration, Flexibility and Performance**. I also added an other category to include the criterion of **human readability**, which was relevant to my project. There is no one format that performs better than the others on all criteria, and the notion of prioritization of  criteria is missing from the list of criteria provided (prioritization depends on the project).
@@ -72,11 +72,11 @@ In concrete terms, it is possible for a human to read JSON files:
 
 But here is the same data in Parquet format, opened with Windows Notepad :
 
-![schema serialisation](../images/Serialisation/Part1/student parquet.png)
+![schema serialisation](../images/Serialisation/Part1/student-parquet.png)
 
 The advantage of the binary format is that it's much more compact, requiring less storage space.
 
-![schema serialisation](../images/Serialisation/Part1/code csv parquet.png)
+![schema serialisation](../images/Serialisation/Part1/code-csv-parquet.png)
 
 **Text formats gain in simplicity and readability, while losing out in terms of performance**. Parquet, Avro and Protobuf are better suited to huge datasets, or where the speed of serialization or deserialization is important to system performance.
 

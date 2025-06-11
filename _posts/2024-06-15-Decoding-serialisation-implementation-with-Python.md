@@ -1,23 +1,23 @@
-In the [first part](), we discuss the challenges of serialization and compare a number of serialization formats, based on certain criteria. This second part is devoted to serialization in Python. We'll compare different libraries and look at some interesting best practices.
+In the [first part](2024-06-15-Decoding-serialisation-challenges-and-stakes.md), we discuss the challenges of serialization and compare a number of serialization formats, based on certain criteria. This second part is devoted to serialization in Python. We'll compare different libraries and look at some interesting best practices.
 
 ## A first library: JSON
 
 The json library is widely used to serialize data in Python. It's very simple to use: just import the json module and use its dumps and loads functions.
 
-![JSON IMAGE](./images/Serialisation/Part2/Code tuto JSON.png)
+![JSON IMAGE](../images/Serialisation/Part2/Code-tuto-JSON.png)
 
 
 This type of format, discussed in Part 1, has the advantage of being a human-readable text format. However, it also has a number of limitations, including being heavier than binary formats, and being natively able to store only basic structures. For example, it is not possible to distinguish between lists and tuples: a tuple serialized in Json and then deserialized will be considered a list.
 
-![JSON TUPLE](./images/Serialisation/Part2/Code tutot JSOn tuple.png)
+![JSON TUPLE](../images/Serialisation/Part2/Code-tutot-JSOn-tuple.png)
 
 One (albeit fragile) solution is to integrate the object type into the Json file by creating functions for serialization:
 
-![JSON TUPLE WD](./images/Serialisation/Part2/Code tuto json tuple bien deserialise.png)
+![JSON TUPLE WD](../images/Serialisation/Part2/Code tuto json tuple bien deserialise.png)
 
 Similarly, if you wish to serialize more complex objects such as your own classes and plan to use the Json format for serialization, consider integrating a "toJson" method to serialize and a "FromJson" method to deserialize as you see fit.
 
-![CLASS RECT](./images/Serialisation/Part2/classe rectangle.png)
+![CLASS RECT](../images/Serialisation/Part2/classe-rectangle.png)
 
 Json's drawbacks make it unsuitable for serializing machine learning models. Let's take a look at other libraries more suited to this type of exercise.
 
@@ -35,16 +35,16 @@ Reading the documentation for various ML frameworks and packages, we can see a c
 
 **Pickle** is Python's built-in serialization method, making it suitable for a wide range of uses in this language and, in particular, for serializing a Machine Learning model. It is a Python-specific library. The Pickle module (whose documentation can be found here) therefore requires no installation and provides a direct means of serializing and deserializing using the dump and load functions:
 
-![Tuto pickle](./images/Serialisation/Part2/Pickle tuto.png)
+![Tuto pickle](../images/Serialisation/Part2/Pickle-tuto.png)
 
 An interesting advantage of Pickle is its ability to serialize customized objects such as the "Rectangle" class we created above.
 
-![rect pickle](./images/Serialisation/Part2/rectangle Pickle.png)
+![rect pickle](../images/Serialisation/Part2/rectangle-Pickle.png)
 
 Beware, however, that Pickle supports different protocol versions. Higher protocol versions can serialize more object types, but may not be readable by older versions of Python.
 Here's a final example applied to serializing a Machine Learning model:
 
-![ML pickle](./images/Serialisation/Part2/Code Ml model serialisation pickle.png)
+![ML pickle](../images/Serialisation/Part2/Code-Ml-model-serialisation-pickle.png)
 
 To conclude on the Pickle library:
 
@@ -67,7 +67,7 @@ To conclude on the Pickle library:
 
 In the example below, we compare the speed of serialization and deserialization of a NumPy matrix in pickle and joblib :
 
-![joblib pickle](./images/Serialisation/Part2/joblib pickle.png)
+![joblib pickle](../images/Serialisation/Part2/joblib pickle.png)
 
 
 ## H5py
@@ -78,15 +78,15 @@ An H5df file is characterized by the hierarchical organization of the objects it
 
 Once you've imported (and installed if necessary) the h5py library, you can open a new h5df file in which you can create groups and datasets using the create_group and create_dataset functions. Groups and datasets can be created within other groups. Data can also be compressed or chunked.
 
-![h5py1](./images/Serialisation/Part2/H5py 1.png)
+![h5py1](../images/Serialisation/Part2/H5py-1.png)
 
 It is then possible to observe the structure of an h5df file using the keys method of Python dictionaries (remember that groups in h5df files are similar to dictionaries and therefore have the same properties).
 
-![h5py2](./images/Serialisation/Part2/H5py 2.png)
+![h5py2](../images/Serialisation/Part2/H5py-2.png)
 
 Last but not least, H5py has the added advantage of being able to call only subsets of serialized datasets, which comes in very handy when dealing with massive amounts of data:
 
-![h5py3](./images/Serialisation/Part2/H5py 3.png)
+![h5py3](../images/Serialisation/Part2/H5py-3.png)
 
 **H5py is probably the best library for serializing machine learning models built with the Tensorflow Keras framework**, thanks in particular to its flexibility with regard to the version of Keras used. This blog post explains how h5py works with TensorFlow.
 
