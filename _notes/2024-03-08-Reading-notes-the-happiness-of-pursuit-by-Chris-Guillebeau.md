@@ -1,3 +1,8 @@
+---
+layout: post
+title: Reading notes the happiness of pursuit by Chris Guillebeau
+date: 2024-03-08
+---
 
 Here are my reading notes from “The Hapiness of Pursuit”, a book written by Chris Guillebeau, an american entrepreneur, famous for his blog “The Art of Non conformity” (and his book of the same name). I tried to keep it short and give what are, in my opinion, the most significant examples from the book. At the end of this summary, I’ve added two applications of the advices given in the book
 
