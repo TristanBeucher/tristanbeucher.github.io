@@ -1,7 +1,7 @@
 ---
 layout: post
 title: The creativity trap why being different isn't enough
-date: 2024-03-01
+date: 2024-03-07
 ---
 
 In 1985, Coca-Cola launched the “New Coke” campaign. It introduced a new drink that they claimed had a better taste. In a context of market share losses, Coca-Cola attempted to differentiate itself. The goal was to create a sensation and stand out in the market.
