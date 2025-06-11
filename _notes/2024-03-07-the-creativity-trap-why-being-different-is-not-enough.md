@@ -1,3 +1,9 @@
+---
+layout: post
+title: The creativity trap why being different isn't enough
+date: 2024-03-01
+---
+
 In 1985, Coca-Cola launched the “New Coke” campaign. It introduced a new drink that they claimed had a better taste. In a context of market share losses, Coca-Cola attempted to differentiate itself. The goal was to create a sensation and stand out in the market.
 
 In 2011, Coca-Cola launched the “Share a Coke” campaign in Australia. They chose to personalize their bottles and can by replacing their logo with popular names (such as Lily or Mike). That’s different from “New Coke,” as this campaign’s creativity lies in its simplicity. Coca-Cola didn’t try to reinvent their product or create an entirely new concept.
