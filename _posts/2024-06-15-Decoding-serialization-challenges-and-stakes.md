@@ -58,7 +58,6 @@ Some of the best-known formats are JSON, XML, CSV, Apache Avro, Apache Parquet a
 
 In concrete terms, it is possible for a human to read JSON files:
 
-<code> 
 ```
 {
                 "student": {
@@ -68,7 +67,6 @@ In concrete terms, it is possible for a human to read JSON files:
                 }
             }
 ```
-</code>
 
 But here is the same data in Parquet format, opened with Windows Notepad :
 
