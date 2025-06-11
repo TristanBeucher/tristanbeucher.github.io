@@ -1,4 +1,4 @@
-In the [first part](2024-06-15-Decoding-serialisation-challenges-and-stakes.md), we discuss the challenges of serialization and compare a number of serialization formats, based on certain criteria. This second part is devoted to serialization in Python. We'll compare different libraries and look at some interesting best practices.
+In the [first part](2024-06-15-Decoding-serialization-challenges-and-stakes.md), we discuss the challenges of serialization and compare a number of serialization formats, based on certain criteria. This second part is devoted to serialization in Python. We'll compare different libraries and look at some interesting best practices.
 
 ## A first library: JSON
 
@@ -195,4 +195,4 @@ Some articles :
 
 [A Gentle Introduction to Serialization for Python - MachineLearningMastery.com](https://machinelearningmastery.com/a-gentle-introduction-to-serialization-for-python/) (especially for the part concerning the use of h5py for Keras).
 [What, Why and How of (De)Serialization in Python | by Xiaoxu Gao | Towards Data Science](https://towardsdatascience.com/what-why-and-how-of-de-serialization-in-python-2d4c3b622f6b) : for more information on certain formats not covered here but mentioned in Part 1 (Csv, Avro, XML) or not (BSON).
-And the first part of this introduction [here](2024-06-15-Decoding-serialisation-challenges_and_stakes.md)
+And the first part of this introduction [here](2024-06-15-Decoding-serialization-challenges_and_stakes.md)
