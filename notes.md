@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: blog
 title: Notes
 permalink: /notes/
 ---
