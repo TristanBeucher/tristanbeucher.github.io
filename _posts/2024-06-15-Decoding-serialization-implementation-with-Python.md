@@ -26,9 +26,9 @@ Json's drawbacks make it unsuitable for serializing machine learning models. Let
 
 Reading the documentation for various ML frameworks and packages, we can see a certain diversity in the serialization libraries used:
 
--**PyTorch**'s save and load functions are based on the Pickle library (source).
--**Scikit-learn** recommends using the joblib library, which is better suited to NumPy arrays than Pickle (source)
--**Keras** serializes by default in Hdf5 format (source).
+- **PyTorch**'s save and load functions are based on the Pickle library (source).
+- **Scikit-learn** recommends using the joblib library, which is better suited to NumPy arrays than Pickle (source)
+- **Keras** serializes by default in Hdf5 format (source).
 
 
 ### Pickle
@@ -48,11 +48,13 @@ Here's a final example applied to serializing a Machine Learning model:
 
 To conclude on the Pickle library:
 
+
 **Advantages**:
 
 1) **Ease of use**: Pickle is simple to use, and several tutorials are available online.
 2) **Integrated module**: Pickle requires no additional installation, being directly integrated into Python.
 3) **Serialization of custom objects**: Pickle can serialize a very wide range of objects, including user-customized objects.
+
 
 **Disadvantages**:
 
@@ -67,7 +69,7 @@ To conclude on the Pickle library:
 
 In the example below, we compare the speed of serialization and deserialization of a NumPy matrix in pickle and joblib :
 
-![joblib pickle](../images/Serialisation/Part2/joblib pickle.png)
+![joblib pickle](../images/Serialisation/Part2/joblib-pickle.png)
 
 
 ## H5py
@@ -109,21 +111,24 @@ To conclude this introduction to serialization in Python, let's look at a few go
 
 The first point is to ensure that your code is **robust and maintainable** by keeping it clean, well-documented and modular. A good starting point, easy to implement, is to create functions designed to serialize and deserialize.
 
-<code> 
-```python import pickle
+<code> ```python
+import pickle
+
 def serialize_data(data, file_path):
-with open(file_path, 'wb') as f:
-pickle.dump(data, f)
+    with open(file_path, 'wb') as f:
+        pickle.dump(data, f)
 
 def deserialize_data(file_path):
-with open(file_path, 'rb') as f:
-return pickle.load(f)
+    with open(file_path, 'rb') as f:
+        return pickle.load(f)
 
-#Usage
-data = {'example': 'data'} # Assurez-vous que la variable 'data' est définie
+# Usage
+data = {'example': 'data'} # Make sure the 'data' variable is defined
 serialize_data(data, 'data.pkl')
-deserialized_data = deserialize_data('data.pkl')```
+deserialized_data = deserialize_data('data.pkl')
+```
 </code>
+
 
 To facilitate code debugging, be sure to set up an **error handling system**, as in the example below:
 
