@@ -157,12 +157,9 @@ schema = {
     },
     "required": ["name", "age"]
 }
-
 data = {"name": "John", "age": 25}
-
-# Validate data
-jsonschema.validate(data, schema)```
-</code>
+#Validate data
+jsonschema.validate(data, schema)```</code>
 
 Finally, to improve your system's serialization performance, you can favor binary formats over text formats, as we saw in the first article on serialization. In addition, you can look into batch processing, which involves processing data in batches to reduce memory usage, or parallelization, which enables you to run several serialization tasks in parallel to reduce the processing time required.
 
