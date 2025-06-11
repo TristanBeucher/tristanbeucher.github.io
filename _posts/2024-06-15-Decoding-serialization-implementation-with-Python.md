@@ -110,7 +110,7 @@ To conclude this introduction to serialization in Python, let's look at a few go
 
 The first point is to ensure that your code is **robust and maintainable** by keeping it clean, well-documented and modular. A good starting point, easy to implement, is to create functions designed to serialize and deserialize.
 
-<code> ```python
+```python
 import pickle
 
 def serialize_data(data, file_path):
@@ -126,32 +126,31 @@ data = {'example': 'data'} # Make sure the 'data' variable is defined
 serialize_data(data, 'data.pkl')
 deserialized_data = deserialize_data('data.pkl')
 ```
-</code>
 
 
 To facilitate code debugging, be sure to set up an **error handling system**, as in the example below:
 
-<code> 
-```try:
+``` python
+try:
     with open('nonexistent_file.pkl', 'rb') as f:
         data = pickle.load(f)
 except FileNotFoundError as e:
-    print(f"Error: {e}")```
-</code>
+    print(f"Error: {e}")
+```
 
 Having a **versioning** system can also be relevant to data traceability issues. One way of implementing this is to include a version number in serialized data:
 
-<code> 
-```data_versioned = {"version": 1, "data": data}
+```python
+data_versioned = {"version": 1, "data": data}
 
 with open('data_versioned.json', 'w') as f:
-    json.dump(data_versioned, f)```
-</code>
+    json.dump(data_versioned, f)
+```
 
 I also advise you to put in place procedures to maximize the **security** of the information you process. This may involve encrypting certain sensitive data, controlling access to data or logging audits (to detect data-related activities). But what you should do at all costs is avoid deserializing data from unknown sources. To ensure data integrity and prevent malicious attacks, you can also set up a data validation system. Certain libraries exist for this purpose, such as jsonschema :
 
-<code> 
-```import jsonschema
+```python
+import jsonschema
 
 schema = {
     "type": "object",
@@ -163,12 +162,13 @@ schema = {
 }
 data = {"name": "John", "age": 25}
 #Validate data
-jsonschema.validate(data, schema)```</code>
+jsonschema.validate(data, schema)
+```
 
 Finally, to improve your system's serialization performance, you can favor binary formats over text formats, as we saw in the first article on serialization. In addition, you can look into batch processing, which involves processing data in batches to reduce memory usage, or parallelization, which enables you to run several serialization tasks in parallel to reduce the processing time required.
 
-<code> 
-```from joblib import Parallel, delayed
+```python
+from joblib import Parallel, delayed
 
 # Assume data_list is a list of data chunks
 data_list = [...]
@@ -176,8 +176,8 @@ data_list = [...]
 # Parallel serialization
 serialized_data_list = Parallel(n_jobs=-1)(
     delayed(pickle.dumps)(data) for data in data_list
-)```
-</code>
+)
+```
 
 ## To Conclude
 
