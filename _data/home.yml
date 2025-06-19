@@ -13,6 +13,10 @@ project_entries:
   - title: Clean Spark Spread Observer
     url: https://css-calculator.streamlit.app/
     desc: A dashboard to visualize realized Clean Spark Spreads based on gas, CO₂, and electricity prices.
+
+  - title: Backtesting CCGTs dispatch
+    url: https://ccgt-optimal-dispatch-backtest.streamlit.app/
+    desc: A small application to perform backtest on a virtual Gas-fired power plant dispatch
     highlight: WIP
 
 
