@@ -10,14 +10,15 @@ navbar_entries:
 
 project_entries:
 
+  - title: Optimal Dispatch for CCGTs
+    url: https://ccgt-optimal-dispatch-backtest.streamlit.app/
+    desc: An application to backtest the dispatch of a virtual Gas-fired power plant.
+    highlight: WIP
+
   - title: Clean Spark Spread Observer
     url: https://css-calculator.streamlit.app/
     desc: A dashboard to visualize realized Clean Spark Spreads based on gas, CO₂, and electricity prices.
-
-  - title: Backtesting CCGTs dispatch
-    url: https://ccgt-optimal-dispatch-backtest.streamlit.app/
-    desc: A small application to perform backtest on a virtual Gas-fired power plant dispatch
-    highlight: WIP
+    
 
 
 old_project_entries:
