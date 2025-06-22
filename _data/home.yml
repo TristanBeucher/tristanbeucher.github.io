@@ -20,7 +20,7 @@ project_entries:
     desc: A dashboard to visualize realized Clean Spark Spreads based on gas, CO₂, and electricity prices.
 
   - title: Financial Markets Course
-    url: /financial_markets_intro/
+    url: /financial-markets-intro/
     desc: A beginner-friendly course to understand financial markets and instruments
     highlight: WIP
     
