@@ -13,7 +13,7 @@ My ambition is to eventually tackle more advanced topics like instrument pricing
 
 That’s why this course aims to be clear, honest, and accessible. As I continue to learn and gain feedback, the content may evolve. But for now, here’s the current outline:
 
-1) [Introduction](/financial-markets-intro/chapter1-introduction.md): Overview of financial markets, key participants, and common financial instruments.
+1) [Introduction](/financial-markets-intro/chapter1-introduction/): Overview of financial markets, key participants, and common financial instruments.
 2) (Incoming) Interest Rates & Time Value of Money: The core financial concept behind all valuations.
 3) (Incoming) Bond Markets: Deep dive into different types of bonds and how to price them.
 4) (Incoming) Equity Markets: Key principles, valuation indicators, and how technical and fundamental analysis are applied.
@@ -21,5 +21,5 @@ That’s why this course aims to be clear, honest, and accessible. As I continue
     - Part 1: Forwards, futures, and swaps.
     - Part 2: Options and related strategies.
   
-[Start with Chapter 1 →](/financial-markets-intro/chapter1-introduction.md)
+[Start with Chapter 1 →](/financial-markets-intro/chapter1-introduction/)
 
