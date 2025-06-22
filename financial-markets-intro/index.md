@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Financial Markets & Instruments — Introduction
-permalink: /financial-markets_intro/
+title: Financial Markets & Instruments — Outline
+permalink: /financial-markets-intro/
 ---
 
 
