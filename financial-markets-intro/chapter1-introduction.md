@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Financial Markets & Instruments — Introduction
-permalink: /financial-markets-intro/chapter1-introduction.md
+permalink: /financial-markets-intro/chapter1-introduction/
 ---
 
 Let's introduce this course with a global overview over financial markets. If we take a step backward, we'll see
