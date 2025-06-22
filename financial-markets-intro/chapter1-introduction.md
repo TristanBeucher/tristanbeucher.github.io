@@ -6,11 +6,11 @@ permalink: /financial-markets-intro/chapter1-introduction/
 
 Let's introduce this course with a global overview over financial markets. If we take a step backward, we'll see
 the financial markets are a part of a financial system which includes :
-    - financial markets
-    - financial institutions
-    - financial services
-    - financial instruments
-    - money
+  - financial markets
+  - financial institutions
+  - financial services
+  - financial instruments
+  - money
 
 The **financial markets** are platforms (physical or virtual) where financial assets such as stocks, bonds, currencies, and derivatives are traded. They play a central role in the economy by matching **savers** (those with excess capital, also called buyers) with **borrowers** (those in need of funds, also called sellers), facilitating capital allocation, liquidity, and price discovery.
 
@@ -19,7 +19,7 @@ Their main role is to act as intermediaries between savers and borrowers, helpin
 
 **Financial services** are the products and activities provided by financial institutions that allow individuals and businesses to manage money, access credit, invest, insure, and transfer funds. These services are the practical application layer of the financial system. They can be of several kind : loans, savings accounts, investment advice, asset management, insurance policies, payment processing.
 
-**Financial instruments**, in the sense of the Internationl Accounting Standards (IAS),  are legal contracts between two or more parties, which can be traded and settled, that define conditions under which one party (the buyer) receives benefits (financial asset) and the other party (the seller) incurs costs (financial liability or equity instrument). We call **portfolio** a collection of financial instruments hold by an investor.
+**Financial instruments**, in the sense of the Internationl Accounting Standards (IAS), are legal contracts between two or more parties, which can be traded and settled, that define conditions under which one party (the buyer) receives benefits (financial asset) and the other party (the seller) incurs costs (financial liability or equity instrument). We call **portfolio** a collection of financial instruments hold by an investor.
 
 **Money** is any asset that is generally accepted as a medium of exchange, a unit of account, and a store of value in an economy. It facilitates trade, provides a standard for pricing goods/services, and preserves value over time (to varying degrees).
 
@@ -32,8 +32,8 @@ Financial markets might seem like a big and complicated machine but at their cor
 ### Finance the economy
 
 When a company wants to grow by building a new factory, hiring more people, or launching a new product or market. They can’t always pay for it all with their own money. So, they turn to the financial markets to raise money:
-    - By issuing **bonds**, they borrow money from investors (like getting a loan from thousands of people).
-    - By selling **shares**, they let people become part-owners of the company.
+  - By issuing **bonds**, they borrow money from investors (like getting a loan from thousands of people).
+  - By selling **shares**, they let people become part-owners of the company.
 
 And governments do the same thing! For example, France issues government bonds through an agency called Agence France Trésor (AFT). These are called OATs (Obligations Assimilables du Trésor). When people buy those bonds, they’re basically lending money to the French state, and in return, they get paid interest over time.
 
@@ -54,10 +54,10 @@ We'll talk a lot about liquidity in this course so it's important that you under
 
 > Liquidity is how quickly and easily you can turn an asset into cash without losing value.
 
-Think of liquidity like water : 
-    - Cash is like water in a glass : ready to drink anytime.
-    - Real estate is like ice : it's still water, but it takes time to melt (sell).
-    - Rare collectibles are like a brick of ice stuck in the freezer : hard to melt, hard to sell fast.
+Think of liquidity like water :
+  - Cash is like water in a glass : ready to drink anytime.
+  - Real estate is like ice : it's still water, but it takes time to melt (sell).
+  - Rare collectibles are like a brick of ice stuck in the freezer : hard to melt, hard to sell fast.
 
 Liquidity depends on how many actors wants to sell and buy a product. 
 
@@ -79,8 +79,8 @@ There are two big families of financial instruments.
 ### Cash Instruments
 
 These are the more “straightforward” ones. They can be:
-    - A financial asset: something with value, like cash, gold, or a legal claim to real stuff (like property or commodities).
-    - A financial security: a tradable claim on a company’s assets or income — like stocks or bonds.
+  - A financial asset: something with value, like cash, gold, or a legal claim to real stuff (like property or commodities).
+  - A financial security: a tradable claim on a company’s assets or income — like stocks or bonds.
 
 Settlement is usually quick, often within 2 business days (called T+2 in market terms). Some examples could be an Apple stock or lending money to a company via a corporate bond.
 
@@ -110,9 +110,9 @@ When we talk about financial markets, we’re really talking about two big stage
 This is where new financial instruments are born. In the primary market, a company (or government) issues a brand-new security that has never been traded before. The main goal? To raise money.
 
 A few typical examples:
-    - Initial Public Offering (IPO): A company goes public and sells its shares to investors for the first time.
-    - Follow-On Public Offering (FPO): A company that’s already public wants to raise more money and sells more shares.
-    - Bond issuance: Governments or companies sell new bonds to fund projects or cover expenses.
+  - Initial Public Offering (IPO): A company goes public and sells its shares to investors for the first time.
+  - Follow-On Public Offering (FPO): A company that’s already public wants to raise more money and sells more shares.
+  - Bond issuance: Governments or companies sell new bonds to fund projects or cover expenses.
 
 You can think of the primary market as a "fundraising event" with the company on stage, and investors in the audience, deciding whether to buy a ticket (or in this case, a piece of the company).
 
@@ -122,8 +122,8 @@ You can think of the primary market as a "fundraising event" with the company on
 Once those shares or bonds are issued, they don’t just disappear : they go to the secondary market, where investors buy and sell them among themselves.
 
 The company doesn’t get any money in these trades. The goal here is different:
-    - Provide liquidity
-    - Let investors manage risk or rebalance their portfolios
+  - Provide liquidity
+  - Let investors manage risk or rebalance their portfolios
 
 Think of it like this: The primary market is when you buy a car from the manufacturer. The secondary market is when you sell that same car later on Craigslist or a dealership.
 
@@ -140,11 +140,11 @@ A clearing house is a middleman in financial markets that sits between buyers an
 > The main role of the clearing house is to guarantee and settle trades between market participants, while managing the risk that one side doesn’t hold up their end of the deal.
 
 The core actions of a clearing house are :
-    - Trade Confirmation : Makes sure both sides agree on the terms of the trade (price, quantity, date).
-    - Clearing : Calculates who owes what to whom after all trades are netted out.
-    - Settlement : Ensures the actual exchange of money and assets happens.
-    - Risk Management : Collects margin (a kind of deposit) and monitors positions to limit risk.
-    - Guaranteeing Trades : Steps in if one party defaults, meaning that the clearing house guarantees the trade.
+  - Trade Confirmation : Makes sure both sides agree on the terms of the trade (price, quantity, date).
+  - Clearing : Calculates who owes what to whom after all trades are netted out.
+  - Settlement : Ensures the actual exchange of money and assets happens.
+  - Risk Management : Collects margin (a kind of deposit) and monitors positions to limit risk.
+  - Guaranteeing Trades : Steps in if one party defaults, meaning that the clearing house guarantees the trade.
 
 
 ## Conclusion
