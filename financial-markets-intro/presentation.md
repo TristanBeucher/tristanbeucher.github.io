@@ -1,3 +1,10 @@
+---
+layout: post
+title: Financial Markets & Instruments — Introduction
+permalink: /financial-markets_intro/
+---
+
+
 Welcome to this course on financial markets and financial instruments.
 
 It all began as a four-hour class I gave to bachelor students, aimed at introducing the different types of financial markets and their key participants. I’ve since decided to expand that foundation into a more complete course, going deeper into the bond, equity, and derivatives markets.
