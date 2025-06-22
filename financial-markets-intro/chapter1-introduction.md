@@ -156,4 +156,4 @@ From bonds and stocks to futures and options, everything passes through this str
 But there’s one thing that influences almost every financial decision, from the price of a bond to the value of a derivative: interest rates. They’re everywhere in finance and in the next section, we’ll explore what they are, why they matter, and how they affect everything from borrowing to investing.
 
 
-[← Back to Outline](/financial-markets-intro/presentation.md) 
+[← Back to Outline](/financial-markets-intro/index.md) 
