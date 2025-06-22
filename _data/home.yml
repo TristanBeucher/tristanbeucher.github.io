@@ -18,6 +18,11 @@ project_entries:
   - title: Clean Spark Spread Observer
     url: https://css-calculator.streamlit.app/
     desc: A dashboard to visualize realized Clean Spark Spreads based on gas, CO₂, and electricity prices.
+
+  - title: Financial Markets Course
+    url: /financial_markets_intro/
+    desc: A beginner-friendly course to understand financial markets and instruments
+    highlight: WIP
     
 
 
