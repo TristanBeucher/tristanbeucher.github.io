@@ -73,7 +73,7 @@ $$
 PV = \frac{V}{1 + R \times T}
 $$
 
-This approach is typically used for short durations ($T \leq 1$ year), or when the agreement specifies no reinvestment of earnings..
+This approach is typically used for short durations (\\(T \leq 1\\) year), or when the agreement specifies no reinvestment of earnings..
 
 
 ### Compound Interest
@@ -93,24 +93,24 @@ This is why compound interest is sometimes called “interest on interest”.
 
 #### Discrete Compounding
 
-Interest is added at regular intervals: yearly, quarterly, monthly, etc. The furture value if the interest is compounded once per year:
+Interest is added at regular intervals: yearly, quarterly, monthly, etc. The future value if the interest is compounded once per year:
 
 $$
 FV = N \times (1 + R)^T
 $$
 
-The present value of the future amount $V$ is:
+The present value of the future amount (\\V\\) is:
 
 $$
 PV = \frac{V}{(1 + R)^T}
 $$
 
 Where:  
-- $N$ = principal  
-- $R$ = annual rate  
-- $T$ = number of years
+- (\\N\\) = principal  
+- (\\R\\) = annual rate  
+- (\\T\\) = number of years
 
-If compounded $n$ times per year:
+If compounded (\\n\\) times per year:
 
 $$
 FV = N \times \left(1 + \frac{R}{n} \right)^{nT}
@@ -120,19 +120,19 @@ $$
 PV = \frac{V}{\left(1 + \frac{R}{n} \right)^{nT}}
 $$
 
-The more frequently the interest is compounded, the more total interest you earn — but the effect becomes smaller as $n$ increases.
+The more frequently the interest is compounded, the more total interest you earn — but the effect becomes smaller as (\\n\\) increases.
 
 **Example**:  
 Let’s say you invest €1,000 at 5% per year for 1 year.
 
 - Compounded annually:  
-  $FV = 1000 \times (1 + 0.05)^1 = €1050$
+  \\(FV = 1000 \times (1 + 0.05)^1 = €1050\\)
 
 - Compounded quarterly:  
-  $FV = 1000 \times \left(1 + \frac{0.05}{4}\right)^4 ≈ €1050.95$
+  \\(FV = 1000 \times \left(1 + \frac{0.05}{4}\right)^4 ≈ €1050.95\\)
 
 - Compounded daily:  
-  $FV ≈ €1051.27$
+  \\(FV ≈ €1051.27\\)
 
 You earn slightly more as compounding becomes more frequent, but there's a limit.
 
@@ -148,24 +148,24 @@ $$
 FV = N \times e^{rT}
 $$
 
-The present value of a future amount $V$ is:
+The present value of a future amount \\(V\\) is:
 
 $$
 PV = V \times e^{-rT}
 $$
 
 Where:  
-- $r$ is the **continuously compounded interest rate**  
-- $e$ is Euler’s number (≈ 2.71828)
+- \\(r\\) is the **continuously compounded interest rate**  
+- \\(e\\) is Euler’s number (≈ 2.71828)
 
 This model is widely used in mathematical finance (especially for options and bonds) because it simplifies many calculations.
 
 
 ### Relationship Between Discrete and Continuous Compounding
 
-You can convert a discrete rate $R$ to its continuous equivalent $r$, and vice versa.
+You can convert a discrete rate \\(R\\) to its continuous equivalent \\(r\\), and vice versa.
 
-If interest is compounded $n$ times per year:
+If interest is compounded \\(n\\) times per year:
 
 $$
 r = n \cdot \ln\left(1 + \frac{R}{n}\right)
@@ -175,7 +175,7 @@ $$
 R = n \cdot \left(e^{\frac{r}{n}} - 1\right)
 $$
 
-And as $n \to \infty$:
+And as (\\n \to \infty\\):
 
 $$
 \left(1 + \frac{R}{n} \right)^n \to e^R
@@ -202,9 +202,9 @@ $$
 $$
 
 Where:
-- \( r_{\text{nominal}} \): nominal interest rate  
-- \( r_{\text{real}} \): real interest rate  
-- \( i \): expected inflation rate  
+- \\( r_{\text{nominal}} \\): nominal interest rate  
+- \\( r_{\text{real}} \\): real interest rate  
+- \\( i \\): expected inflation rate  
 
 For small rates, a good approximation is:
 
@@ -276,13 +276,13 @@ A **spot rate** is the interest rate you’d earn today on a **zero-coupon bond*
 
 Because a zero-coupon bond only pays **one amount at maturity**, it gives a clean, direct way to measure the time value of money over a fixed horizon.
 
-If the market price of a zero-coupon bond that pays 1 unit at time $t$ is $B(0, t)$, then the spot rate $R(0, t)$ (with annual compounding) is:
+If the market price of a zero-coupon bond that pays 1 unit at time \\(t\\) is \\(B(0, t)\\), then the spot rate \\(R(0, t)\\) (with annual compounding) is:
 
 $$
 B(0, t) = \frac{1}{(1 + R(0, t))^t}
 $$
 
-This means: the price today of receiving €1 in $t$ years reflects the interest rate over that full period.
+This means: the price today of receiving €1 in \\(t\\) years reflects the interest rate over that full period.
 
 Under **continuous compounding**, the same idea becomes:
 
@@ -290,7 +290,7 @@ $$
 B(0, t) = e^{-r(0, t) \cdot t}
 $$
 
-Where $r(0, t)$ is the continuously compounded spot rate.
+Where \\(r(0, t)\\)  is the continuously compounded spot rate.
 
 
 ### Forward Rates: Interest Rates Starting in the Future
@@ -300,7 +300,7 @@ A **forward rate** is the rate you lock in **today**, for a loan or investment t
 It applies between two future dates:  
 - Starting at time $t$  
 - Ending at time $T$  
-with $T > t$
+with \\(T > t\\) 
 
 This rate is **implied by today’s yield curve** — it tells us what the market expects interest rates to be in the future.
 
@@ -325,9 +325,9 @@ Even though you can't always invest at a forward rate today, the **no-arbitrage 
 
 Let’s assume you have:
 
-- A 1-year spot rate: $R(0,1)$  
-- A 2-year spot rate: $R(0,2)$  
-- A 1-year forward rate starting in 1 year: $F(0,1,1)$
+- A 1-year spot rate: \\(R(0,1)\\)   
+- A 2-year spot rate: \\(R(0,2)\\)  
+- A 1-year forward rate starting in 1 year: \\(F(0,1,1)\\) 
 
 You can invest for 2 years at a known spot rate or you can invest for 1 year, then reinvest at the 1-year forward rate starting next year Both strategies must result in the same value. Otherwise, you’d have an arbitrage opportunity (a guaranteed profit). This idea links forward rates to spot rates in a way that keeps the market consistent.
 
@@ -345,9 +345,9 @@ $$
 
 #### Continuous Compounding
 
-Let $r(0,1)$ and $r(0,2)$ be the continuously compounded spot rates.
+Let \\(r(0,1)\\)  and \\(r(0,2)\\)  be the continuously compounded spot rates.
 
-Then the forward rate $f(0,1,1)$ is given by:
+Then the forward rate \\(f(0,1,1)\\)  is given by:
 
 $$
 f(0,1,1) = \frac{r(0,2) \cdot 2 - r(0,1) \cdot 1}{1}
@@ -357,7 +357,7 @@ $$
 This ensures that the compounded returns over the full period are consistent with no arbitrage.
 
 
-These formulas can be extended to any pair of maturities $T_1 < T_2$ to find forward rates over arbitrary future periods.
+These formulas can be extended to any pair of maturities \\(T_1 < T_2\\)  to find forward rates over arbitrary future periods.
 
 
 
@@ -458,7 +458,7 @@ It works by using the prices of instruments that have known cash flows (typicall
    For maturities up to 1 year, we can directly compute the discount factor and zero-coupon rate from the price of short-term instruments (like Treasury bills).
 
 2. **Interpolate for short-term curve**:  
-   Use **linear** or **cubic interpolation** to draw a smooth curve for maturities \( T \leq 1 \) year.
+   Use **linear** or **cubic interpolation** to draw a smooth curve for maturities \\( T \leq 1 \\) year.
 
 3. **Move to the next maturity range**:  
    Take a bond with the nearest maturity beyond 1 year (say, 18 months or 2 years). Use the earlier known discount factors to isolate the unknown one in a nonlinear pricing equation.
