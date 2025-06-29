@@ -11,7 +11,7 @@ Let's start simple
 
 > An interest rate is the price of money over time. It’s what you pay when you borrow money, or what you earn when you lend or deposit it.
 
-Interest rates are expressed as a percentage of the principal amount, usually over one year. For example, if you borrow €1,000 at a 5% annual interest rate, you’ll pay €50 in interest over one year.
+Interest rates are expressed as a percentage of the principal amount, usually over one year. For example, if you borrow 1,000€ at a 5% annual interest rate, you’ll pay 50€ in interest over one year.
 
 
 ## Why do interest rates vary ?
@@ -47,7 +47,7 @@ This is called **the time value of money**. It’s a core idea in finance: a eur
 When someone lends money, they give up the ability to use it now. Interest is the compensation for that sacrifice. This compensation reflects four key things:
 
 1. **Time**: Lending money ties up resources.  
-2. **Inflation**: Over time, purchasing power tends to fall. €100 today might only buy €95 worth of goods in a year.  
+2. **Inflation**: Over time, purchasing power tends to fall. 100€ today might only buy 95€ worth of goods in a year.  
 3. **Credit risk**: There's always a chance the borrower won’t pay back.  
 4. **Opportunity cost**: The lender could have used the money elsewhere for a better return.  
 
@@ -123,16 +123,16 @@ $$
 The more frequently the interest is compounded, the more total interest you earn — but the effect becomes smaller as (\\n\\) increases.
 
 **Example**:  
-Let’s say you invest €1,000 at 5% per year for 1 year.
+Let’s say you invest 1,000€ at 5% per year for 1 year.
 
 - Compounded annually:  
-  \\(FV = 1000 \times (1 + 0.05)^1 = €1050\\)
+  \\(FV = 1000 \times (1 + 0.05)^1 = 1050€\\)
 
 - Compounded quarterly:  
-  \\(FV = 1000 \times \left(1 + \frac{0.05}{4}\right)^4 ≈ €1050.95\\)
+  \\(FV = 1000 \times \left(1 + \frac{0.05}{4}\right)^4 ≈ 1050.95€\\)
 
 - Compounded daily:  
-  \\(FV ≈ €1051.27\\)
+  \\(FV ≈ 1051.27€\\)
 
 You earn slightly more as compounding becomes more frequent, but there's a limit.
 
@@ -282,7 +282,7 @@ $$
 B(0, t) = \frac{1}{(1 + R(0, t))^t}
 $$
 
-This means: the price today of receiving €1 in \\(t\\) years reflects the interest rate over that full period.
+This means: the price today of receiving 1€ in \\(t\\) years reflects the interest rate over that full period.
 
 Under **continuous compounding**, the same idea becomes:
 
@@ -298,8 +298,8 @@ Where \\(r(0, t)\\)  is the continuously compounded spot rate.
 A **forward rate** is the rate you lock in **today**, for a loan or investment that happens **in the future**.
 
 It applies between two future dates:  
-- Starting at time $t$  
-- Ending at time $T$  
+- Starting at time \\(t\\)
+- Ending at time \\(T\\)  
 with \\(T > t\\) 
 
 This rate is **implied by today’s yield curve** — it tells us what the market expects interest rates to be in the future.
@@ -425,7 +425,7 @@ In practice, most bonds pay coupons multiple cash flows over time. That makes it
 
 A **zero-coupon bond** is a bond that pays **no intermediate interest (coupon)** (we'll discuss bonds in more details in the dedicated section). Instead, it’s sold at a discount and pays its full face value at maturity.
 
-Hence, the price of a zero-coupon bond reflects exactly one cash flow and that makes it ideal for extracting the pure interest rate for that maturity. In other words, it gives us a clean, direct measure of how much investors are willing to pay today to receive €1 in, say, 1 year, 2 years, or 10 years.
+Hence, the price of a zero-coupon bond reflects exactly one cash flow and that makes it ideal for extracting the pure interest rate for that maturity. In other words, it gives us a clean, direct measure of how much investors are willing to pay today to receive 1€ in, say, 1 year, 2 years, or 10 years.
 
 These spot rates form what we call the **zero-coupon yield curve** which tells us the purest form of interest rate per maturity, stripped of coupon effects.
 
