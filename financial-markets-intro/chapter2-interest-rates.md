@@ -1,3 +1,8 @@
+---
+layout: post
+title: Financial Markets & Instruments — Introduction
+permalink: /financial-markets-intro/chapter2-interest-rates/
+---
 
 
 # What is an interest rate
