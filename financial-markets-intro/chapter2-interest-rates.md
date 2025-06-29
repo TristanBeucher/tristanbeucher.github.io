@@ -61,7 +61,7 @@ There are two main ways to calculate interest on an investment or loan: **simple
 
 Simple interest is calculated only on the initial principal. The amount of interest stays the same each period.
 
-If you invest an amount $N$ at a rate $R$ over time $T$, the **future value** is:
+If you invest an amount \\(N\\) at a rate \\(R\\) over time \\(T\\), the **future value** is:
 
 $$
 FV = N \times (1 + R \times T)
