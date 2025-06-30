@@ -24,9 +24,7 @@ A government or a large stable company might borrow at a low rate. A riskier bor
 
 ## Interest rates across markets
 
-You will encounter the term "basis point". In financial markets, interest rates often change in small increments. Instead of saying "0.01 percent", we use the term **basis point**. One basis point equals 0.01% per annum.
-
-For instance, if a rate moves from 3.00% to 3.25%, that’s a change of 25 basis points.
+You will encounter the term "basis point". In financial markets, interest rates often change in small increments. Instead of saying "0.01 percent", we use the term **basis point**. One basis point equals 0.01% per annum. For instance, if a rate moves from 3.00% to 3.25%, that’s a change of 25 basis points.
 
 Interest rates are used in all types of financial contracts, and quoted in various currencies. Here are a few common examples:
   - Interbank rates: the rates at which banks lend to each other, such as EURIBOR or SOFR.
@@ -40,7 +38,7 @@ Each of these rates reflects different levels of credit risk, liquidity, and mar
 
 Interest rates exist for one key reason: 
 
-> money today is worth more than the same amount in the future.
+> Money today is worth more than the same amount in the future.
 
 This is called **the time value of money**. It’s a core idea in finance: a euro received today can be invested, used, or protected against uncertainty — which makes it more valuable than waiting for the same euro in a year.
 
@@ -67,7 +65,7 @@ $$
 FV = N \times (1 + R \times T)
 $$
 
-The **present value** of a future amount $V$ is:
+The **present value** of a future amount \\(V\\) is:
 
 $$
 PV = \frac{V}{1 + R \times T}
@@ -78,9 +76,7 @@ This approach is typically used for short durations (\\(T \leq 1\\) year), or wh
 
 ### Compound Interest
 
-Compound interest means you earn interest **on the interest already earned**, which leads to **exponential growth**.
-
-This makes your investment grow faster, because each period the base you're earning interest on gets bigger.
+Compound interest means you earn interest **on the interest already earned**, which leads to **exponential growth**. This makes your investment grow faster, because each period the base you're earning interest on gets bigger.
 
 Let’s break it down:
 
@@ -99,18 +95,18 @@ $$
 FV = N \times (1 + R)^T
 $$
 
-The present value of the future amount (\\V\\) is:
+The present value of the future amount \\(V\\) is:
 
 $$
 PV = \frac{V}{(1 + R)^T}
 $$
 
 Where:  
-- (\\N\\) = principal  
-- (\\R\\) = annual rate  
-- (\\T\\) = number of years
+- \\(N\\) = principal  
+- \\(R\\) = annual rate  
+- \\(T\\) = number of years
 
-If compounded (\\n\\) times per year:
+If compounded \\(n\\) times per year:
 
 $$
 FV = N \times \left(1 + \frac{R}{n} \right)^{nT}
@@ -120,19 +116,19 @@ $$
 PV = \frac{V}{\left(1 + \frac{R}{n} \right)^{nT}}
 $$
 
-The more frequently the interest is compounded, the more total interest you earn — but the effect becomes smaller as (\\n\\) increases.
+The more frequently the interest is compounded, the more total interest you earn — but the effect becomes smaller as \\(n\\) increases.
 
 **Example**:  
 Let’s say you invest 1,000€ at 5% per year for 1 year.
 
 - Compounded annually:  
-  \\(FV = 1000 \times (1 + 0.05)^1 = 1050€\\)
+  \\( FV = 1000 \times (1 + 0.05)^1 = 1050€ \\)
 
 - Compounded quarterly:  
-  \\(FV = 1000 \times \left(1 + \frac{0.05}{4}\right)^4 ≈ 1050.95€\\)
+  \\( FV = 1000 \times \left(1 + \frac{0.05}{4}\right)^4 ≈ 1050.95€ \\)
 
 - Compounded daily:  
-  \\(FV ≈ 1051.27€\\)
+  \\( FV ≈ 1051.27€ \\)
 
 You earn slightly more as compounding becomes more frequent, but there's a limit.
 
@@ -175,7 +171,7 @@ $$
 R = n \cdot \left(e^{\frac{r}{n}} - 1\right)
 $$
 
-And as (\\n \to \infty\\):
+And as \\(n \to \infty\\):
 
 $$
 \left(1 + \frac{R}{n} \right)^n \to e^R
