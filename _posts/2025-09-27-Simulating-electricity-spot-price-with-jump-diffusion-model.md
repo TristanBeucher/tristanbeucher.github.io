@@ -1,6 +1,5 @@
 
-Electricity spot prices don’t behave like other commodities or financial assets — they have their own personality, and it’s a bit wild.  
-The main reason is the **non-storability of electricity**: supply and demand must be balanced every second. Any imbalance between consumption and generation can push prices sharply up or down.
+Electricity spot prices don’t behave like other commodities or financial assets — they have their own personality, and it’s a bit wild. The main reason is the **non-storability of electricity**: supply and demand must be balanced every second. Any imbalance between consumption and generation can push prices sharply up or down.
 
 There is some good news, though: price patterns are highly predictable in shape because seasonality is everywhere:
 - **During a day**, we usually see morning and evening peaks surrounding the midday solar dip.  
@@ -21,9 +20,7 @@ Because of these characteristics, plain vanilla finance models aren’t enough �
 ## Demystifying stochastic processes
 
 Spoiler: you won’t escape stochastic processes in this article — they’ll be everywhere.  
-But I promise that even without a PhD in mathematics, you’ll be able to follow along easily.  
-
-In the end, although the term may sound intimidating, it simply means *a way to describe something that evolves randomly over time*.  
+But I promise that even without a PhD in mathematics, you’ll be able to follow along easily. In the end, although the term may sound intimidating, it simply means *a way to describe something that evolves randomly over time*. 
 
 A stochastic process is a bit like your child: you can’t control or predict their exact next move. That’s the essence of randomness. So instead, we take a step back and define the **framework** within which they can evolve.  
 
@@ -34,25 +31,23 @@ In this article, we'll use two of the most common building blocks: **Brownian mo
 
 ### Brownian motion
 
-It’s a hot summer night in Paris, the atmosphere is festive because the national football team has just won the World Cup — again. Walking down the street, you recognize a friend, drunk, and stop to observe his chaotic progression. Left, right, forward, backward… over time his path looks messy.  
-
-That’s essentially **Brownian motion**: tiny moves that, when accumulated, create an unpredictable path.  
+It’s a hot summer night in Paris, the atmosphere is festive because the national football team has just won the World Cup — again. Walking down the street, you recognize a friend, drunk, and stop to observe his chaotic progression. Left, right, forward, backward… over time his path looks messy. That’s essentially **Brownian motion**: tiny moves that, when accumulated, create an unpredictable path.  
 
 In finance, it’s been used to model stock prices: they drift and wiggle continuously, never quite moving in a straight line. We call it *Brownian* thanks to a Scottish botanist, Robert Brown, who in 1827 observed the erratic movement of pollen particles suspended in water.  
 
 At this point you may be thinking: *“Thank you for the history lesson, but what makes this random process special enough to have its own name?”* That’s where the math comes in:  
 - A Gaussian process is **continuous**: no teleportation.  
 - A Gaussian process has **no memory**: current and past positions don’t influence the next move.  
-- The **average displacement is zero**: if you simulate many Gaussian processes starting from the same point, their average position at time \(t\) will still be the starting point.  
+- The **average displacement is zero**: if you simulate many Gaussian processes starting from the same point, their average position at time $$t$$ will still be the starting point.  
 - But the **spread increases over time**: the more paths you simulate, the further apart the extremes will drift.  
 
-We also write, for a Wiener process \(W_t\):  
+We also write, for a Brownian (also called Wiener) process $$W_t$$:  
 
 $$
 dW_t \sim \mathcal{N}(0, dt)
 $$
 
-which means that in a very small time step \(dt\), the change in \(W_t\) is normally distributed with mean 0 and variance equal to the length of that time step.  
+which means that in a very small time step $$dt$$, the change in $$W_t$$ is normally distributed with mean 0 and variance equal to the length of that time step.  
 
 
 
@@ -60,15 +55,15 @@ which means that in a very small time step \(dt\), the change in \(W_t\) is norm
 
 I remember waiting at a bus stop with my friends as a kid, betting on when the next bus would arrive. Sometimes we waited a long time, sometimes two came close together — even if, on average, the number of buses per day was always about the same. Too bad I didn’t know about the Poisson process back in 2010… it might have helped me win more bets (well, not really, because as we’ll see, stochastic processes aren’t used for forecasting exact outcomes).  
 
-Mathematically, if \(N_t\) is a Poisson process with rate \(\lambda\):  
+Mathematically, if $$N_t$$ is a Poisson process with rate $$\lambda$$:  
 
 $$
 \Pr(N_t = k) = \frac{(\lambda t)^k}{k!} e^{-\lambda t}, \quad k=0,1,2,\dots
 $$
 
-which means the probability of seeing \(k\) events up to time \(t\) follows a Poisson distribution.  
+which means the probability of seeing $$k$$ events up to time $$t$$ follows a Poisson distribution.  
 
-One of its defining features is that the number of arrivals in disjoint time intervals are **independent**, and the average number of arrivals grows linearly with time (\(\lambda t\)).  
+One of its defining features is that the number of arrivals in disjoint time intervals are **independent**, and the average number of arrivals grows linearly with time ($$\lambda t$$).  
 
 ---
 
@@ -76,12 +71,10 @@ One of its defining features is that the number of arrivals in disjoint time int
 
 We’ve talked about stochastic processes and electricity spot markets. Now comes a key question:  
 
-*Do you think we'll use a stochastic model to predict tomorrow's spot price?*  
+> Do you think we'll use a stochastic model to predict tomorrow's spot price?
 
-The answer is **no**. The models we’ll discuss here have a very different objective.  
-We want to reproduce the **key features** of electricity markets: the wiggles, the tendency to come back to a normal level, those occasional crazy spikes, and the possibility of negative prices.  
-
-This will allow us to create a **distribution of scenarios**, capturing both ordinary days and extreme events.  
+The answer is no. The models we’ll discuss here have a very different objective.  
+We want to reproduce the **key features** of electricity markets: the wiggles, the tendency to come back to a normal level, those occasional crazy spikes, and the possibility of negative prices. This will allow us to create a **distribution of scenarios**, capturing both ordinary days and extreme events.  
 
 Why is that useful? Because in power markets — and in risk management more generally — we don’t just care about the *most likely* outcome. We also care about:  
 - the risk of price spikes,  
@@ -107,9 +100,9 @@ $$
 dS_t = \mu S_t \, dt + \sigma S_t \, dW_t
 $$
 
-- The first term, \(\mu S_t dt\), is deterministic, with \(\mu\) representing the drift rate — the average trend of prices.  
-- The second term, \(\sigma S_t dW_t\), is stochastic, with \(\sigma\) being the volatility (it controls how wild the swings are), and \(dW_t\) the random “wiggle” from Brownian motion.  
-- Both parts are multiplied by \(S_t\), which means that the higher the price, the larger the absolute moves. That’s why GBM generates **percentage changes** rather than fixed increments.  
+- The first term, $$\mu S_t dt$$, is deterministic, with $$\mu$$ representing the drift rate — the average trend of prices.  
+- The second term, $$\sigma S_t dW_t$$, is stochastic, with $$\sigma$$ being the volatility (it controls how wild the swings are), and $$dW_t$$ the random “wiggle” from Brownian motion.  
+- Both parts are multiplied by $$S_t$$, which means that the higher the price, the larger the absolute moves. That’s why GBM generates **percentage changes** rather than fixed increments.  
 
 By solving the SDE, we get the closed-form solution:  
 
@@ -142,24 +135,24 @@ dS_t = \alpha(\mu - S_t)\,dt + \sigma\,dW_t
 $$
 
 Here’s what each parameter does:  
-- \(\mu\) is the **long-term mean level**. Prices are “magnetized” toward this value.  
-- \(\alpha\) is the **speed of mean reversion**. It tells us how strong the pull of the magnet is:  
-  - A high \(\alpha\) means prices snap back quickly.  
-  - A low \(\alpha\) means they drift around lazily before returning.  
-- \(\sigma\) is the **volatility**. The bigger it is, the more prices wiggle around on their way back to \(\mu\).  
+- $$\mu$$ is the **long-term mean level**. Prices are “magnetized” toward this value.  
+- $$\alpha$$ is the **speed of mean reversion**. It tells us how strong the pull of the magnet is:  
+  - A high $$\alpha$$ means prices snap back quickly.  
+  - A low $$\alpha$$ means they drift around lazily before returning.  
+- $$\sigma$$ is the **volatility**. The bigger it is, the more prices wiggle around on their way back to $$\mu$$.  
 
-On the following plot, you can observe the impact of volatility (with \(\alpha\) = 1 and \(\mu\) = 50) :
+On the following plot, you can observe the impact of volatility (with $$\alpha$$ = 1 and $$\mu$$ = 50) :
 
 ![OU varying sigma](images/simulating_spot_prices/ou_vary_sigma.png)
 
-And on this one, the speed of mean reversion varies (\(\mu\) = 50 and \(\sigma\) = 10) :
+And on this one, the speed of mean reversion varies ($$\mu$$ = 50 and $$\sigma$$ = 10) :
 
 ![OU varying alpha](images/simulating_spot_prices/ou_vary_alpha.png)
 
 
-👉 Imagine a ball attached to a spring: if you pull it away from the center, the spring (mean reversion) pulls it back. The stiffness of the spring is \(\alpha\), the center point is \(\mu\), and your shaky hand bumping the table is \(\sigma\).  
+👉 Imagine a ball attached to a spring: if you pull it away from the center, the spring (mean reversion) pulls it back. The stiffness of the spring is $$\alpha$$, the center point is $$\mu$$, and your shaky hand bumping the table is $$\sigma$$.  
 
-Below is a simulation of a OU process with \(\alpha\) = 1, \(\mu\) = 50, \(\sigma\) = 10 and \(S_0\) = 50
+Below is a simulation of a OU process with $$\alpha$$ = 1, $$\mu$$ = 50, $$\sigma$$ = 10 and $$S_0$$ = 50
 
 ![OU process One year](images/simulating_spot_prices/ou_one_year.PNG)
 
@@ -169,8 +162,8 @@ $$
 d(\ln S_t) = \alpha(\mu_L - \ln S_t)\,dt + \sigma\,dW_t
 $$
 
-- \(\mu_L\) is the **long-term mean of the log-price**.  
-- \(\alpha\) and \(\sigma\) play the same roles as before.  
+- $$\mu_L$$ is the long-term mean of the log-price.  
+- $$\alpha$$ and $$\sigma$$ play the same roles as before.  
 
 Because the dynamics happen on the log scale, the actual price is always:  
 
@@ -178,7 +171,7 @@ $$
 S_t = \exp(\ln S_t) > 0
 $$
 
-So the log-OU is strictly positive and keeps the same mean-reverting logic. Below is a simulation of a OU process with \(\alpha\) = 1, \(\mu\) = ln(50), \(\sigma\) = 0,25 and \(S_0\) = 50
+So the log-OU is strictly positive and keeps the same mean-reverting logic. Below is a simulation of a OU process with $$\alpha$$ = 1, $$\mu$$ = ln(50), $$\sigma$$ = 0,25 and $$S_0$$ = 50
 
 ![LOG OU process One year](images/simulating_spot_prices/logou_one_year.PNG)
 
@@ -202,16 +195,16 @@ dS_t = \alpha(\mu - S_t)\,dt + \sigma\,dW_t + J\,dN_t
 $$
 
 Here:  
-- The first part, \(\alpha(\mu - S_t)dt\), is the familiar mean reversion.  
-- The second part, \(\sigma dW_t\), is the continuous noise.  
-- The new part, \(J dN_t\), is the jump term:  
-  - \(N_t\) is a **Poisson process** with intensity \(\lambda\) (average number of jumps per unit of time).  
-  - \(J\) is the **jump size**, usually drawn from a distribution (Normal, Exponential, Lognormal…).  
+- The first part, $$\alpha(\mu - S_t)dt$$, is the familiar mean reversion.  
+- The second part, $$\sigma dW_t$$, is the continuous noise.  
+- The new part, $$J dN_t$$, is the jump term:  
+  - $$N_t$$ is a **Poisson process** with intensity $$\lambda$$ (average number of jumps per unit of time).  
+  - $$J$$ is the **jump size**, usually drawn from a distribution (Normal, Exponential, Lognormal…).  
 
 **What each parameter means in practice**:  
-- \(\lambda\): how often spikes occur. A high \(\lambda\) means frequent shocks, a low \(\lambda\) means they’re rare.  
-- Distribution of \(J\): how big the spikes are, and whether they are mostly upwards (scarcity events) or can also be downwards (negative-price events).  
-- \(\alpha\): still pulls the process back to its mean after a shock — this is what makes electricity spikes short-lived.  
+- $$\lambda$$: how often spikes occur. A high $$\lambda$$ means frequent shocks, a low $$\lambda$$ means they’re rare.  
+- Distribution of $$J$$: how big the spikes are, and whether they are mostly upwards (scarcity events) or can also be downwards (negative-price events).  
+- $$\alpha$$: still pulls the process back to its mean after a shock — this is what makes electricity spikes short-lived.  
 
 👉 Think of it as our spring-and-ball system again, but now, every once in a while, someone hits the ball with a hammer. The spring ensures the ball comes back quickly, but the shock creates a huge, temporary displacement.  
 
