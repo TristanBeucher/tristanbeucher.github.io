@@ -10,10 +10,20 @@ navbar_entries:
 
 project_entries:
 
+  - title: Optimal Dispatch for CCGTs
+    url: https://ccgt-optimal-dispatch-backtest.streamlit.app/
+    desc: An application to backtest the dispatch of a virtual Gas-fired power plant.
+    highlight: WIP
+
   - title: Clean Spark Spread Observer
     url: https://css-calculator.streamlit.app/
     desc: A dashboard to visualize realized Clean Spark Spreads based on gas, CO₂, and electricity prices.
+
+  - title: Financial Markets Course
+    url: /financial-markets-intro/
+    desc: A beginner-friendly course to understand financial markets and instruments
     highlight: WIP
+    
 
 
 old_project_entries:
