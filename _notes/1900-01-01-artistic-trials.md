@@ -3,7 +3,7 @@ layout: page
 title: Artistic trials — dessins & haïkus
 permalink: /notes/artistic-trials/
 description: lazy black and white art - haiku and drawings.
-image: /assets/img/notes/artistic-trials/20250927%20paysage.png
+image: images/dessins/20250927%20paysage.png
 images:
   - src: /images/dessins/20250927%20paysage.png
     alt: "Paysage minimaliste"
