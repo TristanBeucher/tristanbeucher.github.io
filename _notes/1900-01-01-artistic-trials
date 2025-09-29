@@ -5,25 +5,25 @@ permalink: /notes/artistic-trials/
 description: lazy black and white art - haiku and drawings.
 image: /assets/img/notes/artistic-trials/20250927%20paysage.png
 images:
-  - src: /assets/images/dessins/20250927%20paysage.png
+  - src: /images/dessins/20250927%20paysage.png
     alt: "Paysage minimaliste — horizon et lumière rasante"
     haiku: |
       L’horizon respire —
       Les collines boivent le vent
       Soleil en suspens
-  - src: /assets/images/dessins/Panda%20pirate.png
+  - src: /images/dessins/Panda%20pirate.png
     alt: "Panda pirate — contraste noir et blanc"
     haiku: |
       Rire en plein contre-jour —
       Le bandeau cache la lune
       Cap sur l’inconnu
-  - src: /assets/images/dessins/rose%20qui%20pleure.png
+  - src: /images/dessins/rose%20qui%20pleure.png
     alt: "Rose qui pleure — gouttes et pétales sombres"
     haiku: |
       Noir sur blanc, silence —
       Les larmes creusent la nuit
       La rose trompée
-  - src: /assets/images/dessins/tente%20sous%20la%20lune.png
+  - src: /images/dessins/tente%20sous%20la%20lune.png
     alt: "Tente sous la lune — nuit claire"
     haiku: |
       Tissu contre étoiles —
