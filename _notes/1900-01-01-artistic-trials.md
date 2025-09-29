@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Artistic trials — dessins & haïkus
+title: Artistic trials — lazy, black & white
 permalink: /notes/artistic-trials/
 date: 2025-09-27 09:00:00 +0000   
 share: true                       
@@ -9,27 +9,27 @@ images:
   - src: /images/dessins/20250927%20paysage.png
     alt: "Paysage minimaliste"
     haiku: |
-      Mira afuera —
-      Les collines boivent le vent
-      Soleil en suspens
+      Mira afuera
+      unas ramas de sombra,
+      La noche sueña
   - src: /images/dessins/Panda%20pirate.png
     alt: "Panda pirate — contraste noir et blanc"
     haiku: |
-      Rire en plein contre-jour —
-      Le bandeau cache la lune
-      Cap sur l’inconnu
+      Noir, blanc, vision claire
+      Ris dans l'ombre et la lumière
+      Ensemble solitaire
   - src: /images/dessins/rose%20qui%20pleure.png
     alt: "Rose qui pleure — gouttes et pétales sombres"
     haiku: |
-      Noir sur blanc, silence —
-      Les larmes creusent la nuit
+      Etreinte brisée
+      Les pétales se referment
       La rose trompée
   - src: /images/dessins/tente%20sous%20la%20lune.png
     alt: "Tente sous la lune — nuit claire"
     haiku: |
-      Tissu contre étoiles —
-      Un souffle de pin s’endort
-      Veillée du croissant
+      Sous la toile tendue
+      Le vent glisse ses secrets
+      Le feu les surprend
 ---
 
 <style>
@@ -45,8 +45,6 @@ images:
 .mw-carousel__dot { width:.6rem; height:.6rem; border-radius:999px; border:none; background:#c9c9c9; cursor:pointer; }
 .mw-carousel__dot[aria-selected="true"] { background:#555; }
 </style>
-
-# Artistic trials
 
 {% include carousel.html
   id="artistic-trials"
