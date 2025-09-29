@@ -1,18 +1,20 @@
+/* Container */
 .mw-carousel {
   position: relative;
   width: 100%;
   margin: 1.5rem auto 2rem;
-  max-width: 900px; /* ajuste si tu veux plus large */
+  max-width: 980px;            /* keep it readable on desktop */
 }
 
+/* Viewport hides off-screen slides */
 .mw-carousel__viewport {
   overflow: hidden;
   border-radius: 12px;
 }
 
+/* Horizontal track */
 .mw-carousel__track {
   display: flex;
-  gap: 0;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -20,22 +22,23 @@
   will-change: transform;
 }
 
+/* Each slide takes full viewport width */
 .mw-carousel__slide {
   min-width: 100%;
   box-sizing: border-box;
 }
 
-.mw-carousel__figure {
-  margin: 0;
-  background: var(--bg, #0b0b0b);
-}
-
+/* Image sizing */
 .mw-carousel__img {
   display: block;
   width: 100%;
-  height: auto;
+  height: auto;                /* keep proportions */
+  max-height: 80vh;            /* never taller than the screen */
+  object-fit: contain;         /* avoid cropping for tall images */
+  background: var(--bg, #0b0b0b);
 }
 
+/* Optional caption */
 .mw-carousel__caption {
   padding: .75rem 1rem;
   font-size: 0.95rem;
@@ -44,18 +47,7 @@
   color: #fff;
 }
 
-.mw-carousel__haiku {
-  display: block;
-  font-style: italic;
-  white-space: pre-wrap;
-}
-
-.mw-carousel__legend {
-  display: block;
-  opacity: .9;
-  margin-top: .25rem;
-}
-
+/* Nav buttons */
 .mw-carousel__btn {
   position: absolute;
   top: 50%;
@@ -69,12 +61,11 @@
   cursor: pointer;
   display: grid;
   place-items: center;
-  transition: background 150ms;
 }
-.mw-carousel__btn:hover { background: rgba(0,0,0,.7); }
 .mw-carousel__btn--prev { left: .5rem; }
 .mw-carousel__btn--next { right: .5rem; }
 
+/* Dots */
 .mw-carousel__dots {
   display: flex;
   justify-content: center;
@@ -82,13 +73,10 @@
   margin-top: .75rem;
 }
 .mw-carousel__dot {
-  width: .6rem;
-  height: .6rem;
+  width: .6rem; height: .6rem;
   border-radius: 999px;
   border: none;
   background: #c9c9c9;
   cursor: pointer;
 }
-.mw-carousel__dot[aria-selected="true"] {
-  background: #555;
-}
+.mw-carousel__dot[aria-selected="true"] { background: #555; }
