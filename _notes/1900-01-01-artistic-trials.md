@@ -6,7 +6,7 @@ description: lazy black and white art - haiku and drawings.
 image: /assets/img/notes/artistic-trials/20250927%20paysage.png
 images:
   - src: /images/dessins/20250927%20paysage.png
-    alt: "Paysage minimaliste — horizon et lumière rasante"
+    alt: "Paysage minimaliste"
     haiku: |
       L’horizon respire —
       Les collines boivent le vent
