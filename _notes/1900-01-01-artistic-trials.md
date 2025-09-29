@@ -8,7 +8,7 @@ images:
   - src: /images/dessins/20250927%20paysage.png
     alt: "Paysage minimaliste"
     haiku: |
-      L’horizon respire —
+      Mira afuera —
       Les collines boivent le vent
       Soleil en suspens
   - src: /images/dessins/Panda%20pirate.png
