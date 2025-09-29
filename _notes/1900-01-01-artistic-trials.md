@@ -1,7 +1,9 @@
 ---
-layout: page
+layout: post
 title: Artistic trials — dessins & haïkus
 permalink: /notes/artistic-trials/
+date: 2025-09-27 09:00:00 +0000   
+share: true                       
 description: lazy black and white art - haiku and drawings.
 images:
   - src: /images/dessins/20250927%20paysage.png
