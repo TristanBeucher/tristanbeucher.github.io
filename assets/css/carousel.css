@@ -80,3 +80,4 @@
   cursor: pointer;
 }
 .mw-carousel__dot[aria-selected="true"] { background: #555; }
+.mw-carousel img.mw-carousel__img { max-width: 100% !important; height: auto !important; }
