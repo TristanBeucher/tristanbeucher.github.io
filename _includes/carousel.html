@@ -8,7 +8,7 @@
           <img
             src="{{ item.src }}"
             alt="{{ item.alt | default: 'Image ' | append: forloop.index }}"
-            loading="{{ forloop.first | default: false | ternary: 'eager','lazy' }}"
+            loading="lazy"
             class="mw-carousel__img"
             width="1600" height="900"
             />
