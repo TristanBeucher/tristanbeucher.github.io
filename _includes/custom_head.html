@@ -1,3 +1,6 @@
 {% comment %}
   Placeholder to allow defining custom head. You can put favicons and other custom header fields here
 {% endcomment %}
+
+<link rel="stylesheet" href="{{ '/assets/css/carousel.css' | relative_url }}?v={{ site.time | date: '%Y%m%d%H%M' }}">
+<script defer src="{{ '/assets/js/carousel.js' | relative_url }}?v={{ site.time | date: '%Y%m%d%H%M' }}"></script>
