@@ -216,7 +216,10 @@ This **OU + jumps** model finally captures all the stylized facts of electricity
 
 That’s why this is one of the most widely used modeling frameworks in electricity finance and risk management. It provides not just a “most likely path,” but a **distribution of outcomes that includes the crazy days** — the ones that often matter most for profits and losses.  
 
-I’ll leave you with a graphical representation of this process (with a deterministic seasonality layer added), and I’ll come back with an article on how you can practically generate such simulations yourself.
+I’ll leave you with two graphical representations of this kind of process (both with a deterministic seasonality layer added but you'll note the difference between them), and I’ll come back with an article on how you can practically generate such simulations yourself.
 
 
 ![LOG OU process One year](images/simulating_spot_prices/spot_jump_diffusion_one_year.png)
+
+![LOG OU process One year](images/simulating_spot_prices/spot_jump_diffusion_one_year_two.png)
+
