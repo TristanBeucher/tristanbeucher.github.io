@@ -221,5 +221,5 @@ I’ll leave you with two graphical representations of this kind of process (bot
 
 ![LOG OU process One year](images/simulating_spot_prices/spot_jump_diffusion_one_year.png)
 
-![LOG OU process One year](images/simulating_spot_prices/spot_jump_diffusion_one_year_two.png)
+![Second LOG OU process One year](images/simulating_spot_prices/spot_jump_diffusion_one_year_two.png)
 
