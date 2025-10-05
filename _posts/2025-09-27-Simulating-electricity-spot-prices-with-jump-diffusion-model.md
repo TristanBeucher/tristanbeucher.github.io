@@ -180,7 +180,7 @@ The OU (log-OU) process is very popular in electricity spot modeling because it 
 - A **jump or spike component** to handle extreme events (cold snaps, outages),  
 - Adjustments for **regional differences** in the grid.  
 
-As Clewlow & Strickland (2000) point out, plain OU is a good starting point, but the real fun begins once you add these layers.  
+As [Clewlow and Strickland (2000)](#clewlow2000) point out, plain OU is a good starting point, but the real fun begins once you add these layers.  
 
 ---
 
@@ -222,4 +222,11 @@ I’ll leave you with two graphical representations of this kind of process (bot
 ![LOG OU process One year](images/simulating_spot_prices/spot_jump_diffusion_one_year.png)
 
 ![Second LOG OU process One year](images/simulating_spot_prices/spot_jump_diffusion_one_year_two.png)
+
+---
+
+## References
+<a name="clewlow2000"></a>
+Clewlow, L., & Strickland, C. (2000). *Energy Derivatives: Pricing and Risk Management*.  
+London: Lacima Group.
 
