@@ -36,7 +36,7 @@ By the end of this article, I’ll have generated between 1,000 and 10,000 scena
 
 Once the 2025 price scenarios are simulated, I need a way to check how realistic they are compared to the actual 2025 data (up to October). Below are the metrics I use to evaluate this consistency:
 
-<table class="metrics-table">
+<table>
   <colgroup>
     <col style="width: 26%">
     <col style="width: 74%">
@@ -245,7 +245,7 @@ This simple recursion stabilizes the set of detected jumps and gives us a robust
 
 Once the list of jumps is stable, we summarize the results:
 
-<table class="metrics-table">
+<table>
   <colgroup>
     <col style="width: 28%">
     <col style="width: 72%">
@@ -353,7 +353,7 @@ Intuitively, this captures the idea that:
 
 Finally, I extended the idea by combining **residual load** and **seasonality**.  I created bins by both load level and season, giving parameters of the form:
 
-<table class="metrics-table">
+<table>
   <colgroup>
     <col style="width: 28%">
     <col style="width: 24%">
@@ -431,7 +431,7 @@ Qualitatively:
 
 ### Evaluation Metrics
 
-<table class="metrics-table">
+<table>
   <colgroup>
     <col style="width: 24%">
     <col style="width: 56%">
@@ -493,7 +493,7 @@ Interpretation:
 ![Residuals analysis](images/simulating_spot_prices/monthly_coverage.png)
 
 
-<table class="metrics-table">
+<table>
   <colgroup>
     <col style="width: 28%">
     <col style="width: 24%">
