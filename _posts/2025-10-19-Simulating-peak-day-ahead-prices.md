@@ -53,6 +53,8 @@ Together, these metrics help me assess whether the simulated distribution:
 
 #### 🧠 A Note on the CRPS
 
+{: .note}
+
 Mathematically, the **Continuous Ranked Probability Score (CRPS)** for a forecast distribution $$ F $$ and an observed value $$ x $$ is defined as:
 
 $$
