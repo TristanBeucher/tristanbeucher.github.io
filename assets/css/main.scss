@@ -35,6 +35,24 @@
   border-left-color: #005fa3;
 }
 
+.metrics-list dl {
+  margin: 1rem 0;
+}
+
+.metrics-list dt {
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-top: 0.8rem;
+}
+
+.metrics-list dd {
+  margin: 0.2rem 0 0.6rem 0;
+  padding-left: 0.8rem;
+  border-left: 3px solid #007acc;
+  background: #f8faff;
+  border-radius: 4px;
+  padding: 0.4rem 0.8rem;
+}
 
 
 
