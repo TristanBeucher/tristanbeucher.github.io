@@ -1,5 +1,4 @@
-Two weeks ago, I shared an article about how **Jump Diffusion models** can be used to simulate power prices.  
-You can read it here → [*previous article placeholder link*](/path/to/first-article).
+Two weeks ago, I shared an article about how **Jump Diffusion models** can be used to simulate power prices. You can read it here → [*previous article placeholder link*](/path/to/first-article).
 
 I received more feedback than expected, so now I have to commit to what I promised: explaining how I’d calibrate such a model.
 
@@ -12,15 +11,14 @@ I went through my usual process, which can be summarized as a four-step cycle:
 
 After taking some time to think, I found the problem I’ll focus on:  
 
-> **Simulating 2025 daily peak prices in France**  
-> using **residual load** and **2023–2024 historical data**
+> Simulating 2025 daily peak prices in France using **residual load** and 2023–2024 historical data
 
-Residual load is defined as the difference between **national consumption** and **solar + wind energy production**.
+Residual load is defined as the difference between national consumption and solar + wind energy production.
 
-### Why this problem?
+#### Why this problem?
 
-- I already have the data.  
-- Daily prices are well-suited for a side project — easier to model and visualize.  
+- I already have the data (yes that's not a very good reason, but it's convenient).  
+- Daily prices are well-suited for a side project — easier to model and visualize than hourly price (again: convenient).  
 - Using **residual load** as the main price driver is relevant, and it’s a great way to include **deterministic seasonality** in a jump diffusion model.  
 - I’m focusing on **peak prices (8h–20h in France)** because the growth in solar capacity must have an impact on them (and by definition, on residual load).
 
@@ -28,31 +26,31 @@ Residual load is defined as the difference between **national consumption** and 
 
 ## Process and Article Goal
 
-My objective is to give an intuition of how I calibrated my **2025 peak price scenarios**.  
-I won’t share any code here (check my GitHub).
+My objective is to give an intuition of how I calibrated my **2025 peak prices scenarios**. This article will already be long for a blog post and then I won’t share any code here (check my GitHub). I also know a lot of things could probably have been done better, as I’m still improving the functions, so please feel free to reach out with any thoughts or suggestions.
 
-A lot of things could probably be done better, as I’m still improving the functions, so please feel free to reach out with any thoughts or suggestions.
-
-By the end of this article, I’ll have generated between **1,000 and 10,000 scenarios for 2025**, trained on **2023–2024 price data**.
+By the end of this article, I’ll have generated between 1,000 and 10,000 scenarios for 2025, trained on **2023–2024 price data** for France.
 
 ---
 
 ## Evaluating the Scenarios
 
-Once the 2025 price scenarios are simulated, I need a way to check how realistic they are compared to the actual 2025 data (up to October).  
-Below are the metrics I use to evaluate this consistency:
+Once the 2025 price scenarios are simulated, I need a way to check how realistic they are compared to the actual 2025 data (up to October). Below are the metrics I use to evaluate this consistency:
 
 | Metric | Meaning |
 |:--|:--|
-| **n_overlap_days** | Number of days that overlap between simulated data and actual observations. |
-| **coverage_50pct** | Fraction of real daily prices that fall within the 50% central interval of simulated prices. |
-| **coverage_90pct** | Fraction of real prices within the 90% prediction interval. |
+| **coverage at 50%** | Fraction of real daily prices that fall within the 50% central interval of simulated prices. |
+| **coverage at 90%** | Fraction of real prices within the 90% prediction interval. |
 | **tails** | Frequency of extreme values in simulated scenarios. Compares the percentage of negative and >200% mean values with actuals. |
-| **mean_CRPS** | Continuous Ranked Probability Score, which measures how close the forecast distribution is to reality. Lower is better. |
+| **mean CRPS** | Continuous Ranked Probability Score, which measures how close the forecast distribution is to reality. Lower is better. |
 
 ---
 
-### A Note on the CRPS
+Together, these metrics help me assess whether the simulated distribution:
+- Covers real-world variability (via the **coverage ratios**),
+- Handles extreme events realistically (via the **tails**),
+- And stays statistically close to observed prices (via the **CRPS**).
+
+#### A Note on the CRPS
 
 Mathematically, the **Continuous Ranked Probability Score (CRPS)** for a forecast distribution $$ F $$ and an observed value $$ x $$ is defined as:
 
@@ -71,38 +69,27 @@ It can be seen as the probabilistic analogue of the **Mean Absolute Error (MAE)*
 
 ---
 
-Together, these metrics help me assess whether the simulated distribution:
-- Covers real-world variability (via the **coverage ratios**),
-- Handles extreme events realistically (via the **tails**),
-- And stays statistically close to observed prices (via the **CRPS**).
 
 
 ## Creating the Deterministic Baseline
 
-First, let’s create the **baseline**.  
-It must capture the underlying **seasonality** of power prices — and my assumption is that **residual load (RL)** can represent this seasonality quite well.
-
-> 🧩 Residual load = Consumption − (Wind + Solar generation)
-
-I started by fitting a model between **residual load** and **daily peak prices**.
+First, let’s create the **baseline**.  It must capture the underlying **seasonality** of power prices — and my assumption is that **residual load (RL)** can represent this seasonality quite well. I started by fitting a model between **residual load** and **daily peak prices**.
 
 *(PLOT — residual load vs. price with fitted curve)*
 
-It seems we have a good fit.  
-I used a **Generalized Additive Model (GAM)** to fit prices as a smooth, non-linear function of residual load.
+It seems we have a good fit. I used a **Generalized Additive Model (GAM)** to fit prices as a smooth, non-linear function of residual load.
 
 ---
 
-### A Note on the GAM Model
+#### A Note on the GAM Model
 
-A **Generalized Additive Model** is a flexible regression model that allows each predictor to have its own **smooth effect** on the response variable.  
-Mathematically, it can be written as:
+A **Generalized Additive Model** is a flexible regression model that allows each predictor to have its own **smooth effect** on the response variable. Mathematically, it can be written as:
 
 $$
 E[Y] = \beta_0 + f_1(X_1) + f_2(X_2) + \dots + f_n(X_n)
 $$
 
-where each $$ f_i $$ is a smooth, data-driven function (often splines).
+where each $$ f_i $$ is a smooth, data-driven function (often splines). We can also have function of several variables (we'll use this property in our model), an intercept or linear relations.
 
 Intuitively:
 - It’s like a linear model, but with curves instead of straight lines.  
@@ -123,14 +110,13 @@ This bivariate term helps capture the **slow market trends** and **seasonal vari
 
 *(PLOT — fitted vs. observed prices or residuals)*
 
-The model produces nice residuals — and we’ll make good use of them later.
+The model produces nice residuals and we’ll make good use of them later.
 
 ---
 
 ### From Baseline to Simulation
 
-Past residual loads are behind us, and our baseline is now set.  
-But we don’t yet know the **residual load for 2025** — so how can we generate our price scenarios?
+Past residual loads are behind us, and our baseline is now set. But we don’t yet know the **residual load for 2025** then how can we generate our price scenarios?
 
 Simple: we’ll **simulate residual load** next.
 
@@ -142,16 +128,13 @@ To generate **2025 residual load (RL) scenarios**, I built a small simulation fr
 **(2)** inflating their variability,  
 and **(3)** adjusting the mean level to reflect 2025 expectations.
 
-*(PLOT — 2025 RL quantiles with 2024–2025 overlay)*
 
----
 
 ### 1️⃣ Moving-Block Bootstrap
 
 The core of the method is a **moving-block bootstrap** applied to historical residual load series.
 
-Instead of sampling single days independently, I resample **7-day blocks** from the historical time series (2023–2024).  
-This preserves short-term autocorrelation — e.g. multi-day cold spells or windy weeks — which are crucial in power systems.
+Instead of sampling single days independently, I resample **7-day blocks** from the historical time series (2023–2024). This preserves short-term autocorrelation (e.g. multi-day cold spells or windy weeks) which are crucial in power systems.
 
 Each simulated path is constructed by concatenating random 7-day chunks taken from the historical record, within a **±15-day seasonal window** around each target calendar day.
 
@@ -159,16 +142,12 @@ Formally, for a target day-of-year $$ d_t $$, we draw a block from:
 $$
 \mathcal{B}_t = \{ RL_i \mid |DoY_i - d_t| \leq 15 \}
 $$
-and repeat until we fill all 365 days.
+and repeat until we fill all 365 days. This creates $$ N = 200 $$ stochastic trajectories of daily residual load for 2025.
 
-This creates $$ N = 200 $$ stochastic trajectories of daily residual load for 2025.
-
----
 
 ### 2️⃣ Dispersion Inflation (+25%)
 
-After generating all scenarios, I compute **daily quantiles** (P10, P50, P90) across them.  
-The next step is to slightly **inflate the spread** around the median (P50) to capture more uncertainty.
+After generating all scenarios, I compute **daily quantiles** (P10, P50, P90) across them. The next step is to slightly **inflate the spread** around the median (P50) to capture more uncertainty.
 
 Mathematically, for each quantile $$ q_p $$:
 $$
@@ -178,19 +157,8 @@ with $$ k = 1.25 $$, i.e. a **25% inflation** of dispersion.
 
 This keeps the **median unchanged** while making the tails more realistic — accounting for the uncertainty inherent in 2025 weather, demand, and renewables.
 
----
 
-### 3️⃣ Extending the GAM Temporal Term
-
-In the initial GAM model (used to create the price baseline), I had a **smooth term for Month × Year**.  
-But since 2025 was not part of the training set, I had to **extend** this term artificially.
-
-To do so, I reused the 2024 monthly pattern and **re-anchored** it so that each month’s average corresponds to **December-24 forward prices** (the last available futures quotations).  
-This ensures the model remains consistent with the forward curve at the time of calibration.
-
----
-
-### 4️⃣ Structural Adjustment on Residual Load (−10%)
+### 3️⃣ Structural Adjustment on Residual Load (−10%)
 
 Finally, I applied a **10% downward adjustment** to residual load levels to reflect expected structural changes:
 - **Demand destruction** due to lower industrial activity,  
@@ -198,9 +166,15 @@ Finally, I applied a **10% downward adjustment** to residual load levels to refl
 
 Importantly, this adjustment is implemented as a **downward dispersion**, not a global shift — meaning the **median remains the same**, but the lower quantiles extend further down.  
 
-> 🧩 This is a raw assumption that would deserve refinement in a future version (e.g. by explicitly modeling new solar capacity or demand elasticity).
+> This is a raw assumption that would deserve refinement in a future version (e.g. by explicitly modeling new solar capacity or demand elasticity).
 
----
+
+### 4️⃣ Extending the GAM Temporal Term
+
+In the initial GAM model (used to create the price baseline), I had a **smooth term for Month × Year**. But since 2025 was not part of the training set, I had to **extend** this term artificially.
+
+To do so, I reused the 2024 monthly pattern and **re-anchored** it so that each month’s average corresponds to **December-24 forward prices** (the last available futures quotations). This ensures the model remains consistent with the forward curve at the time of calibration. 
+
 
 The result is a set of 200 realistic 2025 residual load trajectories — each preserving historical patterns, incorporating plausible uncertainty, and aligned with market fundamentals.
 
@@ -209,23 +183,20 @@ The result is a set of 200 realistic 2025 residual load trajectories — each pr
 
 ## Modeling the Jumps
 
-Jumps are a key component of our scenarios, and we need to calibrate both their **frequency** and **intensity**.  
-To do that, I use a method called **Recursive Jump Filtering**.
+Jumps are a key component of our scenarios, and we need to calibrate both their **frequency** and **intensity**. To do that, I use a method called **Recursive Jump Filtering**.
 
 ---
 
 ### 1️⃣ From Residuals to Innovations
 
-We start from the **residuals** of the GAM model (price – fitted value).  
-For each day, we compute the **innovation**, i.e. the day-to-day change in residuals:
+We start from the **residuals** of the GAM model (price – fitted value). For each day, we compute the **innovation**, i.e. the day-to-day change in residuals:
 
 $$
 \Delta x_t = x_t - x_{t-1}
 $$
 
-This represents how much the residual changed since yesterday — the “shock” not explained by the deterministic baseline.
+This represents how much the residual changed since yesterday (the “shock” not explained by the deterministic baseline).
 
----
 
 ### 2️⃣ Detecting Outliers (First Pass)
 
@@ -235,10 +206,8 @@ $$
 z_t = \frac{\Delta x_t - \bar{\Delta x}}{\sigma_{\Delta x}}
 $$
 
-Since the mean innovation is typically close to 0, this z-score tells us how many standard deviations away from “normal” each daily change is.  
-If $$|z_t|$$ exceeds a threshold $$ c $$ (for instance, $$ c = 3 $$), we count that day as a **jump**.
+Since the mean innovation is typically close to 0, this z-score tells us how many standard deviations away from “normal” each daily change is. If $$|z_t|$$ exceeds a threshold $$ c $$ (for instance, $$ c = 3 $$), we count that day as a **jump**.
 
----
 
 ### 3️⃣ Refining the Standard Deviation (Recursive Filtering)
 
@@ -253,7 +222,6 @@ To correct for that, we use a **recursive filtering** approach:
 
 This simple recursion stabilizes the set of detected jumps and gives us a robust estimate of volatility and extreme moves.
 
----
 
 ### 4️⃣ Summarizing Jump Events
 
@@ -273,12 +241,11 @@ In the end, this procedure gives us an empirical **jump intensity (λ)** and **j
 
 *(PLOT — histogram of innovations + threshold lines for jump detection)*
 
+---
+
 ## Mean Reversion Calibration
 
-Before simulating volatility, I first estimated the **mean-reverting dynamics** of the residuals from the baseline model.  
-The idea is that deviations from the deterministic trend (residuals) tend to revert toward an equilibrium level — not drift endlessly.
-
-I used a **Weighted Least Squares (WLS)** regression to fit the continuous-time Ornstein–Uhlenbeck (OU) process:
+The idea of mean reversion is that deviations from the deterministic trend (residuals) tend to revert toward an equilibrium level — not drift endlessly. I used a **Weighted Least Squares (WLS)** regression to fit the continuous-time Ornstein–Uhlenbeck (OU) process:
 
 $$
 dx_t = \alpha (\bar{x} - x_t)\,dt + \sigma\,dW_t
@@ -289,7 +256,6 @@ where:
 - $$ \bar{x} $$ is the **long-term mean**,  
 - $$ \sigma $$ is the **volatility of the stochastic noise**.
 
----
 
 ### Estimation Steps
 
@@ -315,15 +281,13 @@ sigma = 12.5
 
 This tells us that deviations from the mean typically fade by half within **about 10 days**, which is consistent with how price shocks behave in short-term power markets.
 
-The parameters $$ \alpha $$, $$ \bar{x} $$, and $$ \sigma $$ are then used to simulate the **mean-reverting component** of prices before applying jump and volatility effects.
-
+---
 
 ## Modeling Volatility
 
-Volatility is, in my opinion, the most complex part of the model.  
-I experimented with three different methods before settling on the one that felt most realistic.
+Volatility is, in my opinion, the most complex part of the model. I experimented with three different methods before settling on the one that felt most realistic.
 
----
+
 
 ### 1️⃣ Naive Yearly Volatility
 
@@ -335,23 +299,19 @@ $$
 
 This gives a global level of variability, but it ignores the fact that price volatility depends strongly on system conditions — especially residual load.
 
----
 
 ### 2️⃣ Residual-Load–Dependent Volatility
 
-To improve on that, I computed **volatility coefficients by residual load bins**.  
-For example, I divided the historical residual load into quantile bins (low, medium, high) and calculated a separate volatility parameter for each bin.
+To improve on that, I computed **volatility coefficients by residual load bins**.  For example, I divided the historical residual load into quantile bins (low, medium, high) and calculated a separate volatility parameter for each bin.
 
 Intuitively, this captures the idea that:
 - When the residual load is low (lots of renewables), prices are calmer.  
 - When the system is tight (high residual load), volatility tends to spike.
 
----
 
 ### 3️⃣ Residual-Load– and Season–Dependent Volatility
 
-Finally, I extended the idea by combining **residual load** and **seasonality**.  
-I created bins by both load level and season, giving parameters of the form:
+Finally, I extended the idea by combining **residual load** and **seasonality**.  I created bins by both load level and season, giving parameters of the form:
 
 | Season | RL Low | RL Medium | RL High |
 |:--|:--:|:--:|:--:|
@@ -373,8 +333,7 @@ I preferred this last method — it’s still rudimentary, but it gives a more c
 
 ## Simulation on 2025
 
-With the bootstrap method, we have created **200 residual load scenarios** for 2025.  
-For each of these, we generated corresponding **price scenarios** using the parameters estimated in the previous sections (baseline, volatility, jumps).
+With the bootstrap method, we have created **200 residual load scenarios** for 2025. For each of these, we generated corresponding **price scenarios** using the parameters estimated in the previous sections (baseline, volatility, jumps).
 
 Finally, we compared the simulated prices with **actual 2025 daily peak prices** (available up to October).
 
