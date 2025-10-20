@@ -53,13 +53,13 @@ Together, these metrics help me assess whether the simulated distribution:
 
 #### 🧠 A Note on the CRPS
 
-Mathematically, the **Continuous Ranked Probability Score (CRPS)** for a forecast distribution \( F \) and an observed value \( x \) is defined as:
+Mathematically, the **Continuous Ranked Probability Score (CRPS)** for a forecast distribution $$ F $$ and an observed value $$ x $$ is defined as:
 
 $$
 \text{CRPS}(F, x) = \int_{-\infty}^{+\infty} (F(y) - 1\{y \ge x\})^2 \, dy
 $$
 
-where \( F(y) \) is the cumulative distribution function (CDF) of the forecast and \( 1\{y \ge x\} \) is the indicator of whether \( y \) exceeds the observed value.
+where $$ F(y) $$ is the cumulative distribution function (CDF) of the forecast and $$ 1\{y \ge x\} $$ is the indicator of whether $$ y $$ exceeds the observed value.
 
 Intuitively:
 - CRPS measures how far the predicted **distribution** is from the **reality** at each possible value of the variable.
@@ -83,7 +83,9 @@ First, let’s create the **baseline**.  It must capture the underlying **season
 It seems we have a good fit. I used a **Generalized Additive Model (GAM)** to fit prices as a smooth, non-linear function of residual load.
 
 
-#### A Note on the GAM Model
+<div class="note" markdown="1">
+
+#### 🧠 A Note on the GAM Model
 
 A **Generalized Additive Model** is a flexible regression model that allows each predictor to have its own **smooth effect** on the response variable. Mathematically, it can be written as:
 
@@ -97,6 +99,8 @@ Intuitively:
 - It’s like a linear model, but with curves instead of straight lines.  
 - GAMs are ideal when you don’t know the exact functional form between variables (for example, how much a price changes when residual load increases).  
 - They capture **non-linearities** without overfitting, which is perfect for electricity prices that often follow complex, threshold-based behaviors.
+
+</div>
 
 
 ### Adding Time Effects
