@@ -38,7 +38,7 @@
 /* make tables read nicely */
 .metrics-table {
   width: 100%;
-  table-layout: fixed;        /* respect colgroup widths */
+  table-layout: auto;        /* respect colgroup widths */
   border-collapse: collapse;
 }
 .metrics-table th,
