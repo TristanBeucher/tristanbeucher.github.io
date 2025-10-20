@@ -19,3 +19,16 @@
 .mw-carousel__dot { width:.6rem; height:.6rem; border-radius:999px; border:none; background:#c9c9c9; cursor:pointer; }
 .mw-carousel__dot[aria-selected="true"] { background:#555; }
 /* === /Carousel === */
+
+.note {
+  border-left: 4px solid #007acc;
+  background: #f8faff;
+  padding: 1rem 1.25rem;
+  margin: 1.2rem 0;
+  border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+.note h4, .note h3 {
+  margin-top: 0;
+  color: #004b8d;
+}
