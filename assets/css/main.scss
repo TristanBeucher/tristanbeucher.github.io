@@ -35,13 +35,24 @@
   border-left-color: #005fa3;
 }
 
-.markdown-body table {
+/* make tables read nicely */
+.metrics-table {
   width: 100%;
-  table-layout: fixed;
+  table-layout: fixed;        /* respect colgroup widths */
+  border-collapse: collapse;
 }
-.markdown-body table th:nth-child(1),
-.markdown-body table td:nth-child(1) { width: 26%; white-space: nowrap; }
-.markdown-body table th:nth-child(2),
-.markdown-body table td:nth-child(2) { width: 74%; word-break: break-word; hyphens: auto; }
+.metrics-table th,
+.metrics-table td {
+  padding: .5rem .6rem;
+  vertical-align: top;
+}
+.metrics-table td:first-child {
+  white-space: nowrap;        /* keep short metric labels on one line */
+}
+.metrics-table td,
+.metrics-table th {
+  word-break: break-word;     /* wrap long text safely */
+  hyphens: auto;
+}
 
 
