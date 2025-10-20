@@ -38,16 +38,16 @@ Once the 2025 price scenarios are simulated, I need a way to check how realistic
 
 <div class="metrics-list">
   <dl>
-    <dt><strong>coverage at 50%</strong></dt>
+    <dt><strong>Coverage at 50% :</strong></dt>
     <dd>Fraction of real daily prices that fall within the 50% central interval of simulated prices.</dd>
 
-    <dt><strong>coverage at 90%</strong></dt>
+    <dt><strong>Coverage at 90% :</strong></dt>
     <dd>Fraction of real prices within the 90% prediction interval.</dd>
 
-    <dt><strong>tails</strong></dt>
+    <dt><strong>Tails :</strong></dt>
     <dd>Frequency of extreme values in simulated scenarios. Compares the percentage of negative and >200% mean values with actuals.</dd>
 
-    <dt><strong>mean CRPS</strong></dt>
+    <dt><strong>Mean CRPS :</strong></dt>
     <dd>Continuous Ranked Probability Score, which measures how close the forecast distribution is to reality. Lower is better.</dd>
     
   </dl>
@@ -235,40 +235,24 @@ This simple recursion stabilizes the set of detected jumps and gives us a robust
 
 Once the list of jumps is stable, we summarize the results:
 
-<table>
-  <colgroup>
-    <col width="28%">
-    <col width="72%">
-  </colgroup>
-  <thead>
-    <tr>
-      <th>Metric</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Count</strong></td>
-      <td>Total number of jumps detected.</td>
-    </tr>
-    <tr>
-      <td><strong>Frequency</strong></td>
-      <td>Average number of jumps per year.</td>
-    </tr>
-    <tr>
-      <td><strong>Mean amplitude</strong></td>
-      <td>Average jump size (in €/MWh).</td>
-    </tr>
-    <tr>
-      <td><strong>Mean positive jump</strong></td>
-      <td>Average magnitude of upward jumps.</td>
-    </tr>
-    <tr>
-      <td><strong>Mean negative jump</strong></td>
-      <td>Average magnitude of downward jumps.</td>
-    </tr>
-  </tbody>
-</table>
+<div class="metrics-list">
+  <dl>
+    <dt><strong>Count</strong></dt>
+    <dd>Total number of jumps detected.</dd>
+
+    <dt><strong>Frequency :</strong></dt>
+    <dd>Average number of jumps per year.</dd>
+
+    <dt><strong>Mean amplitude :</strong></dt>
+    <dd>Average jump size (in €/MWh).</dd>
+
+    <dt><strong>Mean positive jump :</strong></dt>
+    <dd>Average magnitude of upward jumps.</dd>
+
+    <dt><strong>Mean negative jump :</strong></dt>
+    <dd>Average magnitude of downward jumps.</dd>
+  </dl>
+</div>
 
 In the end, this procedure gives us an empirical **jump intensity (λ)** and **jump size distribution**, which will feed directly into our stochastic model for price simulation.
 
@@ -341,53 +325,7 @@ Intuitively, this captures the idea that:
 
 ### 3️⃣ Residual-Load– and Season–Dependent Volatility
 
-Finally, I extended the idea by combining **residual load** and **seasonality**.  I created bins by both load level and season, giving parameters of the form:
-
-<table>
-  <colgroup>
-    <col width="28%">
-    <col width="24%">
-    <col width="24%">
-    <col width="24%">
-  </colgroup>
-  <thead>
-    <tr>
-      <th>Season</th>
-      <th>RL Low</th>
-      <th>RL Medium</th>
-      <th>RL High</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Winter</strong></td>
-      <td>σ₁</td>
-      <td>σ₂</td>
-      <td>σ₃</td>
-    </tr>
-    <tr>
-      <td><strong>Spring</strong></td>
-      <td>σ₄</td>
-      <td>σ₅</td>
-      <td>σ₆</td>
-    </tr>
-    <tr>
-      <td><strong>Summer</strong></td>
-      <td>σ₇</td>
-      <td>σ₈</td>
-      <td>σ₉</td>
-    </tr>
-    <tr>
-      <td><strong>Autumn</strong></td>
-      <td>σ₁₀</td>
-      <td>σ₁₁</td>
-      <td>σ₁₂</td>
-    </tr>
-  </tbody>
-</table>
-
-
-This approach remains simple but more realistic:  
+Finally, I extended the idea by combining **residual load** and **seasonality** and I created bins by both load level and season. This approach remains simple but more realistic:  
 - It acknowledges that **volatility structure changes throughout the year**,  
 - And that **tight system margins amplify price dispersion**.
 
@@ -421,52 +359,33 @@ Qualitatively:
 
 ### Evaluation Metrics
 
-<table>
-  <colgroup>
-    <col width="24%">
-    <col width="56%">
-    <col width="20%">
-  </colgroup>
-  <thead>
-    <tr>
-      <th>Metric</th>
-      <th>Meaning</th>
-      <th>Value</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>n_overlap_days</strong></td>
-      <td>Number of days overlapping between simulation and actual data.</td>
-      <td>196</td>
-    </tr>
-    <tr>
-      <td><strong>coverage_50pct</strong></td>
-      <td>Fraction of actual prices within the 50% prediction band.</td>
-      <td>0.51</td>
-    </tr>
-    <tr>
-      <td><strong>coverage_90pct</strong></td>
-      <td>Fraction within the 90% prediction band.</td>
-      <td>0.90</td>
-    </tr>
-    <tr>
-      <td><strong>mean_CRPS</strong></td>
-      <td>Continuous Ranked Probability Score (lower = better).</td>
-      <td>15.95</td>
-    </tr>
-    <tr>
-      <td><strong>tails_actual</strong></td>
-      <td>Share of real data in extreme zones:<br>1.0% negative, 0.5% &gt; 200%, 0% &gt; 300%.</td>
-      <td>—</td>
-    </tr>
-    <tr>
-      <td><strong>tails_sim_mean</strong></td>
-      <td>Share of simulated data in same zones:<br>5.0% negative, 1.4% &gt; 200%, 0.01% &gt; 300%.</td>
-      <td>—</td>
-    </tr>
-  </tbody>
-</table>
+<div class="metrics-list">
+  <dl>
+    <dt><strong>Overlap days</strong> — <em>196</em></dt>
+    <dd>Number of days overlapping between simulation and actual data.</dd>
+
+    <dt><strong>Coverage at 50%</strong> — <em>0.51</em></dt>
+    <dd>Fraction of actual prices within the 50% prediction band.</dd>
+
+    <dt><strong>Coverage at 90%</strong> — <em>0.90</em></dt>
+    <dd>Fraction within the 90% prediction band.</dd>
+
+    <dt><strong>Mean CRPS</strong> — <em>15.95</em></dt>
+    <dd>Continuous Ranked Probability Score (lower = better).</dd>
+
+    <dt><strong>Tails actual</strong> — <em>—</em></dt>
+    <dd>
+      Share of real data in extreme zones:<br>
+      1.0% negative, 0.5% &gt; 200%, 0% &gt; 300%.
+    </dd>
+
+    <dt><strong>Tails simulated</strong> — <em>—</em></dt>
+    <dd>
+      Share of simulated data in same zones:<br>
+      5.0% negative, 1.4% &gt; 200%, 0.01% &gt; 300%.
+    </dd>
+  </dl>
+</div>
 
 
 Interpretation:
@@ -482,41 +401,10 @@ Interpretation:
 
 ![Residuals analysis](images/simulating_spot_prices/monthly_coverage.png)
 
-
-<table>
-  <colgroup>
-    <col width="28%">
-    <col width="24%">
-    <col width="24%">
-    <col width="24%">
-  </colgroup>
-  <thead>
-    <tr>
-      <th>Month</th>
-      <th style="text-align: right;">cov50</th>
-      <th style="text-align: right;">cov90</th>
-      <th style="text-align: right;">n (days)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr><td><strong>Jan</strong></td><td style="text-align: right;">0.52</td><td style="text-align: right;">0.70</td><td style="text-align: right;">23</td></tr>
-    <tr><td><strong>Feb</strong></td><td style="text-align: right;">0.50</td><td style="text-align: right;">0.95</td><td style="text-align: right;">20</td></tr>
-    <tr><td><strong>Mar</strong></td><td style="text-align: right;">0.52</td><td style="text-align: right;">0.71</td><td style="text-align: right;">21</td></tr>
-    <tr><td><strong>Apr</strong></td><td style="text-align: right;">0.55</td><td style="text-align: right;">1.00</td><td style="text-align: right;">22</td></tr>
-    <tr><td><strong>May</strong></td><td style="text-align: right;">0.68</td><td style="text-align: right;">0.95</td><td style="text-align: right;">22</td></tr>
-    <tr><td><strong>Jun</strong></td><td style="text-align: right;">0.48</td><td style="text-align: right;">0.95</td><td style="text-align: right;">21</td></tr>
-    <tr><td><strong>Jul</strong></td><td style="text-align: right;">0.43</td><td style="text-align: right;">0.91</td><td style="text-align: right;">23</td></tr>
-    <tr><td><strong>Aug</strong></td><td style="text-align: right;">0.38</td><td style="text-align: right;">0.95</td><td style="text-align: right;">21</td></tr>
-    <tr><td><strong>Sep</strong></td><td style="text-align: right;">0.45</td><td style="text-align: right;">0.95</td><td style="text-align: right;">22</td></tr>
-  </tbody>
-</table>
-
-
 Monthly coverage confirms that:
 - The model performs **best in spring (April–May)** where volatility is moderate and well-learned from history.  
 - **Summer months (July–August)** show undercoverage — simulated bands are too narrow compared to actual volatility.  
 - Winter (January–February) remains well-calibrated despite larger jumps.
-
 
 
 Overall, this first version of the jump-diffusion simulation manages to reproduce the main structure and variability of **2025 daily peak prices**, using only **historical patterns**, **residual load**, and **minimal market assumptions**.
