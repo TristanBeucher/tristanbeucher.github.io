@@ -38,8 +38,8 @@ Once the 2025 price scenarios are simulated, I need a way to check how realistic
 
 <table>
   <colgroup>
-    <col width="26%">
-    <col width="74%">
+    <col width="76%">
+    <col width="24%">
   </colgroup>
   <thead>
     <tr><th>Metric</th><th>Meaning</th></tr>
@@ -64,29 +64,6 @@ Once the 2025 price scenarios are simulated, I need a way to check how realistic
   </tbody>
 </table>
 
-<table>
-<colgroup>
-<col width="30%" />
-<col width="70%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td markdown="span">First column **fields**</td>
-<td markdown="span">Some descriptive text. This is a markdown link to [Google](http://google.com). Or see [some link][mydoc_tags].</td>
-</tr>
-<tr>
-<td markdown="span">Second column **fields**</td>
-<td markdown="span">Some more descriptive text.
-</td>
-</tr>
-</tbody>
-</table>
 
 Together, these metrics help me assess whether the simulated distribution:
 - Covers real-world variability (via the **coverage ratios**),
