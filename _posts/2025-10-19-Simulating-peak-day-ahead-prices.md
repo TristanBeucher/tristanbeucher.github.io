@@ -36,36 +36,22 @@ By the end of this article, I’ll have generated between 1,000 and 10,000 scena
 
 Once the 2025 price scenarios are simulated, I need a way to check how realistic they are compared to the actual 2025 data (up to October). Below are the metrics I use to evaluate this consistency:
 
-<table>
-  <colgroup>
-    <col width="76%">
-    <col width="24%">
-  </colgroup>
-<thead>
-<tr class="header">
-<th>Metrics</th>
-<th>Description</th>
-</tr>
-</thead>
-  <tbody>
-    <tr>
-      <td markdown="span"><strong>coverage at 50%</strong></td>
-      <td markdown="span">Fraction of real daily prices that fall within the 50% central interval of simulated prices.</td>
-    </tr>
-    <tr>
-      <td markdown="span"><strong>coverage at 90%</strong></td>
-      <td markdown="span">Fraction of real prices within the 90% prediction interval.</td>
-    </tr>
-    <tr>
-      <td markdown="span"><strong>tails</strong></td>
-      <td markdown="span">Frequency of extreme values in simulated scenarios. Compares the percentage of negative and &gt;200% mean values with actuals.</td>
-    </tr>
-    <tr>
-      <td markdown="span"><strong>mean CRPS</strong></td>
-      <td markdown="span">Continuous Ranked Probability Score, which measures how close the forecast distribution is to reality. Lower is better.</td>
-    </tr>
-  </tbody>
-</table>
+<div class="metrics-list">
+  <dl>
+    <dt><strong>coverage at 50%</strong></dt>
+    <dd>Fraction of real daily prices that fall within the 50% central interval of simulated prices.</dd>
+
+    <dt><strong>coverage at 90%</strong></dt>
+    <dd>Fraction of real prices within the 90% prediction interval.</dd>
+
+    <dt><strong>tails</strong></dt>
+    <dd>Frequency of extreme values in simulated scenarios. Compares the percentage of negative and >200% mean values with actuals.</dd>
+
+    <dt><strong>mean CRPS</strong></dt>
+    <dd>Continuous Ranked Probability Score, which measures how close the forecast distribution is to reality. Lower is better.</dd>
+    
+  </dl>
+</div>
 
 
 Together, these metrics help me assess whether the simulated distribution:
