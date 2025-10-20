@@ -114,12 +114,12 @@ This bivariate term helps capture the **slow market trends** and **seasonal vari
 
 The model produces well-centered residuals (mean is around 0). The ±2$$\sigma$$ band (~±32 €/MWh) looks relatively stable, though some bursts of volatility appear (notably winter 2023–24), and the residual spread seems narrower in spring/summer. This suggests heteroskedasticity and we'll try to manage that later in this article through the modelisation of volatility.
 
-There is also a weak autocorrelation but no structural drift. The histogram is roughly bell-shaped but shows a slightly left-skewed (more negative residuals) and Heavy tails, especially on the right (occasional high positive spikes). These phenomenon are typical for power prices: rare upward shocks (“price jumps”) and smoother negative deviations.
+There is also a weak autocorrelation but no structural drift. The histogram is roughly bell-shaped but shows a slightly left-skewed (more negative residuals) and heavy tails, especially on the right (occasional high positive spikes). These phenomenon are typical for power prices: rare upward shocks (“price jumps”) and smoother negative deviations.
 
 
 ### Extending the GAM Temporal Term
 
-In the GAM model, I have a **smooth term for Month × Year**. But since 2025 was not part of the training set, I had to **extend** this term artificially.
+In the GAM model, I have a **smooth term for Month × Year**. But since 2025 was not part of the training set, I had to extend this term artificially.
 
 To do so, I reused the 2024 monthly pattern and **re-anchored** it so that each month’s average corresponds to **December-24 forward prices** (the last available futures quotations). This ensures the model remains consistent with the forward curve at the time of calibration. 
 
@@ -204,7 +204,7 @@ $$
 z_t = \frac{\Delta x_t - \bar{\Delta x}}{\sigma_{\Delta x}}
 $$
 
-Since the mean innovation is typically close to 0, this z-score tells us how many standard deviations away from “normal” each daily change is. If $$|z_t|$$ exceeds a threshold $$ c $$ (for instance, $$ c = 3 $$), we count that day as a **jump**.
+Since the mean innovation is typically close to 0, this z-score tells us how many standard deviations away from “normal” each daily change is. If $$\lvert z_t \rvert$$ exceeds a threshold $$ c $$ (for instance, $$ c = 3 $$), we count that day as a **jump**. $$ c = 3 $$ is often chosen and if the innovation follows a normal law, then 99,87% of the values will have $$\lvert z_t \rvert > 3\sigma $$. For this use case, I prefer a lower threshold and choose $$ c = 2,5 $$.
 
 
 ### 3️⃣ Refining the Standard Deviation (Recursive Filtering)
@@ -215,7 +215,7 @@ To correct for that, we use a **recursive filtering** approach:
 
 1. Compute mean and standard deviation on the **clean** set (excluding detected jumps).  
 2. Recalculate z-scores for all points.  
-3. Identify new jumps ($$|z_t| > c \times \sigma_{\text{clean}}$$).  
+3. Identify new jumps ($$ \lvert z_t \rvert > c \times \sigma_{\text{clean}}$$).  
 4. Repeat until the list of jump days stops changing.
 
 This simple recursion stabilizes the set of detected jumps and gives us a robust estimate of volatility and extreme moves.
