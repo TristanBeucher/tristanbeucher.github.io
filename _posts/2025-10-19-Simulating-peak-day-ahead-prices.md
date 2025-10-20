@@ -43,7 +43,6 @@ Once the 2025 price scenarios are simulated, I need a way to check how realistic
 | **tails** | Frequency of extreme values in simulated scenarios. Compares the percentage of negative and >200% mean values with actuals. |
 | **mean CRPS** | Continuous Ranked Probability Score, which measures how close the forecast distribution is to reality. Lower is better. |
 
----
 
 Together, these metrics help me assess whether the simulated distribution:
 - Covers real-world variability (via the **coverage ratios**),
@@ -79,7 +78,6 @@ First, let’s create the **baseline**.  It must capture the underlying **season
 
 It seems we have a good fit. I used a **Generalized Additive Model (GAM)** to fit prices as a smooth, non-linear function of residual load.
 
----
 
 #### A Note on the GAM Model
 
@@ -96,7 +94,6 @@ Intuitively:
 - GAMs are ideal when you don’t know the exact functional form between variables (for example, how much a price changes when residual load increases).  
 - They capture **non-linearities** without overfitting, which is perfect for electricity prices that often follow complex, threshold-based behaviors.
 
----
 
 ### Adding Time Effects
 
@@ -112,7 +109,6 @@ This bivariate term helps capture the **slow market trends** and **seasonal vari
 
 The model produces nice residuals and we’ll make good use of them later.
 
----
 
 ### From Baseline to Simulation
 
@@ -120,6 +116,7 @@ Past residual loads are behind us, and our baseline is now set. But we don’t y
 
 Simple: we’ll **simulate residual load** next.
 
+---
 
 ## Simulating Residual Load Scenarios
 
@@ -180,12 +177,14 @@ The result is a set of 200 realistic 2025 residual load trajectories — each pr
 
 *(PLOT — simulated RL quantiles vs. actual 2025 if available)*
 
+---
+
 
 ## Modeling the Jumps
 
 Jumps are a key component of our scenarios, and we need to calibrate both their **frequency** and **intensity**. To do that, I use a method called **Recursive Jump Filtering**.
 
----
+
 
 ### 1️⃣ From Residuals to Innovations
 
@@ -235,7 +234,7 @@ Once the list of jumps is stable, we summarize the results:
 | **Mean positive jump** | Average magnitude of upward jumps |
 | **Mean negative jump** | Average magnitude of downward jumps |
 
----
+
 
 In the end, this procedure gives us an empirical **jump intensity (λ)** and **jump size distribution**, which will feed directly into our stochastic model for price simulation.
 
@@ -270,7 +269,7 @@ where:
    t_{1/2} = \frac{\ln(2)}{\alpha}
    $$
 
----
+
 
 ### Example Output
 
@@ -324,12 +323,13 @@ This approach remains simple but more realistic:
 - It acknowledges that **volatility structure changes throughout the year**,  
 - And that **tight system margins amplify price dispersion**.
 
----
+
 
 I preferred this last method — it’s still rudimentary, but it gives a more credible description of how volatility behaves in power markets.
 
 *(PLOT — estimated volatility vs residual load and season)*
 
+---
 
 ## Simulation on 2025
 
@@ -342,7 +342,6 @@ No more suspense — here is the visualization:
 *(PLOT — Actual vs. Simulated Fan Chart)*
 
 
----
 
 ### Reading the Fan Chart
 
@@ -358,7 +357,7 @@ Qualitatively:
 - The **fan width** expands from spring to winter, consistent with increasing market uncertainty.  
 - Overall, the model seems to reproduce both the trend and the scale of variability reasonably well.
 
----
+
 
 ### Evaluation Metrics
 
@@ -378,7 +377,7 @@ Interpretation:
 - The **tails** show that the model slightly **overestimates negative price events** (5% vs 1%) but captures upward spikes reasonably well.  
   This is expected since jumps were calibrated conservatively.
 
----
+
 
 ### Coverage by Month
 
@@ -399,7 +398,7 @@ Monthly coverage confirms that:
 - **Summer months (July–August)** show undercoverage — simulated bands are too narrow compared to actual volatility.  
 - Winter (January–February) remains well-calibrated despite larger jumps.
 
----
+
 
 Overall, this first version of the jump-diffusion simulation manages to reproduce the main structure and variability of **2025 daily peak prices**, using only **historical patterns**, **residual load**, and **minimal market assumptions**.
 
