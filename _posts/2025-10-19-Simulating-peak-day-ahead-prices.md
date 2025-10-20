@@ -1,4 +1,4 @@
-Two weeks ago, I shared an article about how **Jump Diffusion models** can be used to simulate power prices. You can read it here → [*previous article placeholder link*](/path/to/first-article).
+Two weeks ago, I shared an article about how **Jump Diffusion models** can be used to simulate power prices. You can read it here → [*Simulating spot prices with jump diffusion model*](2025-09-27-Simulating-electricity-spot-prices-with-jump-diffusion-model.md).
 
 I received more feedback than expected, so now I have to commit to what I promised: explaining how I’d calibrate such a model.
 
