@@ -245,13 +245,40 @@ This simple recursion stabilizes the set of detected jumps and gives us a robust
 
 Once the list of jumps is stable, we summarize the results:
 
-| Metric | Description |
-|:--|:--|
-| **Count** | Total number of jumps detected |
-| **Frequency** | Average number of jumps per year |
-| **Mean amplitude** | Average jump size (in €/MWh) |
-| **Mean positive jump** | Average magnitude of upward jumps |
-| **Mean negative jump** | Average magnitude of downward jumps |
+<table class="metrics-table">
+  <colgroup>
+    <col style="width: 28%">
+    <col style="width: 72%">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Count</strong></td>
+      <td>Total number of jumps detected.</td>
+    </tr>
+    <tr>
+      <td><strong>Frequency</strong></td>
+      <td>Average number of jumps per year.</td>
+    </tr>
+    <tr>
+      <td><strong>Mean amplitude</strong></td>
+      <td>Average jump size (in €/MWh).</td>
+    </tr>
+    <tr>
+      <td><strong>Mean positive jump</strong></td>
+      <td>Average magnitude of upward jumps.</td>
+    </tr>
+    <tr>
+      <td><strong>Mean negative jump</strong></td>
+      <td>Average magnitude of downward jumps.</td>
+    </tr>
+  </tbody>
+</table>
 
 In the end, this procedure gives us an empirical **jump intensity (λ)** and **jump size distribution**, which will feed directly into our stochastic model for price simulation.
 
@@ -326,12 +353,49 @@ Intuitively, this captures the idea that:
 
 Finally, I extended the idea by combining **residual load** and **seasonality**.  I created bins by both load level and season, giving parameters of the form:
 
-| Season | RL Low | RL Medium | RL High |
-|:--|:--:|:--:|:--:|
-| **Winter** | σ₁ | σ₂ | σ₃ |
-| **Spring** | σ₄ | σ₅ | σ₆ |
-| **Summer** | σ₇ | σ₈ | σ₉ |
-| **Autumn** | σ₁₀ | σ₁₁ | σ₁₂ |
+<table class="metrics-table">
+  <colgroup>
+    <col style="width: 28%">
+    <col style="width: 24%">
+    <col style="width: 24%">
+    <col style="width: 24%">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Season</th>
+      <th>RL Low</th>
+      <th>RL Medium</th>
+      <th>RL High</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Winter</strong></td>
+      <td>σ₁</td>
+      <td>σ₂</td>
+      <td>σ₃</td>
+    </tr>
+    <tr>
+      <td><strong>Spring</strong></td>
+      <td>σ₄</td>
+      <td>σ₅</td>
+      <td>σ₆</td>
+    </tr>
+    <tr>
+      <td><strong>Summer</strong></td>
+      <td>σ₇</td>
+      <td>σ₈</td>
+      <td>σ₉</td>
+    </tr>
+    <tr>
+      <td><strong>Autumn</strong></td>
+      <td>σ₁₀</td>
+      <td>σ₁₁</td>
+      <td>σ₁₂</td>
+    </tr>
+  </tbody>
+</table>
+
 
 This approach remains simple but more realistic:  
 - It acknowledges that **volatility structure changes throughout the year**,  
@@ -367,14 +431,53 @@ Qualitatively:
 
 ### Evaluation Metrics
 
-| Metric | Meaning | Value |
-|:--|:--|:--:|
-| **n_overlap_days** | Number of days overlapping between simulation and actual data | 196 |
-| **coverage_50pct** | Fraction of actual prices within the 50% prediction band | 0.51 |
-| **coverage_90pct** | Fraction within the 90% prediction band | 0.90 |
-| **mean_CRPS** | Continuous Ranked Probability Score (lower = better) | 15.95 |
-| **tails_actual** | Share of real data in extreme zones:<br>1.0% negative, 0.5% > 200%, 0% > 300% | — |
-| **tails_sim_mean** | Share of simulated data in same zones:<br>5.0% negative, 1.4% > 200%, 0.01% > 300% | — |
+<table class="metrics-table">
+  <colgroup>
+    <col style="width: 24%">
+    <col style="width: 56%">
+    <col style="width: 20%">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th>Meaning</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>n_overlap_days</strong></td>
+      <td>Number of days overlapping between simulation and actual data.</td>
+      <td>196</td>
+    </tr>
+    <tr>
+      <td><strong>coverage_50pct</strong></td>
+      <td>Fraction of actual prices within the 50% prediction band.</td>
+      <td>0.51</td>
+    </tr>
+    <tr>
+      <td><strong>coverage_90pct</strong></td>
+      <td>Fraction within the 90% prediction band.</td>
+      <td>0.90</td>
+    </tr>
+    <tr>
+      <td><strong>mean_CRPS</strong></td>
+      <td>Continuous Ranked Probability Score (lower = better).</td>
+      <td>15.95</td>
+    </tr>
+    <tr>
+      <td><strong>tails_actual</strong></td>
+      <td>Share of real data in extreme zones:<br>1.0% negative, 0.5% &gt; 200%, 0% &gt; 300%.</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><strong>tails_sim_mean</strong></td>
+      <td>Share of simulated data in same zones:<br>5.0% negative, 1.4% &gt; 200%, 0.01% &gt; 300%.</td>
+      <td>—</td>
+    </tr>
+  </tbody>
+</table>
+
 
 Interpretation:
 - The **90% coverage** close to 0.9 indicates that simulated price distributions are well-calibrated — they encompass most real outcomes.  
@@ -390,17 +493,34 @@ Interpretation:
 ![Residuals analysis](images/simulating_spot_prices/monthly_coverage.png)
 
 
-| Month | cov50 | cov90 | n (days) |
-|:--|--:|--:|--:|
-| Jan | 0.52 | 0.70 | 23 |
-| Feb | 0.50 | 0.95 | 20 |
-| Mar | 0.52 | 0.71 | 21 |
-| Apr | 0.55 | 1.00 | 22 |
-| May | 0.68 | 0.95 | 22 |
-| Jun | 0.48 | 0.95 | 21 |
-| Jul | 0.43 | 0.91 | 23 |
-| Aug | 0.38 | 0.95 | 21 |
-| Sep | 0.45 | 0.95 | 22 |
+<table class="metrics-table">
+  <colgroup>
+    <col style="width: 28%">
+    <col style="width: 24%">
+    <col style="width: 24%">
+    <col style="width: 24%">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Month</th>
+      <th style="text-align: right;">cov50</th>
+      <th style="text-align: right;">cov90</th>
+      <th style="text-align: right;">n (days)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Jan</strong></td><td style="text-align: right;">0.52</td><td style="text-align: right;">0.70</td><td style="text-align: right;">23</td></tr>
+    <tr><td><strong>Feb</strong></td><td style="text-align: right;">0.50</td><td style="text-align: right;">0.95</td><td style="text-align: right;">20</td></tr>
+    <tr><td><strong>Mar</strong></td><td style="text-align: right;">0.52</td><td style="text-align: right;">0.71</td><td style="text-align: right;">21</td></tr>
+    <tr><td><strong>Apr</strong></td><td style="text-align: right;">0.55</td><td style="text-align: right;">1.00</td><td style="text-align: right;">22</td></tr>
+    <tr><td><strong>May</strong></td><td style="text-align: right;">0.68</td><td style="text-align: right;">0.95</td><td style="text-align: right;">22</td></tr>
+    <tr><td><strong>Jun</strong></td><td style="text-align: right;">0.48</td><td style="text-align: right;">0.95</td><td style="text-align: right;">21</td></tr>
+    <tr><td><strong>Jul</strong></td><td style="text-align: right;">0.43</td><td style="text-align: right;">0.91</td><td style="text-align: right;">23</td></tr>
+    <tr><td><strong>Aug</strong></td><td style="text-align: right;">0.38</td><td style="text-align: right;">0.95</td><td style="text-align: right;">21</td></tr>
+    <tr><td><strong>Sep</strong></td><td style="text-align: right;">0.45</td><td style="text-align: right;">0.95</td><td style="text-align: right;">22</td></tr>
+  </tbody>
+</table>
+
 
 Monthly coverage confirms that:
 - The model performs **best in spring (April–May)** where volatility is moderate and well-learned from history.  
