@@ -41,25 +41,28 @@ Once the 2025 price scenarios are simulated, I need a way to check how realistic
     <col width="76%">
     <col width="24%">
   </colgroup>
-  <thead>
-    <tr><th>Metric</th><th>Meaning</th></tr>
-  </thead>
+<thead>
+<tr class="header">
+<th>Metrics</th>
+<th>Description</th>
+</tr>
+</thead>
   <tbody>
     <tr>
-      <td><strong>coverage at 50%</strong></td>
-      <td>Fraction of real daily prices that fall within the 50% central interval of simulated prices.</td>
+      <td markdown="span"><strong>coverage at 50%</strong></td>
+      <td markdown="span">Fraction of real daily prices that fall within the 50% central interval of simulated prices.</td>
     </tr>
     <tr>
-      <td><strong>coverage at 90%</strong></td>
-      <td>Fraction of real prices within the 90% prediction interval.</td>
+      <td markdown="span"><strong>coverage at 90%</strong></td>
+      <td markdown="span">Fraction of real prices within the 90% prediction interval.</td>
     </tr>
     <tr>
-      <td><strong>tails</strong></td>
-      <td>Frequency of extreme values in simulated scenarios. Compares the percentage of negative and &gt;200% mean values with actuals.</td>
+      <td markdown="span"><strong>tails</strong></td>
+      <td markdown="span">Frequency of extreme values in simulated scenarios. Compares the percentage of negative and &gt;200% mean values with actuals.</td>
     </tr>
     <tr>
-      <td><strong>mean CRPS</strong></td>
-      <td>Continuous Ranked Probability Score, which measures how close the forecast distribution is to reality. Lower is better.</td>
+      <td markdown="span"><strong>mean CRPS</strong></td>
+      <td markdown="span">Continuous Ranked Probability Score, which measures how close the forecast distribution is to reality. Lower is better.</td>
     </tr>
   </tbody>
 </table>
