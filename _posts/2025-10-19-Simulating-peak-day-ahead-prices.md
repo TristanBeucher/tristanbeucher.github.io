@@ -49,19 +49,17 @@ Together, these metrics help me assess whether the simulated distribution:
 - Handles extreme events realistically (via the **tails**),
 - And stays statistically close to observed prices (via the **CRPS**).
 
-{: .note}
+<div class="note" markdown="1">
 
 #### 🧠 A Note on the CRPS
 
-{: .note}
-
-Mathematically, the **Continuous Ranked Probability Score (CRPS)** for a forecast distribution $$ F $$ and an observed value $$ x $$ is defined as:
+Mathematically, the **Continuous Ranked Probability Score (CRPS)** for a forecast distribution \( F \) and an observed value \( x \) is defined as:
 
 $$
-\text{CRPS}(F, x) = \int_{-\infty}^{+\infty} \big( F(y) - \mathbf{1}\{y \ge x\} \big)^2 \, dy
+\text{CRPS}(F, x) = \int_{-\infty}^{+\infty} (F(y) - 1\{y \ge x\})^2 \, dy
 $$
 
-where $$ F(y) $$ is the cumulative distribution function (CDF) of the forecast and $$ \mathbf{1}\{y \ge x\} $$ is the indicator of whether $$ y $$ exceeds the observed value.
+where \( F(y) \) is the cumulative distribution function (CDF) of the forecast and \( 1\{y \ge x\} \) is the indicator of whether \( y \) exceeds the observed value.
 
 Intuitively:
 - CRPS measures how far the predicted **distribution** is from the **reality** at each possible value of the variable.
@@ -69,6 +67,8 @@ Intuitively:
 - Wider or misplaced distributions (too much uncertainty or bias) increase the CRPS.
 
 It can be seen as the probabilistic analogue of the **Mean Absolute Error (MAE)** — but instead of comparing single predictions to single outcomes, it compares **entire forecast distributions** to the actual realization.
+
+</div>
 
 ---
 
