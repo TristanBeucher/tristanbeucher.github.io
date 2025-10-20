@@ -78,7 +78,7 @@ It can be seen as the probabilistic analogue of the **Mean Absolute Error (MAE)*
 
 First, let’s create the **baseline**.  It must capture the underlying **seasonality** of power prices — and my assumption is that **residual load (RL)** can represent this seasonality quite well. I started by fitting a model between **residual load** and **daily peak prices**.
 
-*(PLOT — residual load vs. price with fitted curve)*
+![RL vs prices](images/simulating_spot_prices/rl_vs_price_timeseries.png)
 
 It seems we have a good fit. I used a **Generalized Additive Model (GAM)** to fit prices as a smooth, non-linear function of residual load.
 
@@ -113,7 +113,7 @@ $$
 
 This bivariate term helps capture the **slow market trends** and **seasonal variations** not explained by load alone.
 
-*(PLOT — fitted vs. observed prices or residuals)*
+![Residuals analysis](images/simulating_spot_prices/residuals_diagnostics.png)
 
 The model produces nice residuals and we’ll make good use of them later.
 
@@ -179,7 +179,7 @@ Importantly, this adjustment is implemented as a **downward dispersion**, not a 
 
 The result is a set of 200 realistic 2025 residual load trajectories — each preserving historical patterns, incorporating plausible uncertainty, and aligned with market fundamentals.
 
-*(PLOT — simulated RL quantiles vs. actual 2025 if available)*
+![RL sim quantiles](images/simulating_spot_prices/rl_sim_quantiles.png)
 
 ---
 
@@ -240,8 +240,6 @@ Once the list of jumps is stable, we summarize the results:
 
 In the end, this procedure gives us an empirical **jump intensity (λ)** and **jump size distribution**, which will feed directly into our stochastic model for price simulation.
 
-*(PLOT — histogram of innovations + threshold lines for jump detection)*
-
 ---
 
 ## Mean Reversion Calibration
@@ -289,7 +287,6 @@ This tells us that deviations from the mean typically fade by half within **abou
 Volatility is, in my opinion, the most complex part of the model. I experimented with three different methods before settling on the one that felt most realistic.
 
 
-
 ### 1️⃣ Naive Yearly Volatility
 
 The simplest approach is to compute a **single volatility parameter** from the residuals observed in **2023–2024**.  
@@ -327,8 +324,6 @@ This approach remains simple but more realistic:
 
 I preferred this last method — it’s still rudimentary, but it gives a more credible description of how volatility behaves in power markets.
 
-*(PLOT — estimated volatility vs residual load and season)*
-
 ---
 
 ## Simulation on 2025
@@ -337,8 +332,7 @@ With the bootstrap method, we have created **200 residual load scenarios** for 2
 
 Finally, we compared the simulated prices with **actual 2025 daily peak prices** (available up to October). No more suspense — here is the visualization:
 
-*(PLOT — Actual vs. Simulated Fan Chart)*
-
+![Fan chart](images/simulating_spot_prices/fan_chart.png)
 
 
 ### Reading the Fan Chart
@@ -377,6 +371,9 @@ Interpretation:
 
 
 ### Coverage by Month
+
+![Residuals analysis](images/simulating_spot_prices/monthly_coverage.png)
+
 
 | Month | cov50 | cov90 | n (days) |
 |:--|--:|--:|--:|
