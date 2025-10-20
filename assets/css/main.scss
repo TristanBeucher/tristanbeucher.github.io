@@ -35,24 +35,6 @@
   border-left-color: #005fa3;
 }
 
-/* make tables read nicely */
-.metrics-table {
-  width: 100%;
-  table-layout: auto;        /* respect colgroup widths */
-  border-collapse: collapse;
-}
-.metrics-table th,
-.metrics-table td {
-  padding: .5rem .6rem;
-  vertical-align: top;
-}
-.metrics-table td:first-child {
-  white-space: nowrap;        /* keep short metric labels on one line */
-}
-.metrics-table td,
-.metrics-table th {
-  word-break: break-word;     /* wrap long text safely */
-  hyphens: auto;
-}
+
 
 
