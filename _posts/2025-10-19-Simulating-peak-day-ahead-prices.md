@@ -118,6 +118,13 @@ This bivariate term helps capture the **slow market trends** and **seasonal vari
 The model produces nice residuals and we’ll make good use of them later.
 
 
+### Extending the GAM Temporal Term
+
+In the GAM model, I have a **smooth term for Month × Year**. But since 2025 was not part of the training set, I had to **extend** this term artificially.
+
+To do so, I reused the 2024 monthly pattern and **re-anchored** it so that each month’s average corresponds to **December-24 forward prices** (the last available futures quotations). This ensures the model remains consistent with the forward curve at the time of calibration. 
+
+
 ### From Baseline to Simulation
 
 Past residual loads are behind us, and our baseline is now set. But we don’t yet know the **residual load for 2025** then how can we generate our price scenarios?
@@ -128,11 +135,7 @@ Simple: we’ll **simulate residual load** next.
 
 ## Simulating Residual Load Scenarios
 
-To generate **2025 residual load (RL) scenarios**, I built a small simulation framework in Python that relies on three key ideas:  
-**(1)** resampling past patterns,  
-**(2)** inflating their variability,  
-and **(3)** adjusting the mean level to reflect 2025 expectations.
-
+To generate **2025 residual load (RL) scenarios**, I built a small simulation framework in Python that relies on three key ideas: **(1)** resampling past patterns, **(2)** inflating their variability, and **(3)** adjusting the mean level to reflect 2025 expectations.
 
 
 ### 1️⃣ Moving-Block Bootstrap
@@ -174,24 +177,15 @@ Importantly, this adjustment is implemented as a **downward dispersion**, not a 
 > This is a raw assumption that would deserve refinement in a future version (e.g. by explicitly modeling new solar capacity or demand elasticity).
 
 
-### 4️⃣ Extending the GAM Temporal Term
-
-In the initial GAM model (used to create the price baseline), I had a **smooth term for Month × Year**. But since 2025 was not part of the training set, I had to **extend** this term artificially.
-
-To do so, I reused the 2024 monthly pattern and **re-anchored** it so that each month’s average corresponds to **December-24 forward prices** (the last available futures quotations). This ensures the model remains consistent with the forward curve at the time of calibration. 
-
-
 The result is a set of 200 realistic 2025 residual load trajectories — each preserving historical patterns, incorporating plausible uncertainty, and aligned with market fundamentals.
 
 *(PLOT — simulated RL quantiles vs. actual 2025 if available)*
 
 ---
 
-
 ## Modeling the Jumps
 
 Jumps are a key component of our scenarios, and we need to calibrate both their **frequency** and **intensity**. To do that, I use a method called **Recursive Jump Filtering**.
-
 
 
 ### 1️⃣ From Residuals to Innovations
@@ -331,8 +325,6 @@ This approach remains simple but more realistic:
 - It acknowledges that **volatility structure changes throughout the year**,  
 - And that **tight system margins amplify price dispersion**.
 
-
-
 I preferred this last method — it’s still rudimentary, but it gives a more credible description of how volatility behaves in power markets.
 
 *(PLOT — estimated volatility vs residual load and season)*
@@ -343,9 +335,7 @@ I preferred this last method — it’s still rudimentary, but it gives a more c
 
 With the bootstrap method, we have created **200 residual load scenarios** for 2025. For each of these, we generated corresponding **price scenarios** using the parameters estimated in the previous sections (baseline, volatility, jumps).
 
-Finally, we compared the simulated prices with **actual 2025 daily peak prices** (available up to October).
-
-No more suspense — here is the visualization:
+Finally, we compared the simulated prices with **actual 2025 daily peak prices** (available up to October). No more suspense — here is the visualization:
 
 *(PLOT — Actual vs. Simulated Fan Chart)*
 
@@ -353,8 +343,7 @@ No more suspense — here is the visualization:
 
 ### Reading the Fan Chart
 
-The blue line represents the **median simulated price (P50)**.  
-The shaded areas correspond to:
+The blue line represents the **median simulated price (P50)**. The shaded areas correspond to:
 - **Light blue:** the 5th–95th percentile range (P5–P95),  
 - **Orange:** the 25th–75th percentile range (P25–P75),  
 - **Black line:** the **actual daily peak price** observed in 2025.
