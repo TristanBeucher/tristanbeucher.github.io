@@ -36,13 +36,33 @@ By the end of this article, I’ll have generated between 1,000 and 10,000 scena
 
 Once the 2025 price scenarios are simulated, I need a way to check how realistic they are compared to the actual 2025 data (up to October). Below are the metrics I use to evaluate this consistency:
 
-| Metric | Meaning |
-|:--|:--|
-| **coverage at 50%** | Fraction of real daily prices that fall within the 50% central interval of simulated prices. |
-| **coverage at 90%** | Fraction of real prices within the 90% prediction interval. |
-| **tails** | Frequency of extreme values in simulated scenarios. Compares the percentage of negative and >200% mean values with actuals. |
-| **mean CRPS** | Continuous Ranked Probability Score, which measures how close the forecast distribution is to reality. Lower is better. |
-
+<table class="metrics-table">
+  <colgroup>
+    <col style="width: 26%">
+    <col style="width: 74%">
+  </colgroup>
+  <thead>
+    <tr><th>Metric</th><th>Meaning</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>coverage at 50%</strong></td>
+      <td>Fraction of real daily prices that fall within the 50% central interval of simulated prices.</td>
+    </tr>
+    <tr>
+      <td><strong>coverage at 90%</strong></td>
+      <td>Fraction of real prices within the 90% prediction interval.</td>
+    </tr>
+    <tr>
+      <td><strong>tails</strong></td>
+      <td>Frequency of extreme values in simulated scenarios. Compares the percentage of negative and &gt;200% mean values with actuals.</td>
+    </tr>
+    <tr>
+      <td><strong>mean CRPS</strong></td>
+      <td>Continuous Ranked Probability Score, which measures how close the forecast distribution is to reality. Lower is better.</td>
+    </tr>
+  </tbody>
+</table>
 
 Together, these metrics help me assess whether the simulated distribution:
 - Covers real-world variability (via the **coverage ratios**),
