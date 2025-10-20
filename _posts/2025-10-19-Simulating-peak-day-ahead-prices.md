@@ -49,7 +49,7 @@ Together, these metrics help me assess whether the simulated distribution:
 - Handles extreme events realistically (via the **tails**),
 - And stays statistically close to observed prices (via the **CRPS**).
 
-<div class="note">
+{: .note}
 
 #### 🧠 A Note on the CRPS
 
@@ -68,7 +68,6 @@ Intuitively:
 
 It can be seen as the probabilistic analogue of the **Mean Absolute Error (MAE)** — but instead of comparing single predictions to single outcomes, it compares **entire forecast distributions** to the actual realization.
 
-</div>
 ---
 
 
