@@ -49,7 +49,9 @@ Together, these metrics help me assess whether the simulated distribution:
 - Handles extreme events realistically (via the **tails**),
 - And stays statistically close to observed prices (via the **CRPS**).
 
-#### A Note on the CRPS
+<div class="note">
+
+#### 🧠 A Note on the CRPS
 
 Mathematically, the **Continuous Ranked Probability Score (CRPS)** for a forecast distribution $$ F $$ and an observed value $$ x $$ is defined as:
 
@@ -66,6 +68,7 @@ Intuitively:
 
 It can be seen as the probabilistic analogue of the **Mean Absolute Error (MAE)** — but instead of comparing single predictions to single outcomes, it compares **entire forecast distributions** to the actual realization.
 
+</div>
 ---
 
 
