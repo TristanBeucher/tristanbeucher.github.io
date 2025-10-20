@@ -38,8 +38,8 @@ Once the 2025 price scenarios are simulated, I need a way to check how realistic
 
 <table>
   <colgroup>
-    <col style="width: 26%">
-    <col style="width: 74%">
+    <col width="26%">
+    <col width="74%">
   </colgroup>
   <thead>
     <tr><th>Metric</th><th>Meaning</th></tr>
@@ -247,8 +247,8 @@ Once the list of jumps is stable, we summarize the results:
 
 <table>
   <colgroup>
-    <col style="width: 28%">
-    <col style="width: 72%">
+    <col width="28%">
+    <col width="72%">
   </colgroup>
   <thead>
     <tr>
@@ -355,10 +355,10 @@ Finally, I extended the idea by combining **residual load** and **seasonality**.
 
 <table>
   <colgroup>
-    <col style="width: 28%">
-    <col style="width: 24%">
-    <col style="width: 24%">
-    <col style="width: 24%">
+    <col width="28%">
+    <col width="24%">
+    <col width="24%">
+    <col width="24%">
   </colgroup>
   <thead>
     <tr>
@@ -433,9 +433,9 @@ Qualitatively:
 
 <table>
   <colgroup>
-    <col style="width: 24%">
-    <col style="width: 56%">
-    <col style="width: 20%">
+    <col width="24%">
+    <col width="56%">
+    <col width="20%">
   </colgroup>
   <thead>
     <tr>
@@ -495,10 +495,10 @@ Interpretation:
 
 <table>
   <colgroup>
-    <col style="width: 28%">
-    <col style="width: 24%">
-    <col style="width: 24%">
-    <col style="width: 24%">
+    <col width="28%">
+    <col width="24%">
+    <col width="24%">
+    <col width="24%">
   </colgroup>
   <thead>
     <tr>
