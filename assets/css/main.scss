@@ -30,16 +30,18 @@
   transition: background 0.3s, border-color 0.3s;
 }
 
-.post-content table {
-  width: 100%;
-  table-layout: fixed;
-}
-.post-content table th:nth-child(1),
-.post-content table td:nth-child(1) { width: 26%; white-space: nowrap; }
-.post-content table th:nth-child(2),
-.post-content table td:nth-child(2) { width: 74%; word-break: break-word; hyphens: auto; }
-
 .note:hover {
   background: #f1f7ff;
   border-left-color: #005fa3;
 }
+
+.markdown-body table {
+  width: 100%;
+  table-layout: fixed;
+}
+.markdown-body table th:nth-child(1),
+.markdown-body table td:nth-child(1) { width: 26%; white-space: nowrap; }
+.markdown-body table th:nth-child(2),
+.markdown-body table td:nth-child(2) { width: 74%; word-break: break-word; hyphens: auto; }
+
+
