@@ -118,4 +118,4 @@ Column-major formats, such as Parquet, are particularly effective for flexible, 
 
 The main aim of this first part on serialization was to show you the major impact this process has on various areas and features of your system. In this respect, we have seen that the best format does not exist in an absolute sense, but depends strongly on the use case.
 
-The [second part](2024-06-15-Decoding-serialization-implementation-with-Python.md) of this article is devoted more specifically to Python serialization and the best practices you can put in place to implement it.
+The [second part](2024-06-15-Decoding-serialization-implementation-with-Python) of this article is devoted more specifically to Python serialization and the best practices you can put in place to implement it.
