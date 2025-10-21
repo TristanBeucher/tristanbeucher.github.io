@@ -428,9 +428,13 @@ Clewlow, L., & Strickland, C. (2000). *Energy Derivatives: Pricing and Risk Mana
 Alcock, J., Goard, J. M. & Vassallo, T. (2008). *Calibrating mean-reverting jump diffusion models: an application to the NSW electricity market*. In T. R. Marchant, M. P. Edwards & G. Mercer (Eds.), Proceedings of the 2007 Mathematics in Industry Study Group (pp. 57-76). Wollongong: University of Wollongong.
 
 Blanco, C. & Soronow, D.. (2001). *Jump diffusion processes-Energy price processes used for derivatives pricing and risk management*. Commodities Now. 
+
+
 ---
 
 ## Data
 
 [*ENTSO-e transparency platform for french Day Ahead prices*](https://transparency.entsoe.eu/)
+
+
 [*RTE's Eco2Mix for consumption and production data*](https://www.rte-france.com/en/eco2mix)
