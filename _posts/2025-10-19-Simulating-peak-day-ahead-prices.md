@@ -9,7 +9,7 @@ I went through my usual process, which can be summarized as a four-step cycle:
 3. **Drink (at least) one coffee**  
 4. **Write and repeat**
 
-After taking a minute to reflect, I clarified the problem that I'll be solving:
+After taking a few hours to reflect, I clarified the problem that I'll be solving:
 
 > Simulating 2025 daily peak prices in France using **residual load** and 2023–2024 historical data
 
@@ -20,7 +20,7 @@ Residual load is defined as the difference between national consumption and sola
 - I already have the data (yes that's not a very good reason, but it's convenient).  
 - Daily prices are well-suited for a side project : easier to model and visualize than hourly price (again: convenient).  
 - Using **residual load** as the main price driver is relevant, and it’s a great way to include **deterministic seasonality** in a jump diffusion model.  
-- I’m focusing on **peak prices (8h–20h in France)** because the growth in solar capacity must have an impact on them (and by definition, on residual load).
+- I’m focusing on **peak prices (8h–20h weekdays in France)** because the growth in solar capacity must have an impact on them (and by definition, on residual load).
 
 ---
 
@@ -45,7 +45,7 @@ Once the 2025 price scenarios are simulated, I need a way to check how realistic
     <dd>Fraction of real prices within the 90% prediction interval.</dd>
 
     <dt><strong>Tails :</strong></dt>
-    <dd>Frequency of extreme values in simulated scenarios. Compares the percentage of negative and >200% mean values with actuals.</dd>
+    <dd>Frequency of extreme values in simulated scenarios. Compares the percentage of negative, >200% and >300% mean values with actuals.</dd>
 
     <dt><strong>Mean CRPS :</strong></dt>
     <dd>Continuous Ranked Probability Score, which measures how close the forecast distribution is to reality. Lower is better.</dd>
@@ -84,7 +84,7 @@ It can be seen as the probabilistic analogue of the **Mean Absolute Error (MAE)*
 
 ## Creating the Deterministic Baseline
 
-First, let’s create the **baseline**.  It must capture the underlying seasonality of power prices — and my assumption is that **residual load (RL)** can represent this seasonality quite well. The chart below shows the two series are well correlated :
+First, let’s create the **baseline**.  It must capture the underlying seasonality of power prices — and my assumption is that **residual load (RL)** can represent this seasonality. The chart below shows the two series are indeed correlated :
 
 ![RL vs prices](images/simulating_spot_prices/rl_vs_price_timeseries.png)
 
@@ -122,16 +122,16 @@ This bivariate term helps capture the **slow market trends** and **seasonal vari
 
 ![Residuals analysis](images/simulating_spot_prices/residuals_diagnostics.png)
 
-The model produces well-centered residuals (mean is around 0). The ±2$$\sigma$$ band (~±32 €/MWh) looks relatively stable, though some bursts of volatility appear (notably winter 2023–24), and the residual spread seems narrower in spring/summer. This suggests heteroskedasticity and we'll try to manage that later in this article through the modelisation of volatility.
+The model produces well-centered residuals (mean is around 0). The ±2$$\sigma$$ band (~±32 €/MWh) looks relatively stable, though some bursts of volatility appear (winter 2023–24), and the residual spread seems narrower in spring/summer. This suggests heteroskedasticity and we'll try to manage that later in this article through the modelisation of volatility.
 
-There is also a weak autocorrelation but no structural drift. The histogram is roughly bell-shaped but shows a slightly left-skewed (more negative residuals) and heavy tails, especially on the right (occasional high positive spikes). These phenomenon are typical for power prices: rare upward shocks (“price jumps”) and smoother negative deviations.
+There is also weak autocorrelation but no structural drift. The histogram is roughly bell-shaped but is slightly left-skewed (more negative residuals) and has heavy tails, especially on the right (occasional high positive spikes). Actually it makes sense for power prices to observe rare upward shocks (“price jumps”) and smoother negative deviations.
 
 
 ### Extending the GAM Temporal Term
 
-In the GAM model, I have a **smooth term for Month × Year**. But since 2025 was not part of the training set, I had to extend this term artificially.
+In the GAM model, I have a smooth term for Month × Year. But since 2025 was not part of the training set, I had to extend this term artificially.
 
-To do so, I reused the 2024 monthly pattern and **re-anchored** it so that each month’s average corresponds to **December-24 forward prices** (the last available futures quotations). This ensures the model remains consistent with the forward curve at the time of calibration. 
+To do so, I reused the 2024 monthly pattern and **re-anchored it so that each month’s average corresponds to December-24 forward prices** (the last available futures quotations). This ensures the model remains consistent with the forward curve at the time of calibration. 
 
 
 ### From Baseline to Simulation
@@ -151,7 +151,7 @@ To generate 2025 residual load (RL) scenarios, I built a small simulation framew
 
 The core of the method is a **moving-block bootstrap** applied to historical residual load series.
 
-Instead of sampling single days independently, I resample **7-day blocks** from the historical time series (2023–2024) to preserve short-term autocorrelation (e.g. multi-day cold spells or windy weeks). Each simulated path is constructed by concatenating random 7-day chunks taken from the historical record, within a **±15-day seasonal window** around each target calendar day.
+Instead of sampling single days independently, I resample **7-day blocks** from the historical time series (2023–2024) to preserve short-term autocorrelation (e.g. multi-day cold spells or windy weeks). Each simulated path is constructed by concatenating random 7-day chunks taken from the historical record, within a ±15-day seasonal window around each target calendar day.
 
 Formally, for a target day-of-year $$ d_t $$, we draw a block from:
 $$
@@ -179,12 +179,12 @@ Finally, I applied a **10% downward adjustment** to residual load levels to refl
 - **Demand destruction** due to lower industrial activity,  
 - **Higher solar capacity** leading to reduced net load during daylight hours.
 
-Importantly, this adjustment is implemented as a **downward dispersion**, not a global shift — meaning the **median remains the same**, but the lower quantiles extend further down.  
+Importantly, this adjustment is implemented as a **downward dispersion**, not a global shift and, as a consequence, the **median remains the same**, but the lower quantiles extend further down.  
 
 > This is a raw assumption that would deserve refinement in a future version (e.g. by explicitly modeling new solar capacity or demand elasticity).
 
 
-The result is a set of 200 realistic 2025 residual load trajectories — each preserving historical patterns, incorporating plausible uncertainty, and aligned with market fundamentals.
+The result is a set of 200 realistic 2025 residual load trajectories with each preserving historical patterns while incorporating plausible uncertainty.
 
 ![RL sim quantiles](images/simulating_spot_prices/rl_sim_quantiles.png)
 
@@ -214,16 +214,16 @@ $$
 z_t = \frac{\Delta x_t - \bar{\Delta x}}{\sigma_{\Delta x}}
 $$
 
-Since the mean innovation is typically close to 0, this z-score tells us how many standard deviations away from “normal” each daily change is. If $$\lvert z_t \rvert$$ exceeds a threshold $$ c $$ (for instance, $$ c = 3 $$), we count that day as a **jump**. $$ c = 3 $$ is often chosen and if the innovation follows a normal law, then 99,87% of the values will have $$\lvert z_t \rvert > 3\sigma $$. For this use case, I prefer a lower threshold and choose $$ c = 2,5 $$.
+Since the mean innovation is typically close to 0, this z-score tells us how many standard deviations away from “normal” each daily change is. If $$\lvert z_t \rvert$$ exceeds a threshold $$ c $$ (for instance, $$ c = 3 $$), we count that day as a jump. $$ c = 3 $$ is often chosen and if the innovation follows a normal law, then 99,87% of the values will have $$\lvert z_t \rvert > 3\sigma $$. For this use case, I prefer a lower threshold and choose $$ c = 2,5 $$.
 
 
 ### 3️⃣ Refining the Standard Deviation (Recursive Filtering)
 
-However, extreme outliers inflate the standard deviation, which makes fewer points appear as outliers — because the threshold $$ c \times \sigma $$ becomes too wide.
+However, extreme outliers increase the standard deviation, which makes fewer points appear as outliers — because the threshold $$ c \times \sigma $$ becomes too wide.
 
 To correct for that, we use a **recursive filtering** approach:
 
-1. Compute mean and standard deviation on the **clean** set (excluding detected jumps).  
+1. Compute mean and standard deviation on the clean set (excluding detected jumps).  
 2. Recalculate z-scores for all points.  
 3. Identify new jumps ($$ \lvert z_t \rvert > c \times \sigma_{\text{clean}}$$).  
 4. Repeat until the list of jump days stops changing.
@@ -247,10 +247,10 @@ Once the list of jumps is stable, we summarize the results:
     <dd>Average jump size (in €/MWh).</dd>
 
     <dt><strong>Mean positive jump :</strong></dt>
-    <dd>Average magnitude of upward jumps.</dd>
+    <dd>Average magnitude of upward jumps (in €/MWh).</dd>
 
     <dt><strong>Mean negative jump :</strong></dt>
-    <dd>Average magnitude of downward jumps.</dd>
+    <dd>Average magnitude of downward jumps (in €/MWh).</dd>
   </dl>
 </div>
 
@@ -260,7 +260,7 @@ In the end, this procedure gives us an empirical **jump intensity (λ)** and **j
 
 ## Mean Reversion Calibration
 
-The idea of mean reversion is that deviations from the deterministic trend (residuals) tend to revert toward an equilibrium level — not drift endlessly. I used a **Weighted Least Squares (WLS)** regression to fit the continuous-time Ornstein–Uhlenbeck (OU) process:
+The idea of mean reversion is that deviations from the deterministic trend (residuals) tend to revert toward an equilibrium level. I used a **Weighted Least Squares (WLS)** regression to fit the continuous-time Ornstein–Uhlenbeck (OU) process:
 
 $$
 dx_t = \alpha (\bar{x} - x_t)\,dt + \sigma\,dW_t
@@ -274,7 +274,7 @@ where:
 
 ### Estimation Steps
 
-1. Compute daily increments $$ \Delta x = x_t - x_{t-1} $$ and corresponding time steps $$ \Delta t $$.  
+1. Compute daily increments $$ \Delta x = x_t - x_{t-1} $$ and corresponding time steps $$ \Delta t $$. As we are working with peak price, $$t$$ is sometimes a Monday and $$t-1$$ a Friday then $$ \Delta t $$ is not always equal to one.
 2. Run a regression of $$ \frac{\Delta x}{\Delta t} $$ on $$ x_{t-1} $$ with weights proportional to $$ \Delta t $$.  
 3. From the fitted coefficients:
    - $$ \alpha = -\text{coef}(x_{t-1}) $$
@@ -285,16 +285,31 @@ where:
    t_{1/2} = \frac{\ln(2)}{\alpha}
    $$
 
+<div class="note" markdown="1">
+
+#### ⏳ A Note on the Half-Life
+
+The **half-life** of mean reversion represents the time it takes for a deviation from the long-term mean to decay by half.  
+Mathematically, for a reversion speed $$ \alpha $$:
+
+$$
+t_{1/2} = \frac{\ln(2)}{\alpha}
+$$
+
+Intuitively:
+- A **short half-life** (for example, a few days) means shocks fade quickly — the system “forgets” recent deviations fast.  
+- A **long half-life** implies that shocks persist and prices take longer to return to equilibrium.  
+
+In power markets, half-lives reflects how rapidly prices revert toward fundamental levels after temporary supply–demand imbalances.
+
+</div>
 
 
-### Example Output
+### Output
 
-alpha = 0.072 per day (half-life ≈ 9.6 days)
-xbar = 1.8
-sigma = 12.5
+In our case, the calibration gave $$\alpha$$ = 0.390 per day (half-life ≈ 1,78 days)
 
-
-This tells us that deviations from the mean typically fade by half within **about 10 days**, which is consistent with how price shocks behave in short-term power markets.
+This tells us that deviations from the mean typically fade by half within **about 2 days**, which is fast but consistent enough with how price shocks behave in short-term power markets.
 
 ---
 
@@ -373,13 +388,13 @@ Qualitatively:
     <dt><strong>Mean CRPS</strong> — <em>15.95</em></dt>
     <dd>Continuous Ranked Probability Score (lower = better).</dd>
 
-    <dt><strong>Tails actual</strong> — <em>—</em></dt>
+    <dt><strong>Tails actual</strong> — <em> 1.0% negative, 0.5% &gt; 200%, 0% &gt; 300%. </em></dt>
     <dd>
       Share of real data in extreme zones:<br>
       1.0% negative, 0.5% &gt; 200%, 0% &gt; 300%.
     </dd>
 
-    <dt><strong>Tails simulated</strong> — <em>—</em></dt>
+    <dt><strong>Tails simulated</strong> — <em> 5.0% negative, 1.4% &gt; 200%, 0.01% &gt; 300%.</em></dt>
     <dd>
       Share of simulated data in same zones:<br>
       5.0% negative, 1.4% &gt; 200%, 0.01% &gt; 300%.
@@ -389,12 +404,10 @@ Qualitatively:
 
 
 Interpretation:
-- The **90% coverage** close to 0.9 indicates that simulated price distributions are well-calibrated — they encompass most real outcomes.  
+- The **90% coverage** close to 0.9 indicates that simulated price distributions are well-calibrated : they encompass most real outcomes.  
 - The **50% coverage** around 0.5 suggests a good central alignment (the model doesn’t systematically over- or underpredict).  
 - **CRPS ≈ 15.9** is in line with other probabilistic power price models: not perfect, but robust for a low-dimensional simulation.  
-- The **tails** show that the model slightly **overestimates negative price events** (5% vs 1%) but captures upward spikes reasonably well.  
-  This is expected since jumps were calibrated conservatively.
-
+- The **tails** show that the model slightly **overestimates negative price events** (5% vs 1%) but captures upward spikes reasonably well. This is expected since jumps were calibrated conservatively.
 
 
 ### Coverage by Month
@@ -402,8 +415,7 @@ Interpretation:
 ![Residuals analysis](images/simulating_spot_prices/monthly_coverage.png)
 
 Monthly coverage confirms that:
-- The model performs **best in spring (April–May)** where volatility is moderate and well-learned from history.  
-- **Summer months (July–August)** show undercoverage — simulated bands are too narrow compared to actual volatility.  
+- The model performs **best in spring (April–May)** where volatility is moderate and well-learned from history.   
 - Winter (January–February) remains well-calibrated despite larger jumps.
 
 
