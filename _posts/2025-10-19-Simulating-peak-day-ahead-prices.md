@@ -1,4 +1,4 @@
-Two weeks ago, I shared an article about how **Jump Diffusion models** can be used to simulate power prices. You can check it here → [*Simulating spot prices with jump diffusion model*](2025-09-27-Simulating-electricity-spot-prices-with-jump-diffusion-model.md).
+Two weeks ago, I shared an article about how **Jump Diffusion models** can be used to simulate power prices. You can check it here → [*Simulating spot prices with jump diffusion model*](2025-09-27-Simulating-electricity-spot-prices-with-jump-diffusion-model).
 
 I received more feedback than expected, so now I have to commit to what I promised: describing how I’d calibrate such a model.
 
@@ -419,4 +419,15 @@ Monthly coverage confirms that:
 
 Overall, this first version of the jump-diffusion simulation manages to reproduce the main structure and variability of **2025 daily peak prices**, using only **historical patterns**, **residual load**, and **minimal market assumptions**.
 
+---
 
+## References
+
+Clewlow, L., & Strickland, C. (2000). *Energy Derivatives: Pricing and Risk Management*. London: Lacima Group.
+
+---
+
+## Data
+
+[*ENTSO-e transparency platform for french Day Ahead prices*](https://transparency.entsoe.eu/)
+[*RTE's Eco2Mix for consumption and production data*](https://www.rte-france.com/en/eco2mix)
