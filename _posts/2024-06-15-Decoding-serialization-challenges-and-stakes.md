@@ -1,6 +1,6 @@
 
 
-This article is the first part of a series on the serialization process in Machine Learning projects. It deals with serialization issues and formats. [Part 2](2024-06-15-Decoding-serialization-implementation-with-Python.md) is devoted to Python implementation.
+This article is the first part of a series on the serialization process in Machine Learning projects. It deals with serialization issues and formats. [Part 2](2024-06-15-Decoding-serialization-implementation-with-Python) is devoted to Python implementation.
 
 Serialization is the process of converting an object into a format that can be stored and/or transported. The term object covers a very wide range of elements, more or less complex, such as a data sample, a function or a Machine Learning model.
 
