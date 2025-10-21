@@ -1,4 +1,4 @@
-Two weeks ago, I shared an article about how **Jump Diffusion models** can be used to simulate power prices. You can check it here → [*Simulating spot prices with jump diffusion model*](2025-09-27-Simulating-electricity-spot-prices-with-jump-diffusion-model).
+Two weeks ago, I shared an article about how **Jump Diffusion models** can be used to simulate power prices. You can check it here → [*Simulating spot prices with jump diffusion model*](simulating-electricity-spot-prices-with-jump-diffusion-model).
 
 I received more feedback than expected, so now I have to commit to what I promised: describing how I’d calibrate such a model.
 
@@ -425,6 +425,9 @@ Overall, this first version of the jump-diffusion simulation manages to reproduc
 
 Clewlow, L., & Strickland, C. (2000). *Energy Derivatives: Pricing and Risk Management*. London: Lacima Group.
 
+Alcock, J., Goard, J. M. & Vassallo, T. (2008). *Calibrating mean-reverting jump diffusion models: an application to the NSW electricity market*. In T. R. Marchant, M. P. Edwards & G. Mercer (Eds.), Proceedings of the 2007 Mathematics in Industry Study Group (pp. 57-76). Wollongong: University of Wollongong.
+
+Blanco, C. & Soronow, D.. (2001). *Jump diffusion processes-Energy price processes used for derivatives pricing and risk management*. Commodities Now. 
 ---
 
 ## Data
