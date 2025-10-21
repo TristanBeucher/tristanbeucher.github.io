@@ -391,13 +391,11 @@ Qualitatively:
     <dt><strong>Tails actual</strong> — <em> 1.0% negative, 0.5% &gt; 200%, 0% &gt; 300%. </em></dt>
     <dd>
       Share of real data in extreme zones:<br>
-      1.0% negative, 0.5% &gt; 200%, 0% &gt; 300%.
     </dd>
 
     <dt><strong>Tails simulated</strong> — <em> 5.0% negative, 1.4% &gt; 200%, 0.01% &gt; 300%.</em></dt>
     <dd>
       Share of simulated data in same zones:<br>
-      5.0% negative, 1.4% &gt; 200%, 0.01% &gt; 300%.
     </dd>
   </dl>
 </div>
