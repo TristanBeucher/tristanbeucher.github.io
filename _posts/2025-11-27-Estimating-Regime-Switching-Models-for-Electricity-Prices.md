@@ -48,36 +48,36 @@ To estimate our regime-switching model, we want to remove this seasonality and w
 a de-seasonalised series. Following the classical decomposition inspired by the methodology
 of Lucia & Schwarz (2002), we express the (log) spot price as:
 
-\[
+$$
 \log(\text{Price}_t) = S_t + X_t
-\]
+$$
 
 where  
-- \( S_t \) is a deterministic seasonal component, and  
-- \( X_t \) is a stochastic component (the part we will model with the regime-switching process).
+- $$ S_t $$ is a deterministic seasonal component, and  
+- $$ X_t $$ is a stochastic component (the part we will model with the regime-switching process).
 
 Using log-prices avoids negative values and stabilizes variance, making the stochastic component 
-\(X_t\) closer to Gaussian and easier to model with regime switching.
+$$ X_t $$ closer to Gaussian and easier to model with regime switching.
 
-We do not want \(S_t\) to include any fundamental variable, it should only represent the 
+We do not want $$ S_t $$ to include any fundamental variable, it should only represent the 
 calendarian evolution of the power price. That's why we can modelize it like :
 
-\[
+$$
 S_t = \sum_{d=1}^{7} a_d \cdot \text{DOW}_{t,d}
 \;+\;
 \sum_{m=1}^{12} b_m \cdot \text{Month}_{t,m}
-\]
+$$
 
 I've also tested trigonometric seasonality but it tends to smooth transitions, whereas 
 electricity markets exhibit sharp discontinuities between weekdays and weekends. Dummy 
 variables capture these discontinuities better.
 
-When plotting \(S_t\), we clearly observe seasonal patterns consistent with the weekly and annual cycles.
+When plotting $$ S_t $$, we clearly observe seasonal patterns consistent with the weekly and annual cycles.
 
 PLOT
 
-Subtracting this seasonal component to the log-prices gives us the de-seasonalized series \(X_t\).
-The ACF of \(X_t\) shows that most of the seasonality has been removed, providing a more suitable input for the subsequent regime-switching model.
+Subtracting this seasonal component to the log-prices gives us the de-seasonalized series $$ X_t $$.
+The ACF of $$ X_t $$ shows that most of the seasonality has been removed, providing a more suitable input for the subsequent regime-switching model.
 
 PLOT ACF
 
@@ -111,15 +111,15 @@ $$
 
 ### Intuition
 
-- If \(|\phi| < 1\), the process **pulls back toward its mean** \(\mu\) over time  
+- If $$ |\phi| < 1 $$, the process **pulls back toward its mean** $$ \mu $$ over time  
   → this is **mean reversion**, essential in energy markets.
 
-- If \(\phi = 0\), there is **no memory** (pure noise).
+- If $$ \phi = 0 $$, there is **no memory** (pure noise).
 
-- If \(\phi\) is close to 1, the process **keeps memory of past shocks**  
+- If $$ \phi $$ is close to 1, the process **keeps memory of past shocks**  
   → effects of shocks are persistent.
 
-- The parameter \(\sigma\) controls the **volatility** of the innovations.
+- The parameter $$ \sigma $$ controls the **volatility** of the innovations.
 
 AR(1) makes the model simple, interpretable, and easy to estimate, while capturing the
 essentials of electricity-price dynamics.
@@ -133,7 +133,7 @@ matrix from one state to another.
 
 ### short note — the Markov property
 
-A stochastic process \((S_t)\) is said to satisfy the **Markov property** if the future 
+A stochastic process $$ (S_t) $$ is said to satisfy the **Markov property** if the future 
 depends **only on the present state**, not on the past. Formally:
 
 $$
@@ -159,7 +159,7 @@ If we have 5 years of daily weather data, we can count transitions such as:
 - how often "Cloudy" is followed by "Rainy"
 - etc.
 
-Dividing the counts by row totals gives the empirical transition matrix \(P\):
+Dividing the counts by row totals gives the empirical transition matrix $$ P $$:
 
 $$
 P = \begin{pmatrix}
@@ -220,37 +220,37 @@ In a regime-switching (Hidden Markov) model, the log-likelihood combines:
 
 Let:
 
-- \( x_t \) be the observed (de-seasonalised) log-price,
-- \( s_t \in \{1,\dots,K\} \) the hidden regime at time \(t\),
-- \( f(x_t \mid s_t, \theta) \) the AR(1) density in regime \(s_t\),
-- \( P_{ij} = \mathbb{P}(s_t = j \mid s_{t-1} = i) \) the transition matrix.
+- $$ x_t $$ be the observed (de-seasonalised) log-price,
+- $$ s_t \in \{1,\dots,K\} $$ the hidden regime at time $$ t $$,
+- $$ f(x_t \mid s_t, \theta) $$ the AR(1) density in regime $$ s_t $$,
+- $$ P_{ij} = \mathbb{P}(s_t = j \mid s_{t-1} = i) $$ the transition matrix.
 
-For a *given* sequence of hidden states \(s_1,\dots,s_T\), the likelihood is:
+For a *given* sequence of hidden states $$ s_1,\dots,s_T $$, the likelihood is:
 
-\[
+$$
 L(x_{1:T}, s_{1:T} \mid \theta)
    = \pi_{s_1}\, f(x_1 \mid s_1)
      \prod_{t=2}^{T} P_{s_{t-1}, s_t} \, f(x_t \mid s_t),
-\]
+$$
 
 and the **log-likelihood** is:
 
-\[
+$$
 \ell = 
 \log \pi_{s_1} + \log f(x_1 \mid s_1)
 + \sum_{t=2}^{T}
     \big( \log P_{s_{t-1}, s_t}
        + \log f(x_t \mid s_t) \big).
-\]
+$$
 
-But we **do not observe** the true states \(s_t\).  
+But we **do not observe** the true states $$ s_t $$.  
 Therefore the log-likelihood of the HMM is the weighted sum over all possible state paths:
 
-\[
+$$
 \ell(\theta) =
 \log \sum_{s_{1:T}}
 L(x_{1:T}, s_{1:T} \mid \theta),
-\]
+$$
 
 which the Hamilton filter computes efficiently.
 
@@ -259,7 +259,7 @@ which the Hamilton filter computes efficiently.
 ### Why we maximise it
 
 The goal of estimation is simple:  
-**find the parameters \(\theta\) that maximise the log-likelihood**,  
+**find the parameters $$ \theta $$ that maximise the log-likelihood**,  
 i.e. the parameters under which the observed prices are the most “expected” by the model.
 
 This is what the optimisation algorithm does:  
@@ -268,15 +268,15 @@ it searches across all possible regime dynamics and transition probabilities and
 
 ### 2.2 The Hamilton Filter: estimating hidden regimes
 
-When regimes are not directly observable, we need to infer at each date \(t\):
+When regimes are not directly observable, we need to infer at each date $$ t $$:
 
-\[
+$$
 P(s_t = j \mid x_{1:t})
-\]
+$$
 
 where:
-- \(s_t\) is the hidden regime (e.g. calm, volatile, stressed),
-- \(x_t\) is the observed de-seasonalised log-price.
+- $$ s_t $$ is the hidden regime (e.g. calm, volatile, stressed),
+- $$ x_t $$ is the observed de-seasonalised log-price.
 
 Because the regime is hidden and uncertainty must be updated every day using the new price, a simple counting approach is impossible.  
 The **Hamilton filter** (Hamilton, 1989) provides a recursive way to compute these probabilities and the associated log-likelihood.
@@ -291,7 +291,7 @@ If regimes were visible, we could:
 - estimate AR(1) parameters per regime.
 
 But in a Hidden Markov Model (HMM):
-- we never observe \(s_t\),
+- we never observe $$ s_t $$,
 - regime inference depends on past uncertainty,
 - uncertainty evolves with each new observation.
 
@@ -317,19 +317,19 @@ Assume:
 - 2 regimes,
 - transition matrix
 
-\[
+$$
 P =
 \begin{pmatrix}
 0.9 & 0.1 \\
 0.2 & 0.8
 \end{pmatrix},
-\]
+$$
 
-- regime-specific AR(1) densities \(f_1(x_t)\) and \(f_2(x_t)\).
+- regime-specific AR(1) densities $$ f_1(x_t) $$ and $$ f_2(x_t) $$.
 
 We denote:
-- \(\alpha_{t|t} = P(s_t \mid x_{1:t})\) = filtered probability,
-- \(\alpha_{t|t-1} = P(s_t \mid x_{1:t-1})\) = predicted probability.
+- $$ \alpha_{t|t} = P(s_t \mid x_{1:t}) $$ = filtered probability,
+- $$ \alpha_{t|t-1} = P(s_t \mid x_{1:t-1}) $$ = predicted probability.
 
 ---
 
@@ -337,9 +337,9 @@ We denote:
 
 Choose initial probabilities, typically:
 
-\[
+$$
 \alpha_{0|0} = (0.5,\; 0.5).
-\]
+$$
 
 *Example:*  
 We start with no reason to believe the system is more likely in either regime.
@@ -348,33 +348,33 @@ We start with no reason to believe the system is more likely in either regime.
 
 ## **Step 2 — Prediction step (Markov propagation)**
 
-\[
+$$
 \alpha_{t|t-1}(j)
 =
 \sum_{i=1}^2 
 \alpha_{t-1|t-1}(i)\, P_{ij}.
-\]
+$$
 
 *Example:*  
 Suppose yesterday we had:
 
-\[
+$$
 \alpha_{t-1|t-1} = (0.7,\; 0.3).
-\]
+$$
 
 Then:
 
-\[
+$$
 \alpha_{t|t-1}(1)
 = 0.7 \cdot 0.9 + 0.3 \cdot 0.2
 = 0.69,
-\]
+$$
 
-\[
+$$
 \alpha_{t|t-1}(2)
 = 0.7 \cdot 0.1 + 0.3 \cdot 0.8
 = 0.31.
-\]
+$$
 
 ---
 
@@ -382,7 +382,7 @@ Then:
 
 When we observe \(x_t\), we update:
 
-\[
+$$
 \alpha_{t|t}(j)
 =
 \frac{
@@ -390,29 +390,29 @@ f_j(x_t)\, \alpha_{t|t-1}(j)
 }{
 \sum_{k=1}^2 f_k(x_t)\, \alpha_{t|t-1}(k)
 }.
-\]
+$$
 
 *Example:*  
 Suppose today's price is unusually high.  
 The regime-specific densities evaluate to:
 
-\[
+$$
 f_1(x_t) = 0.01,\qquad
 f_2(x_t) = 0.20.
-\]
+$$
 
 Weighted likelihoods:
 
-\[
+$$
 \tilde{\alpha}_1 = 0.01 \times 0.69 = 0.0069,
-\]
-\[
+$$
+$$
 \tilde{\alpha}_2 = 0.20 \times 0.31 = 0.062.
-\]
+$$
 
 Normalisation:
 
-\[
+$$
 \alpha_{t|t}
 =
 \left(
@@ -421,7 +421,7 @@ Normalisation:
 \right)
 =
 (0.10,\; 0.90).
-\]
+$$
 
 After observing the spike, regime 2 becomes far more likely.
 
@@ -431,28 +431,28 @@ After observing the spike, regime 2 becomes far more likely.
 
 Each date contributes:
 
-\[
+$$
 L_t = 
 \sum_{j=1}^2 
 f_j(x_t)\, \alpha_{t|t-1}(j).
-\]
+$$
 
 The total log-likelihood is:
 
-\[
+$$
 \log \mathcal{L}
 =
 \sum_{t=1}^T 
 \log L_t.
-\]
+$$
 
 *Example:*
 
-\[
+$$
 L_t = 0.0069 + 0.062 = 0.0689,
 \qquad
 \log L_t = -2.6768.
-\]
+$$
 
 The optimiser adjusts:
 - regime means \(\mu_r\),
@@ -478,18 +478,18 @@ It is the engine that makes Hidden Markov Models estimable in practice.
 Once we know how to compute the **log-likelihood** of the model using the Hamilton filter,
 the next step is simply:
 
-\[
+$$
 \widehat{\theta}
 =
 \arg\max_{\theta}
 \log \mathcal{L}(\theta),
-\]
+$$
 
-where \(\theta\) groups all parameters:
+where $$ \theta $$ groups all parameters:
 
-- regime means \(\mu_r\)  
-- AR(1) parameters \(\phi_r, \sigma_r\)  
-- transition probabilities \(P_{ij}\)
+- regime means $$ \mu_r $$  
+- AR(1) parameters $$ \phi_r, \sigma_r $$  
+- transition probabilities $$ P_{ij} $$
 
 Because the log-likelihood is not linear and has no closed-form solution,
 we must rely on **numerical optimisation**.
@@ -500,9 +500,9 @@ we must rely on **numerical optimisation**.
 
 The idea is simple:
 
-1. Choose a trial parameter vector \(\theta\).  
+1. Choose a trial parameter vector $$ \theta $$.  
 2. Run the Hamilton filter to compute the log-likelihood.  
-3. Change \(\theta\) slightly.  
+3. Change $$ \theta $$ slightly.  
 4. Keep the version that gives a **higher** log-likelihood.  
 5. Repeat until improvements become negligible.
 
