@@ -91,6 +91,7 @@ After removing seasonality, the right panel shows a much more symmetric and cent
 ![DistributionComparison](images/regime switching model estimation/distributions.png)
 
 This de-seasonalised series is therefore a more suitable input for estimating regime-switching dynamics.
+
 ---
 
 
@@ -343,8 +344,8 @@ $$
 - regime-specific AR(1) densities $$ f_1(x_t) $$ and $$ f_2(x_t) $$.
 
 We denote:
-- $$ \alpha_{t|t} = P(s_t \mid x_{1:t}) $$ = filtered probability,
-- $$ \alpha_{t|t-1} = P(s_t \mid x_{1:t-1}) $$ = predicted probability.
+- $$ \alpha_{t | t} = P(s_t \mid x_{1:t}) $$ = filtered probability,
+- $$ \alpha_{t | t-1} = P(s_t \mid x_{1:t-1}) $$ = predicted probability.
 
 
 #### **Step 1️⃣ — Initialise regime probabilities**
@@ -392,7 +393,7 @@ $$
 
 #### **Step 3️⃣ — Filtering step (Bayesian update with today’s price)**
 
-When we observe \(x_t\), we update:
+When we observe $$ x_t $$, we update:
 
 $$
 \alpha_{t|t}(j)
@@ -466,9 +467,9 @@ L_t = 0.0069 + 0.062 = 0.0689,
 $$
 
 The optimiser adjusts:
-- regime means \(\mu_r\),
-- AR(1) parameters \(\phi_r, \sigma_r\),
-- transition probabilities \(P_{ij}\),
+- regime means $$ \mu_r $$,
+- AR(1) parameters $$ \phi_r, \sigma_r $$,
+- transition probabilities $$ P_{ij} $$,
 
 to maximise this log-likelihood.
 
