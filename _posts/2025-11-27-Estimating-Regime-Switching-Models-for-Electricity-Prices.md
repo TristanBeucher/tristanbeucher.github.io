@@ -7,7 +7,7 @@ a gas-fired power plant. I’ve defined a simple workflow to guide the modelling
 
 IMAGE
 
-I've already shared a Linkedin post about the co-simulation of gas and CO2scenarios. I'm
+I've already shared a [Linkedin post](https://www.linkedin.com/posts/tristanbeucher_co-simulating-gas-and-co2-scenarios-activity-7391742121973694465-37SA?utm_source=share&utm_medium=member_desktop&rcm=ACoAACCU3acBQq8Y387LjTXIf5N-KEwhLCNwVZU) about the co-simulation of gas and CO2 scenarios. I'm
 now focusing on generating power prices based on fundamental variables such as gas and CO2
 prices and weather. My first idea was to use an Machine Learning model to derive prices 
 from these inputs. Thanks to the scenarios I've created to simulate the level of these
@@ -17,7 +17,7 @@ My concern is that standard Machine Learning models often struggle to capture ex
 
 ILLUSTRATION
 
-In a previous article, I described how we can model jumps using a Poisson process,
+In a [previous article](simulating-electricity-spot-prices-with-jump-diffusion-model), I described how we can model jumps using a Poisson process,
 but I decided not to use the same method here (it wouldn't have been fun).
 That's why I've chosen a different approach called Regime Switching (RS). The intuitive
 idea behind RS is the existence of different states of the market (for example: a “crisis
@@ -33,7 +33,10 @@ hurt your ability to understand the overall message of this article.
 Now that the context is set, let's dive into the process of setting up a regime switching model
 for power prices.
 
-## Managing the seasonality
+---
+
+
+## 1. Managing the seasonality
 
 We work with daily power prices, obtained by averaging hourly (or quarter-hourly) observations 
 over each day. In this article, I use French day-ahead prices from January 2023 to October 2025.
@@ -81,7 +84,10 @@ The ACF of $$ X_t $$ shows that most of the seasonality has been removed, provid
 
 PLOT ACF
 
-## Setting up the RS Model
+---
+
+
+## 2. Understanding how the Regime-Switching model works
 
 As discussed in the introduction, the intuition behind Regime Switching is that we cannot
 model the behaviour of power prices using a single stochastic process. The dynamics of prices
@@ -92,8 +98,10 @@ For this reason, we define a small number of distinct regimes (in this article, 
 compare a 2-regime setup to a 3-regime setup). Each regime has its own mean, volatility,
 and short-term dynamics — all wrapped inside an AR(1) model.
 
-SHORT NOTE ON AR(1)
 
+<div class="note" markdown="1">
+
+#### 🧠 A Note on AR(1) models
 
 An AR(1) model (“Auto-Regressive model of order 1”) is one of the simplest ways to describe
 how a variable depends on its own past values. In an AR(1) process, today’s value is a
@@ -102,14 +110,14 @@ combination of:
 - A fraction of yesterday’s deviation from that mean
 - Random noise
 
-### Mathematical form
+Mathematically we have :
 
 $$
 X_t = \mu + \phi (X_{t-1} - \mu) + \sigma \varepsilon_t,
 \qquad \varepsilon_t \sim \mathcal{N}(0,1)
 $$
 
-### Intuition
+It can be read as : 
 
 - If $$ |\phi| < 1 $$, the process **pulls back toward its mean** $$ \mu $$ over time  
   → this is **mean reversion**, essential in energy markets.
@@ -124,14 +132,19 @@ $$
 AR(1) makes the model simple, interpretable, and easy to estimate, while capturing the
 essentials of electricity-price dynamics.
 
+</div>
+
+Now that we have defined how the price will behave within each state, we need to explain 
+how it goes from one state to another.
 
 
-This section aims to describe how we can estimate the parameters as well as the transition
-matrix from one state to another.
+### 2.1 Using an Hidden Markov Model
 
-### 2.1 Model definition : an Hidden Markov Model
+Let's remember first what is the Markov property.
 
-### short note — the Markov property
+<div class="note" markdown="1">
+
+#### 🧠 A Note on Markov chains
 
 A stochastic process $$ (S_t) $$ is said to satisfy the **Markov property** if the future 
 depends **only on the present state**, not on the past. Formally:
@@ -147,7 +160,10 @@ In words:
 This property allows us to summarize the entire dynamics using a **transition matrix** 
 containing the probabilities of switching from one state to another.
 
+</div>
 
+
+We start with an example of a "not-hidden" markov chain.
 Suppose we categorize weather into three observable states:
 - 1 = **Sunny**
 - 2 = **Cloudy**
@@ -195,9 +211,15 @@ which then modifies the transition probabilities,
 which then modifies the likelihood of all parameters… and so on.  
 
 This is why we rely on numerical optimisation and algorithms like Hamilton’s filter : the 
-following subsection describes that (and can be skipped if you prefer).
+following section describes that (and can be skipped if you prefer).
 
-### A simple explanation of log-likelihood
+---
+
+
+## 3. Estimating the Regime-Switching model
+
+
+### 3.1 Maximizing the likelihood
 
 To estimate our regime-switching model, we need a way to measure **how well a set of parameters explains the observed price series**.  
 This is exactly what the *likelihood* does.
@@ -214,11 +236,7 @@ In a regime-switching (Hidden Markov) model, the log-likelihood combines:
 - the probability of observing the price given the regime’s AR(1) dynamics,
 - the probability of switching from one regime to another according to the transition matrix.
 
----
-
-### Mathematical form (kept simple)
-
-Let:
+Formally, let:
 
 - $$ x_t $$ be the observed (de-seasonalised) log-price,
 - $$ s_t \in \{1,\dots,K\} $$ the hidden regime at time $$ t $$,
@@ -254,19 +272,15 @@ $$
 
 which the Hamilton filter computes efficiently.
 
----
 
-### Why we maximise it
 
-The goal of estimation is simple:  
-**find the parameters $$ \theta $$ that maximise the log-likelihood**,  
+The goal of estimation is simple: **find the parameters $$ \theta $$ that maximise the log-likelihood**,  
 i.e. the parameters under which the observed prices are the most “expected” by the model.
 
-This is what the optimisation algorithm does:  
-it searches across all possible regime dynamics and transition probabilities and keeps the configuration that gives the highest log-likelihood.
+This is what the optimisation algorithm does: it searches across all possible regime dynamics and transition probabilities and keeps the configuration that gives the highest log-likelihood.
 
 
-### 2.2 The Hamilton Filter: estimating hidden regimes
+### 3.2 The Hamilton Filter: estimating hidden regimes
 
 When regimes are not directly observable, we need to infer at each date $$ t $$:
 
@@ -281,9 +295,8 @@ where:
 Because the regime is hidden and uncertainty must be updated every day using the new price, a simple counting approach is impossible.  
 The **Hamilton filter** (Hamilton, 1989) provides a recursive way to compute these probabilities and the associated log-likelihood.
 
----
 
-### Why do we need it?
+#### 3.2.1 Why do we need it?
 
 If regimes were visible, we could:
 - classify each day into a regime,
@@ -302,16 +315,11 @@ Thus, we need a principled way to keep track of:
 
 This is exactly what the Hamilton filter does.
 
----
 
-### Reference sources
-- Hamilton (1989), *New approach to economic time series with regime switching*  
-- Kim & Nelson (1999), *State-Space Models with Regime Switching*  
-- Perlin (2015), *HMM in Finance*
 
----
 
-### 2.2.1 Hamilton Filter — Algorithm with integrated example
+
+#### 3.2.2 Hamilton Filter — Algorithm with example
 
 Assume:
 - 2 regimes,
@@ -331,9 +339,8 @@ We denote:
 - $$ \alpha_{t|t} = P(s_t \mid x_{1:t}) $$ = filtered probability,
 - $$ \alpha_{t|t-1} = P(s_t \mid x_{1:t-1}) $$ = predicted probability.
 
----
 
-## **Step 1 — Initialise regime probabilities**
+#### **Step 1️⃣ — Initialise regime probabilities**
 
 Choose initial probabilities, typically:
 
@@ -344,9 +351,8 @@ $$
 *Example:*  
 We start with no reason to believe the system is more likely in either regime.
 
----
 
-## **Step 2 — Prediction step (Markov propagation)**
+#### **Step 2️⃣ — Prediction step (Markov propagation)**
 
 $$
 \alpha_{t|t-1}(j)
@@ -376,9 +382,8 @@ $$
 = 0.31.
 $$
 
----
 
-## **Step 3 — Filtering step (Bayesian update with today’s price)**
+#### **Step 3️⃣ — Filtering step (Bayesian update with today’s price)**
 
 When we observe \(x_t\), we update:
 
@@ -425,9 +430,8 @@ $$
 
 After observing the spike, regime 2 becomes far more likely.
 
----
 
-## **Step 4 — Update the log-likelihood contribution**
+#### **Step 4️⃣ — Update the log-likelihood contribution**
 
 Each date contributes:
 
@@ -461,9 +465,8 @@ The optimiser adjusts:
 
 to maximise this log-likelihood.
 
----
 
-### Summary
+#### 3.2.3 Summary
 
 The Hamilton filter does three things at once:
 
@@ -473,7 +476,7 @@ The Hamilton filter does three things at once:
 
 It is the engine that makes Hidden Markov Models estimable in practice.
 
-### 2.3 Parameter estimation: maximisation procedure and smoothing
+### 3.3 Parameter estimation: maximisation procedure and smoothing
 
 Once we know how to compute the **log-likelihood** of the model using the Hamilton filter,
 the next step is simply:
@@ -494,10 +497,6 @@ where $$ \theta $$ groups all parameters:
 Because the log-likelihood is not linear and has no closed-form solution,
 we must rely on **numerical optimisation**.
 
----
-
-## How the maximisation works (intuition only)
-
 The idea is simple:
 
 1. Choose a trial parameter vector $$ \theta $$.  
@@ -516,3 +515,7 @@ prices most “expected” under the model.**
 ---
 
 
+### Reference sources
+- Hamilton (1989), *New approach to economic time series with regime switching*  
+- Kim & Nelson (1999), *State-Space Models with Regime Switching*  
+- Perlin (2015), *HMM in Finance*
