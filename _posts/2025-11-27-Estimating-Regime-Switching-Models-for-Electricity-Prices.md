@@ -344,8 +344,8 @@ $$
 - regime-specific AR(1) densities $$ f_1(x_t) $$ and $$ f_2(x_t) $$.
 
 We denote:
-- $$ \alpha_{t | t} = P(s_t \mid x_{1:t}) $$ = filtered probability,
-- $$ \alpha_{t | t-1} = P(s_t \mid x_{1:t-1}) $$ = predicted probability.
+- $$ \alpha_{t\mid t} = P(s_t \mid x_{1:t}) $$ = filtered probability,
+- $$ \alpha_{t\mid t-1} = P(s_t \mid x_{1:t-1}) $$ = predicted probability.
 
 
 #### **Step 1️⃣ — Initialise regime probabilities**
