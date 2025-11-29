@@ -5,7 +5,7 @@ this article.
 I'm writing it while working on a broader topic: computing Cash-Flows at Risk for
 a gas-fired power plant. I’ve defined a simple workflow to guide the modelling process:
 
-IMAGE
+![Workflow](images/regime switching model estimation/workflow.png)
 
 I've already shared a [Linkedin post](https://www.linkedin.com/posts/tristanbeucher_co-simulating-gas-and-co2-scenarios-activity-7391742121973694465-37SA?utm_source=share&utm_medium=member_desktop&rcm=ACoAACCU3acBQq8Y387LjTXIf5N-KEwhLCNwVZU) about the co-simulation of gas and CO2 scenarios. I'm
 now focusing on generating power prices based on fundamental variables such as gas and CO2
@@ -15,7 +15,7 @@ inputs for future periods, I'll be able to feed my model and have a range of pow
 My concern is that standard Machine Learning models often struggle to capture extreme events
  which are quite frequent on power markets.
 
-ILLUSTRATION
+![ExtremePrices](images/regime switching model estimation/daily prices.png)
 
 In a [previous article](simulating-electricity-spot-prices-with-jump-diffusion-model), I described how we can model jumps using a Poisson process,
 but I decided not to use the same method here (it wouldn't have been fun).
@@ -45,7 +45,7 @@ The seasonality of power prices has been well documented and can be observed in 
 through the autocorrelation plot below which shows pronounced peaks at multiples of 7
 (a signature of a weekly pattern).
 
-PLOT
+![ACF](images/regime switching model estimation/acf prices.png)
 
 To estimate our regime-switching model, we want to remove this seasonality and work with 
 a de-seasonalised series. Following the classical decomposition inspired by the methodology
@@ -77,13 +77,20 @@ variables capture these discontinuities better.
 
 When plotting $$ S_t $$, we clearly observe seasonal patterns consistent with the weekly and annual cycles.
 
-PLOT
+![SeasonBaseline](images/regime switching model estimation/season baseline.png)
+
 
 Subtracting this seasonal component to the log-prices gives us the de-seasonalized series $$ X_t $$.
-The ACF of $$ X_t $$ shows that most of the seasonality has been removed, providing a more suitable input for the subsequent regime-switching model.
+The ACF of $$ X_t $$ shows that most of the seasonality has been removed : 
 
-PLOT ACF
+![ACFdeseasonalized](images/regime switching model estimation/acf prices deseasonalized.png)
 
+Below, the left panel shows the distribution of raw log-prices, which is heavily skewed because of strong weekly and yearly seasonal patterns.
+After removing seasonality, the right panel shows a much more symmetric and centred distribution, with extreme values now clearly identifiable as genuine market shocks rather than calendar effects.
+
+![DistributionComparison](images/regime switching model estimation/distributions.png)
+
+This de-seasonalised series is therefore a more suitable input for estimating regime-switching dynamics.
 ---
 
 
