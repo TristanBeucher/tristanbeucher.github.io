@@ -429,6 +429,98 @@ Even though the internal math is complicated, the procedure is always the same: 
 
 ---
 
+## 4. Results
+
+This section presents the main outputs of the regime-switching modelling applied to the de-seasonalised daily day-ahead power prices.
+It also describes an alternative to 
+
+### 4.1 Model Comparison and Selection
+
+The 3-regime Markov Switching model (MRS-3) achieves by far the highest log-likelihood (–288.3) than the 2-regime model (-675), indicating a substantially better fit to the data.
+
+This aligns with empirical intuition: power prices exhibit three distinct statistical behaviours—normal, stressed-low, and stressed-high—that cannot be captured using only two regimes.
+
+I also tried two alternatives to the specifications discussed in this article:
+- a definition of states based on fixed thresholds (e.g., days where anomalies fall below or above a certain percentile such as the 5th or 95th),
+- a time-varying transition probability model (described at the end of this section), which allows transition probabilities to depend on market conditions such as gas prices, month of the year, or residual load.
+
+The first options was a bit too simple while the second, apparently promising, didn't give good results.
+
+
+### 4.2 Regime Classification Over Time
+
+The figure below shows the observed daily day-ahead prices over 2023–2024, with background shading highlighting the inferred regimes of the 3-state Markov Switching model:
+- **Stressed− (red bands)** → exceptionally low anomalies
+- **Normal (unshaded)** → central behaviour
+- **Stressed+ (blue bands)** → exceptionally high anomalies
+
+Periods of market stress coincide with large deviations in the daily prices, often associated with weather shocks, demand surges, or supply constraints.
+
+![RegimeClassification](images/regime switching model estimation/daily price with regime shading.png)
+
+### 4.3 Fit to the Empirical Distribution
+
+To evaluate how well the model reproduces the statistical properties of daily price anomalies, we compare:
+- the empirical distribution of de-seasonalised log-price anomalies (histogram), and
+- the model-implied mixture distribution obtained by combining the three Gaussian AR(1) regimes using their stationary regime probabilities.
+
+The match is good, especially around the centre of the distribution. The model captures moderate volatility clustering and asymmetric behaviour, though the tail events remain difficult to fully represent with Gaussian components alone—this is a known challenge in electricity markets.
+
+![AnomaliesDistribution](images/regime switching model estimation/anomalies distribution.png)
+
+###  4.4 Key Takeaways
+
+- A 3-regime structure provides the most realistic representation of observed price dynamics.
+- The model’s mixture density reproduces the central part of the empirical distribution well.
+- Regime classification over time reveals meaningful clusters of stressed price behaviour.
+- These results justify using the 3-regime model as the basis for scenario generation, jump modelling, and probabilistic forecasting.
+
+
+<div class="note" markdown="1">
+
+#### 🧠 A Note on Time-Varying Regime Switching
+
+In the standard Markov Regime Switching (MRS) model, transitions between regimes are governed by a constant probability matrix:
+
+$$
+P(s_t = j \mid s_{t-1} = i) = P_{ij}.
+$$
+
+This assumes that the likelihood of moving from one state to another never changes.
+But in electricity markets, regime changes often depend on observable fundamentals such as gas prices, residual load, seasonality, or weather conditions.
+
+The Time-Varying Regime Switching (TVRS) model generalises MRS by making transition probabilities depend on a vector of explanatory variables denoted by $$ z_t $$.
+
+In this case, transitions become:
+
+$$
+P(s_t = j \mid s_{t-1} = i, z_t) = P_{ij}(z_t).
+$$
+
+To ensure that each row still sums to one, a multinomial logit specification is used. For each departure regime $$ i $$:
+
+$$
+P_{ij}(z_t)
+=
+\frac{\exp(\beta_{ij}^T z_t)}
+     {\sum_{k=1}^{K} \exp(\beta_{ik}^T z_t)}.
+$$
+
+Here, $$ \beta_{ij} $$ is a vector of coefficients that describes how the variables in $$ z_t $$ influence the transition from regime $$ i $$ to regime $$ j $$.
+
+Inside each regime, the price anomalies still follow a regime-specific AR(1) process:
+
+$$
+X_t = \mu_s + \phi_s (X_{t-1} - \mu_s) + \sigma_s \varepsilon_t,
+\qquad \varepsilon_t \sim \mathcal{N}(0,1).
+$$
+
+The key idea is that regime changes are no longer purely random: they become conditional on market conditions. When fundamentals signal tension (for example high residual load or high gas price), the probability of entering a stressed regime increases. When fundamentals normalise, the model naturally shifts probability back toward calmer regimes.
+
+</div>
+
+
+
 
 ### Reference sources
 - Hamilton (1989), *New approach to economic time series with regime switching*  
