@@ -16,7 +16,7 @@ In a [previous article](simulating-electricity-spot-prices-with-jump-diffusion-m
 You'll notice that the section about the estimation of the Hidden Markov Model behind the regime switching approach is more technical than the rest of the article. I found this section important because it explains how a complex problem like the one we'll go through can be managed by applying the correct optimisation methods. However, skipping this section will not hurt your ability to understand the overall message of this article.
 
 Now that the context is set, let's dive into the process of setting up a regime switching model
-for power prices.
+for power prices. I'll come back at the end of the article on how I will use it for my purpose.
 
 ---
 
@@ -49,18 +49,20 @@ S_t = \sum_{d=1}^{7} a_d \cdot \text{DOW}_{t,d}
 \sum_{m=1}^{12} b_m \cdot \text{Month}_{t,m}
 $$
 
+where $$DOW$$ means day of the week. You can see that it's just a regression on two calendar dummy variables (day of the week and month).
+
 I've also tested trigonometric seasonality but it tends to smooth transitions, whereas electricity markets exhibit sharp discontinuities between weekdays and weekends. Dummy variables capture these discontinuities better.
 
-When plotting $$ S_t $$, we clearly observe seasonal patterns consistent with the weekly and annual cycles.
+When plotting $$ S_t $$, we clearly observe seasonal patterns consistent with the weekly and annual cycles (decrease in price during week-ends and summer).
 
 ![SeasonBaseline](images/regime switching model estimation/season baseline.png)
 
 
-Subtracting this seasonal component to the log-prices gives us the de-seasonalized series $$ X_t $$. The ACF of $$ X_t $$ shows that most of the seasonality has been removed : 
+Subtracting this seasonal component to the log-prices gives us the de-seasonalized series $$ X_t $$. The ACF of $$ X_t $$ shows that **most of the seasonality has been removed** : 
 
 ![ACFdeseasonalized](images/regime switching model estimation/acf prices deseasonalized.png)
 
-Below, the left panel shows the distribution of raw log-prices, which is heavily skewed because of strong weekly and yearly seasonal patterns. After removing seasonality, the right panel shows a much more symmetric and centred distribution, with extreme values now clearly identifiable as genuine market shocks rather than calendar effects.
+On the chart below, the left panel shows the distribution of raw log-prices, which is heavily skewed because of strong weekly and yearly seasonal patterns. After removing seasonality, the right panel shows a much more symmetric and centred distribution, with extreme values now clearly identifiable as genuine market shocks rather than calendar effects.
 
 ![DistributionComparison](images/regime switching model estimation/distributions.png)
 
@@ -71,7 +73,7 @@ This de-seasonalised series is therefore **a more suitable input for estimating 
 
 ## 2. Understanding how the Regime-Switching model works
 
-As discussed in the introduction, the intuition behind Regime Switching is that we cannot model the behaviour of power prices using a single stochastic process. The dynamics of prices depend strongly on the state of the system. For example, we may assume that volatility increases when the system enters a “crisis” mode.
+As discussed in the introduction, the intuition behind Regime Switching is that **we cannot model the behaviour of power prices using a single stochastic process**. The dynamics of prices depend strongly on the state of the system. For example, we may assume that volatility increases when the system enters a “crisis” mode.
 
 For this reason, we define a small number of distinct regimes (in this article, we will compare a 2-regime setup to a 3-regime setup). Each regime has its own mean, volatility, and short-term dynamics — all wrapped inside an AR(1) model.
 
@@ -94,7 +96,7 @@ $$
 
 It can be read as : 
 
-- If $$ |\phi| < 1 $$, the process **pulls back toward its mean** $$ \mu $$ over time → this is **mean reversion**, essential in energy markets.
+- If $$ \mid \phi \mid < 1 $$, the process **pulls back toward its mean** $$ \mu $$ over time → this is **mean reversion**.
 
 - If $$ \phi = 0 $$, there is **no memory** (pure noise).
 
@@ -142,7 +144,7 @@ If we have 5 years of daily weather data, we can count transitions such as:
 - how often "Cloudy" is followed by "Rainy"
 - etc.
 
-Dividing the counts by row totals gives the empirical transition matrix $$ P $$:
+Dividing the counts by row totals gives the empirical transition matrix $$ P $$ with in line the current state (from top to bottom : Sunny, Cloudy, Rainy) and in colums the future state (from left to right : Sunny, Cloudy, Rainy). Each value represents to probability to go to the future state (column) knowing the current state (line):
 
 $$
 P = \begin{pmatrix}
@@ -159,7 +161,7 @@ Here:
 
 Because states are **directly observed**, inference is straightforward.
 
-But in many financial and energy applications (including ours), the true state of the system (e.g., “normal”, “stress”, “spike”) is **not observed** — we only see the resulting prices.
+But in many financial and energy applications (including ours), the true state of the system (e.g., “normal”, “stress”) is **not observed** : we only see the resulting prices.
 
 This leads us to a **Hidden Markov Model (HMM)**, where the states are latent but the prices provide noisy information about which state we are likely in.
 
@@ -173,8 +175,8 @@ Because none of these quantities are directly observable, the model must infer t
 → which then modifies the transition probabilities,  
 → which then modifies the likelihood of all parameters… and so on.  
 
-This is why we rely on numerical optimisation and algorithms like Hamilton’s filter : the 
-following section describes that (and can be skipped if you prefer).
+This is why **we rely on numerical optimisation and algorithms like Hamilton’s filter** : the 
+following section describes that (and can be skipped if you prefer → go [Here](#4-results)).
 
 ---
 
@@ -186,7 +188,7 @@ following section describes that (and can be skipped if you prefer).
 
 To estimate our regime-switching model, we need a way to measure **how well a set of parameters explains the observed price series**. This is exactly what the *likelihood* does.
 
-> *Likelihood = “given my parameters, how probable is it that I observe this data?”*
+> *Likelihood = given my parameters, how probable is it that I observe this data?*
 
 If the model assigns high probability to the prices we actually observed, the parameters are good. If the model says these prices were very unlikely, the parameters are bad.
 
@@ -203,6 +205,7 @@ Formally, let:
 - $$ s_t \in \{1,\dots,K\} $$ the hidden regime at time $$ t $$,
 - $$ f(x_t \mid s_t, \theta) $$ the AR(1) density in regime $$ s_t $$,
 - $$ P_{ij} = \mathbb{P}(s_t = j \mid s_{t-1} = i) $$ the transition matrix.
+- $$\pi_{s_1}$$ is the initial probability distribution over the regimes
 
 For a *given* sequence of hidden states $$ s_1,\dots,s_T $$, the likelihood is:
 
@@ -236,20 +239,20 @@ The goal of estimation is simple: **find the parameters $$ \theta $$ that maximi
 
 ### 3.2 The Hamilton Filter: estimating hidden regimes
 
-Since we do not know which regime generated each observation, we cannot simply count transitions or estimate AR(1) parameters per regime. The Hamilton filter (Hamilton, 1989) provides a recursive way to infer, at every date, the probabilities :
+Since we do not know which regime generated each observation, we cannot simply count transitions or estimate AR(1) parameters per regime. **The Hamilton filter (Hamilton, 1989) provides a recursive way to infer, at every date, the probabilities** :
 
 $$
 P(s_t = j \mid x_{1:t})
 $$
 
-updating uncertainty as new prices arrive through the Markov transitions and Bayes’ rule. In short: it lets us track the hidden regimes in real time and compute the likelihood needed for optimisation.
+updating uncertainty as new prices arrive through the Markov transitions and Bayes’ rule. It lets us track the hidden regimes in real time and compute the likelihood needed for optimisation.
 
 
 #### 3.2.1 Hamilton Filter Algorithm with example
 
 Assume:
 - 2 regimes,
-- transition matrix
+- transition matrix (values are manually chosen here)
 
 $$
 P =
@@ -268,17 +271,22 @@ We denote:
 
 #### **Step 1️⃣ — Initialise regime probabilities**
 
-Choose initial probabilities, typically:
+*What the algorithm does:*  
+We pick a starting distribution for the regimes before observing any data.
+
+*Example:*  
+We start with no reason to believe the system is more likely in either regime (well, in practice, that's generally not true).
 
 $$
 \alpha_{0|0} = (0.5,\; 0.5).
 $$
 
-*Example:*  
-We start with no reason to believe the system is more likely in either regime.
-
-
 #### **Step 2️⃣ — Prediction step (Markov propagation)**
+
+*What the algorithm does:*  
+We use the transition matrix to predict the probability of being in each regime **before** seeing today’s price.
+
+The formula is:
 
 $$
 \alpha_{t|t-1}(j)
@@ -287,7 +295,7 @@ $$
 \alpha_{t-1|t-1}(i)\, P_{ij}.
 $$
 
-*Example:*  
+*Example: (predicting today’s regimes from yesterday’s beliefs):*  
 Suppose yesterday we had:
 
 $$
@@ -308,10 +316,14 @@ $$
 = 0.31.
 $$
 
+We now have predicted probabilities *before observing today’s price*.
 
 #### **Step 3️⃣ — Filtering step (Bayesian update with today’s price)**
 
-When we observe $$ x_t $$, we update:
+*What the algorithm does:*  
+We update the predicted probabilities using how likely today’s price is under each regime.
+
+Update formula:
 
 $$
 \alpha_{t|t}(j)
@@ -324,8 +336,7 @@ f_j(x_t)\, \alpha_{t|t-1}(j)
 $$
 
 *Example:*  
-Suppose today's price is unusually high.  
-The regime-specific densities evaluate to:
+Suppose today's price is unusually high. The regime-specific densities evaluate to:
 
 $$
 f_1(x_t) = 0.01,\qquad
@@ -359,7 +370,10 @@ After observing the spike, regime 2 becomes far more likely.
 
 #### **Step 4️⃣ — Update the log-likelihood contribution**
 
-Each date contributes:
+*What the algorithm does:*  
+We compute today’s contribution to the log-likelihood so the optimiser can later find the best parameters.
+
+Contribution:
 
 $$
 L_t = 
@@ -384,23 +398,18 @@ L_t = 0.0069 + 0.062 = 0.0689,
 \log L_t = -2.6768.
 $$
 
-The optimiser adjusts:
-- regime means $$ \mu_r $$,
-- AR(1) parameters $$ \phi_r, \sigma_r $$,
-- transition probabilities $$ P_{ij} $$,
-
-to maximise this log-likelihood.
+This value is added to the total log-likelihood, which the optimiser later tries to maximise.
 
 
 #### 3.2.2 Summary
 
-The Hamilton filter does three things at once:
+At each date, the filter:
+1. **Predicts** regime probabilities using the Markov chain.  
+2. **Updates** them using today’s price and Bayes' rule.  
+3. **Adds** the contribution to the log-likelihood. 
 
-1. **Propagates uncertainty** using the Markov chain.  
-2. **Updates regime probabilities** using today’s price (Bayes).  
-3. **Accumulates log-likelihood** for parameter estimation.
+This recursion makes the Hidden Markov Model estimable even though the regimes are never observed directly.
 
-It is the engine that makes Hidden Markov Models estimable in practice.
 
 ### 3.3 Parameter estimation: maximisation procedure and smoothing
 
@@ -432,19 +441,19 @@ Even though the internal math is complicated, the procedure is always the same: 
 ## 4. Results
 
 This section presents the main outputs of the regime-switching modelling applied to the de-seasonalised daily day-ahead power prices.
-It also describes an alternative to 
+It also describes an alternative to Regime Switching with constant transition probabilities ([check here](#-a-note-on-time-varying-regime-switching))
 
 ### 4.1 Model Comparison and Selection
 
-The 3-regime Markov Switching model (MRS-3) achieves by far the highest log-likelihood (–288.3) than the 2-regime model (-675), indicating a substantially better fit to the data.
+The **3-regime Markov Switching model (MRS-3) achieves by far the highest log-likelihood** (–288.3) than the 2-regime model (-675), indicating a substantially better fit to the data.
 
 This aligns with empirical intuition: power prices exhibit three distinct statistical behaviours—normal, stressed-low, and stressed-high—that cannot be captured using only two regimes.
 
 I also tried two alternatives to the specifications discussed in this article:
 - a definition of states based on fixed thresholds (e.g., days where anomalies fall below or above a certain percentile such as the 5th or 95th),
-- a time-varying transition probability model (described at the end of this section), which allows transition probabilities to depend on market conditions such as gas prices, month of the year, or residual load.
+- a **time-varying transition probability model** ([described at the end of this section](#-a-note-on-time-varying-regime-switching)), which allows transition probabilities to depend on market conditions such as gas prices, month of the year, or residual load.
 
-The first options was a bit too simple while the second, apparently promising, didn't give good results.
+The first option was a bit too simple but **can really help for the initialisation of the optimisation**. The second, apparently promising, didn't give good results in my case (I'll need to work on it).
 
 
 ### 4.2 Regime Classification Over Time
@@ -464,11 +473,26 @@ To evaluate how well the model reproduces the statistical properties of daily pr
 - the empirical distribution of de-seasonalised log-price anomalies (histogram), and
 - the model-implied mixture distribution obtained by combining the three Gaussian AR(1) regimes using their stationary regime probabilities.
 
-The match is good, especially around the centre of the distribution. The model captures moderate volatility clustering and asymmetric behaviour, though the tail events remain difficult to fully represent with Gaussian components alone—this is a known challenge in electricity markets.
+The match is good, especially around the centre of the distribution. The model **captures moderate volatility clustering and asymmetric behaviour, though the tail events remain difficult to fully represent** with Gaussian components alone—this is a known challenge in electricity markets.
 
 ![AnomaliesDistribution](images/regime switching model estimation/anomalies distribution.png)
 
-###  4.4 Key Takeaways
+###  4.4 Transition Matrix and Key Takeaways
+
+The transition matrix is maybe the most important result for what I want to do then :
+
+$$
+P = \begin{pmatrix}
+0.49 & 0.50 & 0.00 \\
+0.06 & 0.88 & 0.05 \\
+0.01 & 0.43 & 0.56
+\end{pmatrix}
+$$
+
+This transition matrix shows that the “normal” regime (middle row) is highly persistent (88% chance of staying) and acts as a hub, since both stressed regimes frequently move back into it.
+The stressed regimes are short-lived (only 49% and 56% persistence) and highly asymmetric: stressed– almost always returns to normal, while stressed+ sometimes jumps directly down into stressed–.
+
+To summarise this section :
 
 - A 3-regime structure provides the most realistic representation of observed price dynamics.
 - The model’s mixture density reproduces the central part of the empirical distribution well.
@@ -480,14 +504,9 @@ The match is good, especially around the centre of the distribution. The model c
 
 #### 🧠 A Note on Time-Varying Regime Switching
 
-In the standard Markov Regime Switching (MRS) model, transitions between regimes are governed by a constant probability matrix:
+In the standard Markov Regime Switching (MRS) model, transitions between regimes are governed by a constant probability matrix.
 
-$$
-P(s_t = j \mid s_{t-1} = i) = P_{ij}.
-$$
-
-This assumes that the likelihood of moving from one state to another never changes.
-But in electricity markets, regime changes often depend on observable fundamentals such as gas prices, residual load, seasonality, or weather conditions.
+This assumes that the likelihood of moving from one state to another never changes. But in electricity markets, regime changes often depend on observable fundamentals such as gas prices, residual load, seasonality, or weather conditions.
 
 The Time-Varying Regime Switching (TVRS) model generalises MRS by making transition probabilities depend on a vector of explanatory variables denoted by $$ z_t $$.
 
@@ -508,7 +527,7 @@ $$
 
 Here, $$ \beta_{ij} $$ is a vector of coefficients that describes how the variables in $$ z_t $$ influence the transition from regime $$ i $$ to regime $$ j $$.
 
-Inside each regime, the price anomalies still follow a regime-specific AR(1) process:
+Inside each regime, the price anomalies can still follow a regime-specific AR(1) process:
 
 $$
 X_t = \mu_s + \phi_s (X_{t-1} - \mu_s) + \sigma_s \varepsilon_t,
@@ -520,9 +539,13 @@ The key idea is that regime changes are no longer purely random: they become con
 </div>
 
 
+## 5. The next Step
+
+In the introduction, I explained that my objective is to combine a regime-switching model with an hourly Machine Learning model to generate power price scenarios that are both realistic on average and capable of reproducing extreme events.
+
+As of today (November 27th, 2025), I am still evaluating two different integration strategies. Very soon, you will be able to see which one I selected, why and how this hybrid approach can be used to simulate hourly price paths that incorporate both fundamental drivers and regime-dependent volatility.
 
 
 ### Reference sources
-- Hamilton (1989), *New approach to economic time series with regime switching*  
-- Kim & Nelson (1999), *State-Space Models with Regime Switching*  
+- Hamilton (1989), *New approach to economic time series with regime switching*   
 - Perlin (2015), *HMM in Finance*
