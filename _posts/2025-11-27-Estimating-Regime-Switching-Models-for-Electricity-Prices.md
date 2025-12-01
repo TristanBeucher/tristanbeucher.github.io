@@ -29,7 +29,7 @@ The seasonality of power prices has been well documented and can be observed in 
 
 ![ACF](images/regime switching model estimation/acf prices.png)
 
-To estimate our regime-switching model, we want to remove this seasonality and work with a de-seasonalised series. Following the classical decomposition inspired by the methodology of Lucia & Schwarz (2002), we express the (log) spot price as:
+To estimate our regime-switching model, we want to remove this seasonality and work with a deseasonalised series. Following the classical decomposition inspired by the methodology of Lucia & Schwarz (2002), we express the (log) spot price as:
 
 $$
 \log(\text{Price}_t) = S_t + X_t
@@ -58,7 +58,7 @@ When plotting $$ S_t $$, we clearly observe seasonal patterns consistent with th
 ![SeasonBaseline](images/regime switching model estimation/season baseline.png)
 
 
-Subtracting this seasonal component to the log-prices gives us the de-seasonalized series $$ X_t $$. The ACF of $$ X_t $$ shows that **most of the seasonality has been removed** : 
+Subtracting this seasonal component to the log-prices gives us the deseasonalised series $$ X_t $$. The ACF of $$ X_t $$ shows that **most of the seasonality has been removed** : 
 
 ![ACFdeseasonalized](images/regime switching model estimation/acf prices deseasonalized.png)
 
@@ -66,7 +66,7 @@ On the chart below, the left panel shows the distribution of raw log-prices, whi
 
 ![DistributionComparison](images/regime switching model estimation/distributions.png)
 
-This de-seasonalised series is therefore **a more suitable input for estimating regime-switching dynamics**.
+This deseasonalised series is therefore **a more suitable input for estimating regime-switching dynamics**.
 
 ---
 
@@ -201,7 +201,7 @@ In a regime-switching (Hidden Markov) model, the log-likelihood combines:
 
 Formally, let:
 
-- $$ x_t $$ be the observed (de-seasonalised) log-price,
+- $$ x_t $$ be the observed (deseasonalised) log-price,
 - $$ s_t \in \{1,\dots,K\} $$ the hidden regime at time $$ t $$,
 - $$ f(x_t \mid s_t, \theta) $$ the AR(1) density in regime $$ s_t $$,
 - $$ P_{ij} = \mathbb{P}(s_t = j \mid s_{t-1} = i) $$ the transition matrix.
@@ -440,7 +440,7 @@ Even though the internal math is complicated, the procedure is always the same: 
 
 ## 4. Results
 
-This section presents the main outputs of the regime-switching modelling applied to the de-seasonalised daily day-ahead power prices.
+This section presents the main outputs of the regime-switching modelling applied to the deseasonalised daily day-ahead power prices.
 It also describes an alternative to Regime Switching with constant transition probabilities ([check here](#-a-note-on-time-varying-regime-switching))
 
 ### 4.1 Model Comparison and Selection
@@ -470,7 +470,7 @@ Periods of market stress coincide with large deviations in the daily prices, oft
 ### 4.3 Fit to the Empirical Distribution
 
 To evaluate how well the model reproduces the statistical properties of daily price anomalies, we compare:
-- the empirical distribution of de-seasonalised log-price anomalies (histogram), and
+- the empirical distribution of deseasonalised log-price anomalies (histogram), and
 - the model-implied mixture distribution obtained by combining the three Gaussian AR(1) regimes using their stationary regime probabilities.
 
 The match is good, especially around the centre of the distribution. The model **captures moderate volatility clustering and asymmetric behaviour, though the tail events remain difficult to fully represent** with Gaussian components alone—this is a known challenge in electricity markets.
