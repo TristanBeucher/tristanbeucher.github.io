@@ -29,7 +29,7 @@ The seasonality of power prices has been well documented and can be observed in 
 
 ![ACF](images/regime switching model estimation/acf prices.png)
 
-To estimate our regime-switching model, we want to remove this seasonality and work with a deseasonalised series. Following the classical decomposition inspired by the methodology of Lucia & Schwarz (2002), we express the (log) spot price as:
+To estimate our regime-switching model, we want to remove this seasonality and work with a deseasonalised series. Following a classical decomposition, we express the (log) spot price as:
 
 $$
 \log(\text{Price}_t) = S_t + X_t
@@ -547,5 +547,6 @@ As of today (November 27th, 2025), I am still evaluating two different integrati
 
 
 ### Reference sources
-- Hamilton (1989), *New approach to economic time series with regime switching*   
+- Hamilton (1989), *New approach to economic time series with regime switching*
+- Lucia, Schwarz (2000), *Electricity prices and power derivatives. - Evidence from the Nordic Power Exchange*   
 - Perlin (2015), *HMM in Finance*
