@@ -19,6 +19,8 @@ This article is organized as follows : using the pretext of studying negative pr
 In this article, I'll use day-ahead prices and wind and solar load forecasts from the ENTSO-E Transparency Platform
 for several Western European countries. I'll focus on the 2021-2025 period and use hourly prices (quarter-hourly prices after October 2025 are aggregated to ensure consistency over the period).
 
+---
+
 ## 1. What we analyze: The duration of an event
 
 Survival analysis focuses on a random variable $$T$$, representing the time until an event ends (or occurs). 
@@ -74,7 +76,7 @@ Histograms and averages handle such observations poorly and that introduces bias
 
 ---
 
-## 3. The Kaplan-Meier Estimator and Hazard Rates
+## 3. Introducing the Kaplan-Meier Estimator
 
 These histograms are useful but only descriptively to show skewness, heterogeneity across countries, and the existence of long tails.
 
@@ -107,9 +109,8 @@ It can be interpreted as:
 
 Unlike a simple average duration, the survival function tells us **how persistence decays over time**.
 
----
 
-### The Kaplan–Meier estimator
+### Kaplan–Meier: formal definition
 
 The **Kaplan-Meier (KM) estimator** is a non-parametric estimator of the survival function. It makes **no assumption** about the underlying distribution of durations (and this property is very desirable in electricity markets).
 
@@ -129,7 +130,6 @@ Where:
 
 Although survival analysis is often introduced in continuous time, the Kaplan-Meier estimator works perfectly well in **discrete time**, fortunately for us. 
 
----
 
 ### Kaplan–Meier: the step-by-step intuition
 
@@ -178,7 +178,7 @@ The stepwise nature of the curves also hints at preferred termination times. Thi
 ---
 
 
-### Hazard rate: when do spells tend to end?
+## 4. Hazard rate: when do spells tend to end?
 
 Closely related to the survival function is the **hazard rate**, defined as:
 
@@ -220,12 +220,14 @@ All markets display a broadly U-shaped hazard pattern:
 
 That means that once a negative price spell survives the initial adjustment phase, its probability of termination increases again.
 
-## 4. Let's continue with the analysis
+---
+
+## 5. Let's continue with the analysis
 
 I've been dropping several plots along my previous explanations. 
 
 
-
+---
 
 ### Reference sources
 
