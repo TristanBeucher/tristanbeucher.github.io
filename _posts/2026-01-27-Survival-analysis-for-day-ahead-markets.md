@@ -224,7 +224,25 @@ That means that once a negative price spell survives the initial adjustment phas
 
 ## 5. Let's continue with the analysis
 
-I've been dropping several plots along my previous explanations. 
+I've been dropping several plots along my previous explanations. We can go further with the same level of complexity. Below some ideas of analysis, that can be explored in the app HERE :
+
+### Adding more countries 
+
+A first thing we can do thanks to the Transparency platform is to add new countries to the analysis :
+
+![otherCountries](images/survival analysis/other countries.png)
+
+As it could have been expected, Portugal behaves very similarly to Spain: its curve drops faster than all others, confirming that negative prices there are mostly short-lived events. Once prices turn negative in Portugal, they usually resolve within a couple of hours, with very little mass in the long tail. Switzerland sits at the opposite end of the spectrum. Negative price spells are less frequent, but when they occur, they tend to persist: the Swiss curve stays above most others for several hours, signaling a higher risk of long-lasting regimes. Belgium, meanwhile, behaves much closer to the core continental markets. Its survival curve largely overlaps with France and the Netherlands, both in the early phase and in the tail, suggesting that negative prices in BE are neither particularly fleeting nor exceptional. Taken together, these curves highlight a clear gradient across Europe: Portugal at the “short and sharp” end with Spain, Switzerland in the “rare but sticky” category, and Belgium in the group of structurally exposed markets alongside FR, DE and NL.
+
+### Evolution over the period
+
+Let's take the example of Germany and France to compare how the persistence of negative prices spells evolve in these two countries.
+
+![YearlComparison](images/survival analysis/yearly comparison.png)
+
+Looking at the yearly curves, France and Germany tell two very different stories. In France, the survival curves gradually shift upward over time: negative price spells not only occur more often, they also tend to last longer once they start. The change is most visible after a few hours, suggesting that recent negative prices are increasingly driven by structural conditions rather than short-lived imbalances. Germany, on the other hand, looks remarkably stable: survival curves from different years largely overlap, and long negative spells were already a feature of the market years ago. In that sense, Germany feels like a system that has already adapted to high renewable penetration, while France still appears to be in the middle of that adjustment process.
+
+
 
 
 ---
