@@ -29,7 +29,7 @@ In our context:
 - the event is a negative price spell, which starts when a price is strictly below zero and ends when the price goes back over zero again.
 - $$T$$ is the duration of that spell (measured in hours). The duration is always positive.
 
-Day-ahead auctions take place for the next day then, in theory, a negative spell can be right-censored meaning that if the spell is still ongoing at the end of the observed period, we can't know its true duration. Even if it remains very unlikely for negative prices, being able to deal with right-censoring is a huge advantage of survival analysis.
+Day-ahead auctions take place for the next day then, in theory, a negative spell can be right-censored meaning that if the spell is still ongoing at the end of the observed period, we can't know its true duration. Even if it remains very unlikely for negative prices, **being able to deal with right-censoring is a huge advantage of survival analysis**.
 
 ---
 
@@ -40,7 +40,7 @@ Before going further into survival analysis, it is worth clarifying *why* more t
 ![Histogram](images/survival analysis/histogram base.png)
 
 
-Across all four countries, spell durations are heavily right-skewed. The majority of spells are short-lived with a modal duration of 1–2 hours. However a long tail of persistent events exists in every market.
+Across all four countries, spell durations are heavily right-skewed. **The majority of spells are short-lived with a modal duration of 1–2 hours. However a long tail of persistent events exists in every market**.
 
 This shape immediately rules out Gaussian assumptions and already hints that averages will be misleading.
 
@@ -66,7 +66,7 @@ In other words, histograms ignore the question:
 
 ### Histograms and averages fail to handle censoring properly
 
-I already wrote that censoring occurs whenever the full duration of a spell is **not observed**.
+I already wrote that censoring occurs whenever the full duration of a spell is not observed.
 
 In practice, this happens when a negative price spell is still ongoing at the end of the dataset, or when data availability changes due to market design or resolution. 
 
@@ -107,12 +107,12 @@ It can be interpreted as:
 - $$ S(3) = 0.1 $$  
   → only 10% last more than 2 hours
 
-Unlike a simple average duration, the survival function tells us **how persistence decays over time**.
+Unlike a simple average duration, **the survival function tells us how persistence decays over time**.
 
 
 ### Kaplan–Meier: formal definition
 
-The **Kaplan-Meier (KM) estimator** is a non-parametric estimator of the survival function. It makes **no assumption** about the underlying distribution of durations (and this property is very desirable in electricity markets).
+The **Kaplan-Meier (KM) estimator** is a non-parametric estimator of the survival function. It makes **no assumption about the underlying distribution of durations** (and this property is very desirable in electricity markets).
 
 Formally, it is defined as:
 
@@ -128,7 +128,7 @@ Where:
 - $$ d_i $$ is the number of spells ending **exactly** at time $$ t_i $$,
 - $$ n_i $$ is the number of spells still ongoing **just before** $$ t_i $$.
 
-Although survival analysis is often introduced in continuous time, the Kaplan-Meier estimator works perfectly well in **discrete time**, fortunately for us. 
+Although survival analysis is often introduced in continuous time, the Kaplan-Meier estimator works perfectly well in discrete time, fortunately for us. 
 
 
 ### Kaplan–Meier: the step-by-step intuition
@@ -155,7 +155,7 @@ This produces the characteristic **step-shaped curve**:
 
 Each curve represents how negative spells behave in a different country. All four curves drop sharply during the first hours. This confirms that most negative price spells are short-lived.
 
-However, the speed of decay differs markedly across countries:
+However, **the speed of decay differs markedly across countries**:
 - Spain (ES) exhibits the steepest early drop: negative prices resolve quickly once they appear (after ~2 hours, survival is well below 50%).
 - Germany (DE) follows a similar but slightly slower pattern (after ~2 hours, survival is around 55–60%).
 - France (FR) and especially the Netherlands (NL) display much higher early survival probabilities (after ~2 hours, survival is closer to 65–70%).
@@ -167,7 +167,7 @@ Beyond 8–10 hours, survival probabilities are low in all countries but they ar
 
 Tail behaviour differs more strongly than central tendency.
 
-An important feature of the figure is that the curves do not cross and remain ordered over most of the duration range. This suggests that persistence differences are systematic, not driven by a few extreme events. If negative prices were governed by the same underlying dynamics across markets, we would expect the curves to overlap more or cross frequently. 
+An important feature of the figure is that the curves do not cross and remain ordered over most of the duration range. **This suggests that persistence differences are systematic, not driven by a few extreme events**. If negative prices were governed by the same underlying dynamics across markets, we would expect the curves to overlap more or cross frequently. 
 
 You remember that France and the Netherlands exhibited the same median duration? Well, we see on the previous plot that once a negative price spell starts, it is initially more persistent in NL than in FR (until 4h, the NL curve is above the FR curve). Then, conditional on having already lasted several hours (around 5-6h), the remaining lifetime of negative price spells is similar in France and the Netherlands.
 
@@ -202,7 +202,7 @@ Where:
 - $$ d_t $$ is the number of spells ending at time $$ t $$,
 - $$ n_t $$ is the number of spells still ongoing at time $$ t $$.
 
-The hazard rate is particularly useful to identify **preferred termination times**, for instance when negative prices tend to resolve after one or two hours due to market or operational constraints.
+**The hazard rate is particularly useful to identify preferred termination times**, for instance when negative prices tend to resolve after one or two hours due to market or operational constraints.
 
 I computed the hazard rates for the four countries of this study. I decided to smooth the rates and only display those for times with more than 30 spells ongoing. This is what is represented on the left plot below. On the right, you can observe cumulative hazard which is basically the sum of all hazard rates up to time t.
 
@@ -232,7 +232,7 @@ A first thing we can do thanks to the Transparency platform is to add new countr
 
 ![otherCountries](images/survival analysis/other countries.png)
 
-As it could have been expected, Portugal behaves very similarly to Spain: its curve drops faster than all others, confirming that negative prices there are mostly short-lived events. Once prices turn negative in Portugal, they usually resolve within a couple of hours, with very little mass in the long tail. Switzerland sits at the opposite end of the spectrum. Negative price spells are less frequent, but when they occur, they tend to persist: the Swiss curve stays above most others for several hours, signaling a higher risk of long-lasting regimes. Belgium, meanwhile, behaves much closer to the core continental markets. Its survival curve largely overlaps with France and the Netherlands, both in the early phase and in the tail, suggesting that negative prices in BE are neither particularly fleeting nor exceptional. Taken together, these curves highlight a clear gradient across Europe: Portugal at the “short and sharp” end with Spain, Switzerland in the “rare but sticky” category, and Belgium in the group of structurally exposed markets alongside FR, DE and NL.
+As it could have been expected, Portugal behaves very similarly to Spain: its curve drops faster than all others, confirming that negative prices there are mostly short-lived events. Once prices turn negative in Portugal, they usually resolve within a couple of hours, with very little mass in the long tail. Switzerland sits at the opposite end of the spectrum. Negative price spells are less frequent, but when they occur, they tend to persist: the Swiss curve stays above most others for several hours, signaling a higher risk of long-lasting regimes. Belgium, meanwhile, behaves much closer to the core continental markets. Its survival curve largely overlaps with France and the Netherlands, both in the early phase and in the tail, suggesting that negative prices in BE are neither particularly fleeting nor exceptional. Taken together, these curves highlight a clear gradient across Europe: **Portugal at the “short and sharp” end with Spain, Switzerland in the “rare but sticky” category, and Belgium in the group of structurally exposed markets alongside FR, DE and NL**.
 
 ### Evolution over the period
 
@@ -256,7 +256,7 @@ The table below aggregates this information across all countries in our dataset 
 | 60–80%                      | 484              | 3.83              | 3.0                 | 2.90               | 69.52                |
 | >80%                        | 267              | 4.44              | 4.0                 | 2.75               | 91.94                |
 
-The first four bins exhibit the same median duration and very similar averages. Based on this table alone, the effect of renewable penetration on negative price persistence does not appear linear. Instead, it seems to behave like a threshold effect: once a certain penetration level is exceeded, negative price spells start to last significantly longer.
+The first four bins exhibit the same median duration and very similar averages. Based on this table alone, the effect of renewable penetration on negative price persistence does not appear linear. Instead, it seems to behave like a threshold effect: **once a certain penetration level is exceeded, negative price spells start to last significantly longer**.
 
 This interpretation is reinforced by the Kaplan–Meier curves below:
 
@@ -275,7 +275,7 @@ Germany exhibits the cleanest and most monotonic pattern: as peak RES penetratio
 
 France stands out by contrast. The curves remain relatively close across penetration bins, suggesting that renewable penetration alone does not fully explain persistence. Other constraints (such as nuclear inflexibility, export capacity, demand shape) seem tp play a major role. The Netherlands sits somewhere in between, with a visible RES effect but substantial overlap across bins, hinting at a system where flexibility can partially absorb renewable shocks.
 
-Taken together, these results suggest that renewable penetration is a necessary but not sufficient condition for persistent negative prices. Whether oversupply translates into a short-lived anomaly or a prolonged regime ultimately depends on market design and system flexibility, a question we will revisit more formally using Cox models.
+Taken together, **these results suggest that renewable penetration is a necessary but not sufficient condition for persistent negative prices**. Whether oversupply translates into a short-lived anomaly or a prolonged regime ultimately depends on market design and system flexibility, a question we will revisit more formally using Cox models.
 
 
 
