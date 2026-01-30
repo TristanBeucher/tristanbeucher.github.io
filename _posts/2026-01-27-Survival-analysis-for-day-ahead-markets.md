@@ -242,6 +242,40 @@ Let's take the example of Germany and France to compare how the persistence of n
 
 Looking at the yearly curves, France and Germany tell two very different stories. In France, the survival curves gradually shift upward over time: negative price spells not only occur more often, they also tend to last longer once they start. The change is most visible after a few hours, suggesting that recent negative prices are increasingly driven by structural conditions rather than short-lived imbalances. Germany, on the other hand, looks remarkably stable: survival curves from different years largely overlap, and long negative spells were already a feature of the market years ago. In that sense, Germany feels like a system that has already adapted to high renewable penetration, while France still appears to be in the middle of that adjustment process.
 
+### Impact of Renewable Penetration
+
+The second part of this article will be devoted to Cox models, which allow us to analyse more precisely the drivers of negative price persistence. However, even with a simple Kaplan–Meier estimator, we can already gain valuable insights into the role of system conditions. Using ENTSO-E data (forecasted wind and solar generation, and forecasted load), we compute for each day the **forecasted renewable penetration during peak hours** (8h–20h), defined as the ratio of forecasted renewable production to forecasted load. By discretising this variable into penetration bins, we can directly compare the persistence of negative price spells across different renewable regimes.
+
+The table below aggregates this information across all countries in our dataset (France, Germany, the Netherlands, Belgium, Portugal, Spain, and Switzerland):
+
+| Forecasted REN penetration (bin) | Number of spells | Mean duration (h) | Median duration (h) | Std. deviation (h) | Avg. penetration (%) |
+|-----------------------------|------------------|-------------------|---------------------|--------------------|----------------------|
+| 0–20%                       | 78               | 3.59              | 3.0                 | 2.87               | 9.20                 |
+| 20–40%                      | 483              | 3.56              | 3.0                 | 2.53               | 31.38                |
+| 40–60%                      | 466              | 3.61              | 3.0                 | 2.52               | 49.94                |
+| 60–80%                      | 484              | 3.83              | 3.0                 | 2.90               | 69.52                |
+| >80%                        | 267              | 4.44              | 4.0                 | 2.75               | 91.94                |
+
+The first four bins exhibit the same median duration and very similar averages. Based on this table alone, the effect of renewable penetration on negative price persistence does not appear linear. Instead, it seems to behave like a threshold effect: once a certain penetration level is exceeded, negative price spells start to last significantly longer.
+
+This interpretation is reinforced by the Kaplan–Meier curves below:
+
+![KMBinsEurope](images/survival analysis/Km by ren europe.png)
+
+The red curve — corresponding to peak-hour renewable penetration above 80% — clearly dominates the others, which remain tightly clustered. However, this first view mixes several markets with very different structures. To better understand the underlying mechanisms, it is more informative to look at the same breakdown country by country.
+
+The figure below focuses on France, Germany, the Netherlands, and Spain:
+
+![KMBins](images/survival analysis/km by ren bins.png)
+
+
+Across all four markets, higher renewable penetration during peak hours is associated with more persistent negative price spells — but the strength of this relationship varies markedly. 
+
+Germany exhibits the cleanest and most monotonic pattern: as peak RES penetration increases, the survival curves shift upward almost systematically. This suggests a strong structural link between renewable oversupply and price persistence. Spain shows a similar ordering, but with a faster overall decay, indicating that even high-RES situations tend to resolve more quickly.
+
+France stands out by contrast. The curves remain relatively close across penetration bins, suggesting that renewable penetration alone does not fully explain persistence. Other constraints (such as nuclear inflexibility, export capacity, demand shape) seem tp play a major role. The Netherlands sits somewhere in between, with a visible RES effect but substantial overlap across bins, hinting at a system where flexibility can partially absorb renewable shocks.
+
+Taken together, these results suggest that renewable penetration is a necessary but not sufficient condition for persistent negative prices. Whether oversupply translates into a short-lived anomaly or a prolonged regime ultimately depends on market design and system flexibility, a question we will revisit more formally using Cox models.
 
 
 
