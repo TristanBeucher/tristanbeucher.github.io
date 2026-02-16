@@ -1,6 +1,6 @@
 This article is indeed one more piece on negative prices in day-ahead markets — but my real motivation behind this post lies in the method, not the topic itself. Allow me a quick autobiographical detour (it’s my blog, so I allow myself one).
 
-In 2019, still a student, I joined a consulting firm, Seabird, specialised in the insurance sector as an apprentice where I eventually worked for four years (three of them under a permanent contract after my one-year apprenticeship). This same year, 2019–2020, was also my final year in engineering school. My major was data science, but I decided to take additional actuarial science courses to stay consistent with my new role. That is how I ended up spending several hours wrestling with survival analysis models. Survival analysis focuses on durations and is traditionally associated with medical studies (*“how long until a patient relapses or dies?”*) or insurance (*“how long until a claim occurs?”*).
+In 2019, still a student, I joined a consulting firm, Seabird, specialised in the insurance sector as an apprentice where I eventually worked for four years (three of them under a permanent contract after my one-year apprenticeship). This same year, 2019–2020, was also my final year in engineering school. My major was data science, but I decided to take additional actuarial science courses to stay consistent with my new role. That is how I ended up spending several hours wrestling with survival analysis models and duration models. Survival analysis focuses on durations and is traditionally associated with medical studies (*“how long until a patient relapses or dies?”*) or insurance (*“how long until a claim occurs?”*).
 
 Seven years later, after switching to the energy sector, I am still strongly convinced that **survival analysis methods are extremely useful, simple (yet robust), intuitive, and underexploited in energy markets**. I had been looking for a way to reuse them in my current position, and studying the persistence of negative prices quickly appeared as the most obvious use case.
 
@@ -59,7 +59,7 @@ A histogram of negative price spell durations treats each spell as an **independ
 - the histogram does not tell us *when* spells tend to end,
 - nor how the probability of termination evolves as time passes.
 
-In other words, histograms ignore the question:
+In other words, histograms do not directly answer the question:
 
 > **“Given that a spell has already lasted 3 hours, how likely is it to end now?”**
 
@@ -105,7 +105,7 @@ It can be interpreted as:
   → 60% of negative price spells last more than 1 hour.
 
 - $$ S(3) = 0.1 $$  
-  → only 10% last more than 2 hours
+  → only 10% last more than 3 hours
 
 Unlike a simple average duration, **the survival function tells us how persistence decays over time**.
 
@@ -155,7 +155,7 @@ This produces the characteristic **step-shaped curve**:
 
 Each curve represents how negative spells behave in a different country. All four curves drop sharply during the first hours. This confirms that most negative price spells are short-lived.
 
-However, **the speed of decay differs markedly across countries**:
+However, **the speed of decay differs noticeably across countries**:
 - Spain (ES) exhibits the steepest early drop: negative prices resolve quickly once they appear (after ~2 hours, survival is well below 50%).
 - Germany (DE) follows a similar but slightly slower pattern (after ~2 hours, survival is around 55–60%).
 - France (FR) and especially the Netherlands (NL) display much higher early survival probabilities (after ~2 hours, survival is closer to 65–70%).
@@ -224,7 +224,7 @@ That means that once a negative price spell survives the initial adjustment phas
 
 ## 5. Let's continue with the analysis
 
-I've been dropping several plots along my previous explanations. We can go further with the same level of complexity. Below some ideas of analysis, that can be explored in the app HERE :
+I've been dropping several plots along my previous explanations. We can go further with the same level of complexity. Below some ideas of analysis :
 
 ### Adding more countries 
 
