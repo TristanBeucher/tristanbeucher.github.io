@@ -166,7 +166,19 @@ The **dominant driver is German residual load during peak hours** (HR ≈ 1.79).
 
 **Belgian residual load** also appears — the only neighbouring country selected — with a smaller HR of about 1.21. Cross-border exchanges help absorb German oversupply, though the effect remains secondary.
 
-**Seasonal components** (sine and cosine of the month) are both significant, reflecting that certain periods — high renewable output, moderate demand — are structurally more prone to persistent negative prices.
+**Seasonal components** (sine and cosine of the month) are both significant, reflecting that certain periods — high renewable output, moderate demand — are structurally more prone to persistent negative prices. Sine and cosine variables aren't very readable so I reconstrcuted the signal and something interesting appeared :
+
+![de_residual_germany](images/cox model/germany_seasonnal_effect_on_hazard.png)
+
+The seasonality effect seems to be the inverse of what we would have expected. Indeed, we have observed over the period longer negative spells during summer but the hazards are higher during this period in the model. It reflects a classic confounding effect. Summer months have lower residual load (high solar output, moderate demand), and low residual load is the dominant driver of persistence. The raw empirical pattern is therefore largely explained by the residual load channel. Once the model strips out that effect, the residual seasonal signal points in the other direction: holding residual load constant, summer is actually associated with faster spell termination.
+
+What could drive this residual seasonal effect? A few mechanisms are plausible:
+
+- **Export capacity**: cross-border interconnectors are less congested in summer, giving Germany more headroom to export excess supply and resolve negative price episodes faster.
+- **Demand response**: large industrial consumers tend to respond more readily to negative price signals in summer, when their operational constraints differ from winter.
+- **Nuclear availability in neighbouring markets**: high French nuclear output in winter reduces the willingness of neighbouring systems to absorb German oversupply, prolonging episodes in ways that residual load alone does not capture.
+
+These remain interpretations rather than conclusions : properly testing them would require interconnector flow data and cross-border generation schedules that go beyond what ENTSO-E day-ahead forecasts provide.
 
 ### What doesn't matter for Germany?
 
