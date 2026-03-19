@@ -156,19 +156,19 @@ The goal is not simply to predict duration, but to **identify the structural dri
 
 The final model for Germany is parsimonious and tells a relatively coherent story.
 
-![model_germany](images/cox model/germany_final_cox.png)
+![model_germany](images/cox model/germany_final_cox2.png)
 
 ### What drives German episodes to end?
 
 The **dominant driver is German residual load during peak hours** (HR ≈ 1.79). When demand is stronger relative to renewable generation, the system absorbs excess supply more quickly and negative prices disappear faster. This is consistent with what the Kaplan-Meier analysis already suggested:
 
-![de_residual_germany](images/cox model/germany_de_residual_load.png)
+![de_residual_germany](images/cox model/germany_de_residual_load2.png)
 
 **Belgian residual load** also appears — the only neighbouring country selected — with a smaller HR of about 1.21. Cross-border exchanges help absorb German oversupply, though the effect remains secondary.
 
 **Seasonal components** (sine and cosine of the month) are both significant, reflecting that certain periods — high renewable output, moderate demand — are structurally more prone to persistent negative prices. Sine and cosine variables aren't very readable so I reconstrcuted the signal and something interesting appeared :
 
-![de_residual_germany](images/cox model/germany_seasonal_effect_on_hazard.png)
+![de_residual_germany](images/cox model/germany_seasonal_effect_on_hazard2.png)
 
 The seasonality effect seems to be the inverse of what we would have expected. Indeed, we have observed over the period longer negative spells during summer but the hazards are higher during this period in the model. It reflects a classic confounding effect. Summer months have lower residual load (high solar output, moderate demand), and low residual load is the dominant driver of persistence. The raw empirical pattern is therefore largely explained by the residual load channel. Once the model strips out that effect, the residual seasonal signal points in the other direction: holding residual load constant, summer is actually associated with faster spell termination.
 
@@ -200,13 +200,13 @@ That said, the **concordance of 0.68** is only reasonable — many short-term op
 
 The Belgian model reveals a structurally different picture.
 
-![model_belgium](images/cox model/belgium_final_cox.png)
+![model_belgium](images/cox model/belgium_final_cox2.png)
 
 ### What drives Belgian episodes to end?
 
 **German residual load is the dominant factor** (HR ≈ 1.63) — more important than Belgium's own system balance. When Germany absorbs its oversupply, Belgian negative price spells tend to end too. Belgium's negative price dynamics appear, to a large extent, *imported*.
 
-![de_residual_belgium](images/cox model/belgium_km_de_residual.png)
+![de_residual_belgium](images/cox model/belgium_km_de_residual2.png)
 
 **Belgian residual load** is also significant (HR ≈ 1.47), confirming that local conditions contribute — but remain secondary.
 
@@ -237,7 +237,7 @@ The **concordance of 0.74** indicates strong predictive performance — the best
 
 The French model is perhaps the most surprising of the four.
 
-![model_france](images/cox model/france_final_cox.png)
+![model_france](images/cox model/france_final_cox2.png)
 
 ### What drives French episodes to end?
 
@@ -277,13 +277,13 @@ The **concordance of 0.74** suggests the model has reasonable predictive power d
 
 The Spanish model is structurally different — and clearly less informative than the others.
 
-![model_spain](images/cox model/spain_final_cox.png)
+![model_spain](images/cox model/spain_final_cox2.png)
 
 ### What drives Spanish episodes to end?
 
 The **only significant variable is Spanish residual load during peak hours** (HR ≈ 1.26). When demand net of renewables rises, the system rebalances and prices recover. The direction is intuitive, but the model cannot say much beyond this single driver.
 
-![model_spain](images/cox model/spain_km_es_residual_load.png)
+![model_spain](images/cox model/spain_km_es_residual_load2.png)
 
 ### What doesn't matter for Spain?
 
