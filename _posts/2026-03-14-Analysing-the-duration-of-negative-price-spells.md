@@ -27,12 +27,12 @@ $$
 
 Where:
 
-- **$h(t \mid X)$**: hazard at time $t$, given the covariates $X$  
-- **$h_0(t)$**: baseline hazard (the natural dynamics of the system)  
-- **$X$**: explanatory variables (residual load, seasonality, etc.)  
-- **$\beta$**: coefficients estimated by the model
+- **$$h(t \mid X)$$**: hazard at time $$t$$, given the covariates $$X$$  
+- **$$h_0(t)$$**: baseline hazard (the natural dynamics of the system)  
+- **$$X$$**: explanatory variables (residual load, seasonality, etc.)  
+- **$$\beta$$**: coefficients estimated by the model
 
-Let's decompose this formula. First we have the baseline hazard **$h_0(t)$** which represents the probability that a spell ends at time t, when all covariates are neutral. If the system conditions change, it should change the probability that the spell ends. This is why the baseline hazard is multiplied by a factor: $$ e^{\beta X} $$
+Let's decompose this formula. First we have the baseline hazard **$$h_0(t)$$** which represents the probability that a spell ends at time t, when all covariates are neutral. If the system conditions change, it should change the probability that the spell ends. This is why the baseline hazard is multiplied by a factor: $$ e^{\beta X} $$
 
 The exponential term has several convenient properties.
 - the hazard must always be positive and the exponential ensures $$ e^{\beta X} > 0$$
@@ -55,7 +55,7 @@ Rather than forcing the duration distribution into a specific functional form, t
 
 The model therefore focuses entirely on what we care about most:
 
-> **how system conditions modify the probability that the event ends.**
+> **How system conditions modify the probability that the event ends.**
 
 
 ## Selecting the variables
@@ -86,7 +86,7 @@ In addition, I included several calendar variables to capture systematic pattern
 
 Considering the fact that I want to include residual load for neighboring countries, I already reach a first conclusion :
 
-> **“I have too much variables and must find a way to select the most descriptive**
+> **I have too much variables and must find a way to select the most descriptive**
 
 An old reflex led me to LASSO. When fitting a model, LASSO adds a small penalty to the estimation process. Instead of maximizing the likelihood alone, the model maximizes:
 
@@ -96,7 +96,7 @@ $$
 
 Where:
 
-- **$\lambda$** is a penalty parameter.
+- **$$\lambda$$** is a penalty parameter.
 
 This penalty forces some coefficients to **shrink toward zero**. If the penalty is strong enough, some variables disappear entirely. So LASSO acts like a **feature filter** which make useless variables vanish and keep only the important ones. The larger the penalty, the simpler will be the model. To choose the optimal value, we test a **grid of penalties** and select the one that produces the best predictive performance.
 
@@ -112,15 +112,7 @@ The **concordance index** measures how well the model ranks durations.It answers
 
 > If two events have different durations, does the model correctly predict which one lasts longer?
 
-The value ranges from:
-
-| Value | Meaning |
-|------|------|
-| 0.5 | random guess |
-| 0.6–0.7 | reasonable |
-| 0.7–0.8 | strong |
-
-Electricity markets are noisy systems, so values around **0.65–0.75** can be already considered good.
+The value ranges from 0.5 (a random guess) to 1. Electricity markets are noisy systems, so values around **0.7–0.8** can be already considered good.
 
 ---
 
@@ -131,14 +123,13 @@ Another useful metric is the **partial Akaike Information Criterion (AIC)**. AIC
 This helps avoid models that fit the data well but rely on too many variables. **AIC rewards models that explain the data well while remaining as simple as possible**.
 
 
-
 ## Summarize the procedure
 
 The modelling process typically follows these steps:
 
 1. Construct candidate explanatory variables  
 2. Apply **LASSO regularization** to remove redundant features  
-3. Select the optimal penalty using **concordance**  
+3. Select the optimal penalty using **concordance** and **partial AIC** 
 4. Estimate the **final Cox model**  
 5. Interpret **hazard ratios**
 
@@ -154,7 +145,7 @@ The final model for Germany is relatively parsimonious and highlights a clear st
 
 The dominant driver is the German residual load during peak hours. The estimated hazard ratio is around 1.79, meaning that a one-unit increase in residual load increases the probability that a negative price spell ends by nearly 80%. In practical terms, when demand is stronger relative to renewable generation, the system absorbs excess supply more quickly and negative prices disappear faster. It's consistent with what we had observed in the previous article [LINK] :
 
-![de_residual_germany](images/cox_model/germany_de_residual.png)
+![de_residual_germany](images/cox model/germany_de_residual_load.png)
 
 Unlike other neighbours' residual load which as not been selected in the procedure, Belgian residual load also appears as a significant, though smaller, contributor. With a hazard ratio of about 1.21, it suggests that neighbouring systems help absorb part of the German oversupply. This confirms the role of cross-border exchanges in shortening negative price events, although the effect remains secondary for Germany compared to domestic conditions.
 
@@ -170,11 +161,11 @@ Overall, the model delivers a coherent economic message: negative price duration
 
 The Belgian model reveals a different structure, where negative price dynamics are largely driven by regional interactions rather than purely domestic conditions.
 
-![model_belgium](images/cox_model/belgium_final_cox.png)
+![model_belgium](images/cox model/belgium_final_cox.png)
 
 German residual load again appears as the dominant factor, with a hazard ratio of about 1.63. This confirms that the persistence of negative prices in Belgium is strongly influenced by the German system: when German residual load increases, excess supply is absorbed more quickly across the region, and Belgian negative price spells tend to end sooner.
 
-![de_residual_belgium](images/cox_model/belgium_km_de_residual.png)
+![de_residual_belgium](images/cox model/belgium_km_de_residual.png)
 
 Belgian residual load also plays a significant role, with a hazard ratio close to 1.47. This indicates that local demand conditions contribute to resolving negative price events, although their impact remains secondary compared to the German system.
 
@@ -188,7 +179,7 @@ Overall, the Belgian model conveys a clear message: negative price persistence i
 
 The French model sits somewhere between the German and Belgian cases, reflecting a system that is both influenced by regional dynamics and shaped by its own structural characteristics.
 
-![model_france](images/cox_model/france_final_cox.png)
+![model_france](images/cox model/france_final_cox.png)
 
 Unlike Germany, domestic residual load does not play a significant role: while it has been selected by the procedure (concordance decreased significantly without it), the coefficient associated with French residual load is small and not statistically significant. This suggests that, in France, negative price persistence may not  be primarily driven by renewable generation. That's a very strong assumption which may also be explained by the correlation of this residual load variable with other selected variables such as "weekend" and "lagged-prices". 
 
@@ -206,11 +197,11 @@ Overall, the model highlights a hybrid structure: France is neither fully driven
 
 The Spanish model is structurally different from the others and clearly less informative, reflecting a market where negative price dynamics are less frequent and harder to explain with the available variables.
 
-![model_spain](images/cox_model/spain_final_cox.png)
+![model_spain](images/cox model/spain_final_cox.png)
 
 The only variable that emerges as statistically significant is the Spanish residual load during peak hours, with a hazard ratio of around 1.26. This indicates that higher residual load — meaning tighter system conditions — tends to shorten negative price events. This is consistent with intuition: when demand net of renewables increases, the system rebalances more quickly and prices recover.
 
-![model_spain](images/cox_model/spain_final_cox.png)
+![model_spain](images/cox model/spain_km_es_residual_load.png)
 
 However, beyond this core effect, the model struggles to identify strong drivers. Neither cross-border variables (such as French residual load), nor calendar effects (weekend), nor seasonal patterns (month sinus/cosinus) are statistically significant. This contrasts sharply with the German and Belgian cases, where both domestic and neighboring system conditions play a central role.
 
