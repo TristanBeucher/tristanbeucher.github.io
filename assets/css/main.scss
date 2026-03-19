@@ -56,3 +56,61 @@
 
 
 
+/* ─── Table styles ──────────────────────────────────────────────────────────
+   Add to assets/css/custom.css (or in a <style> block at the top of the post)
+   ─────────────────────────────────────────────────────────────────────────── */
+ 
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  margin: 2rem 0;
+}
+ 
+thead tr {
+  border-bottom: 2px solid #0F2744;
+}
+ 
+thead th {
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #0F2744;
+  white-space: nowrap;          /* keeps headers on one line */
+}
+ 
+tbody tr {
+  border-bottom: 1px solid #e2dfd9;
+}
+ 
+tbody tr:last-child {
+  border-bottom: none;
+}
+ 
+tbody td {
+  padding: 10px 14px;
+  vertical-align: top;
+  color: #3a3834;
+}
+ 
+/* Alternating row tint — remove if you prefer plain white */
+tbody tr:nth-child(even) {
+  background-color: #faf9f7;
+}
+ 
+/* First column slightly bolder (country names, etc.) */
+tbody td:first-child {
+  font-weight: 500;
+  white-space: nowrap;
+}
+ 
+/* Numeric columns: right-align the last column (C-index etc.) */
+thead th:last-child,
+tbody td:last-child {
+  text-align: right;
+  white-space: nowrap;
+}
