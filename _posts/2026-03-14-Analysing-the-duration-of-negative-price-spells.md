@@ -17,7 +17,7 @@ This article is organised as follows: the first section gives a solid understand
 
 ## 1. The Cox proportional hazard model
 
-The Cox model has been introduced by XXX. It answers a simple question :
+The Cox model answers a simple question :
 
 > **"What factors increase or decrease the probability that a negative price spell ends?"**
 
