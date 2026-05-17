@@ -154,8 +154,8 @@ If a plant has a positive scarcity rent (its capacity is genuinely valuable) the
 
 In our example :
 
-- Plant A : running at 100 MW $$= \overline{P}_A$, so $\mu_A = 3 > 0$$ ✓
-- Plant B : running at 100 MW $$< \overline{P}_B = 300$, so $\mu_B = 0$$ ✓
+- Plant A : running at 100 MW $$= \overline{P}_A$$, so $$\mu_A = 3 > 0$$ ✓
+- Plant B : running at 100 MW $$< \overline{P}_B = 300$$, so $$\mu_B = 0$$ ✓
 
 This condition is what connects the primal dispatch to the dual prices. It tells you exactly which constraints are "active" and which are slack. An active constraint has a positive dual variable. A slack constraint has a zero dual variable. This is how you read the economics of the whole system at a glance.
 
