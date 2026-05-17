@@ -13,10 +13,10 @@ This reason is that every constrain in a linear problem draws a straight line (i
 Let's take our dispatch problem again and try to visualise it geometrically :
 
 First we draw the capacity constraints for plant A and B :
-![Capacity constraints](images/lp_note/lp_step1_capacity.png)
+![Capacity constraints](/images/lp_note/lp_step1_capacity.png)
 
 Second, we add the demand constraint to obtain the feasible region (here we accept overproduction then, unlike in the next sections, our demand constraint is an inequality : $$p_A + p_B \geq 200$$)
-![Feasible region](images/lp_note/lp_step2_feasible.png)
+![Feasible region](/images/lp_note/lp_step2_feasible.png)
 
 The feasible region is the green area. We have the following first critical property :
 
@@ -25,7 +25,7 @@ The feasible region is the green area. We have the following first critical prop
 Indeed, an objective function has a direction of improvement "go this way and the cost decreases". as long as you are in the interior of the feasible region, you can always take a small step in that direction and stay feasible. So the interior is never optimal, you can always do better. When you hit an edge of the region, you're constraint on one side but can still slide along the edge. as long as the edge is not perpendicular to the direction of improvement, sliding along in the correct direction keeps reducing the cost. You stop only when you hit a corner, because every direction that would further reduce the cost takes you outside the feasible region. You've find the optimum (or at least a candidate).
 
 Using the cost decreasing direction, the cost is evaluated at several corners of the feasible region, finding that point C1 is the optimum (with cost = 700€).
-![Optimum](images/lp_note/lp_step3_optimum.png)
+![Optimum](/images/lp_note/lp_step3_optimum.png)
 
 
 It's more or less how the Simplex algorithm, used by a lot of solvers, works. At each step, it's not searching blindy : it knows exactly which direction to go and it follows this direction along each edge until it hits the next corner, then reassesses.
@@ -66,7 +66,7 @@ $$\mathcal{L} = \underbrace{2p_A + 5p_B}_{\text{original cost}} + \underbrace{\m
 
 Note something very important : the lagragian includes the original and other components which are all negative (the two penalty for capacity constraints because $$0 \leq p_A \leq 100$$ and $$0 \leq p_B \leq 300$$) or zero (the penalty for missing demand because $$p_A + p_B = 200$$)
 
-> The Lagrangian is always less than or equal to the true primal cost. Then minimising L over $$p_A$$ and $$p_B$$ gives you a number which is always below the true optimal cost or in other words : a lower bound.
+> The Lagrangian is always less than or equal to the true primal cost. Then minimising L over $$p_A$$ and $$p_B$$ gives you a number which is always below the true optimal cost or in other words : **a lower bound**.
 
 We can rearrange the Lagrangian :
 
@@ -74,7 +74,7 @@ $$\mathcal{L} = \underbrace{(2 - \lambda + \mu_A)}_{\text{coefficient of } p_A} 
 
 We note $$g(\lambda, \mu_A, \mu_B) = \min_{p_A, p_B \geq 0} \mathcal{L}(p_A, p_B, \lambda, \mu_A, \mu_B)$$
 
-The minimum over $p_A$ and $p_B$ is:
+The minimum over $$p_A$$ and $$p_B$$ is:
 
 - $$-\infty$$ if $$(2 - \lambda + \mu_A) < 0$$ (you'd push $$p_A$$ to $$+\infty$$)
 - $$-\infty$$ if $$(5 - \lambda + \mu_B) < 0$$ (same reason)
@@ -84,7 +84,7 @@ So g is only useful in the third case when both constraints over $$\mu_A$$ and $
 
 ## The dual problem
 
-We know that g() is a lower bound of the primal and we would like to find the highest possible lower-bound. That's when the dual problem emerges :
+We know that $$g()$$ is a lower bound of the primal and we would like to find the highest possible lower-bound. That's when the dual problem emerges :
 
 $$\max_{\lambda, \mu_A, \mu_B} \quad 200\lambda - 100\mu_A - 300\mu_B$$
 
