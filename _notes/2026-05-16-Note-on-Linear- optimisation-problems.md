@@ -13,10 +13,10 @@ This reason is that every constrain in a linear problem draws a straight line (i
 Let's take our dispatch problem again and try to visualise it geometrically :
 
 First we draw the capacity constraints for plant A and B :
-![Capacity constraints](images/lp_note/lp_step1_capacity.svg)
+![Capacity constraints](images/lp_note/lp_step1_capacity.png)
 
 Second, we add the demand constraint to obtain the feasible region (here we accept overproduction then, unlike in the next sections, our demand constraint is an inequality : $$p_A + p_B \geq 200$$)
-![Feasible region](images/lp_note/lp_step2_feasible.svg)
+![Feasible region](images/lp_note/lp_step2_feasible.png)
 
 The feasible region is the green area. We have the following first critical property :
 
@@ -25,7 +25,7 @@ The feasible region is the green area. We have the following first critical prop
 Indeed, an objective function has a direction of improvement "go this way and the cost decreases". as long as you are in the interior of the feasible region, you can always take a small step in that direction and stay feasible. So the interior is never optimal, you can always do better. When you hit an edge of the region, you're constraint on one side but can still slide along the edge. as long as the edge is not perpendicular to the direction of improvement, sliding along in the correct direction keeps reducing the cost. You stop only when you hit a corner, because every direction that would further reduce the cost takes you outside the feasible region. You've find the optimum (or at least a candidate).
 
 Using the cost decreasing direction, the cost is evaluated at several corners of the feasible region, finding that point C1 is the optimum (with cost = 700€).
-![Optimum](images/lp_note/lp_step3_optimum.svg)
+![Optimum](images/lp_note/lp_step3_optimum.png)
 
 
 It's more or less how the Simplex algorithm, used by a lot of solvers, works. At each step, it's not searching blindy : it knows exactly which direction to go and it follows this direction along each edge until it hits the next corner, then reassesses.
