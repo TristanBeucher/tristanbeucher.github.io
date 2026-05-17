@@ -4,11 +4,19 @@ title: Note on Linear Optimisation problems
 date: 2026-05-16
 ---
 
-Let's use an electricity dispatch problem as an example. In our imaginary world, there are two power plants available : plant A has a cost of 2€ per MWh produced and a maximum capacity of 100MW and plant B has a cost of 5€ per MWh produced and a capacity of 300MW. Our objective is to minimise the production costs while ensuring the total production equal the demand.
+This note introduces the main ideas behind linear optimisation through a simple electricity dispatch problem. The goal is not to provide a rigorous optimisation course, but to build an intuitive understanding of primal problems, duality, shadow prices and the KKT conditions, and to show how they naturally lead to the economic logic of electricity markets.
 
-This problem is called a linear because every relationship is proportional. For both plants, producing 100MW costs twice as much as producing 50MW. This sounds restrictive: for example we can't include startup costs because we'll break the proportionality. However, it's precisely what makes the problem solvable at scale for a good geometric reason.
+We will start with the geometric intuition behind linear problems, then progressively construct the primal problem, the Lagrangian, the dual problem and the KKT conditions before finally discussing where the framework breaks when integer variables are introduced.
 
-This reason is that every constraint in a linear problem draws a straight line (in 2D) or a flat plane (in higher dimensions) across the space of possible decisions. It defines a region of valid solutions : the feasible set which, because all boundaries are straight, always forms a convex polygon. 
+---
+
+Let's use an electricity dispatch problem as an example. In our imaginary world, there are two power plants available : plant A has a cost of 2€ per MWh produced and a maximum capacity of 100MW and plant B has a cost of 5€ per MWh produced and a capacity of 300MW. Our objective is to minimise the production costs while ensuring the total production equals the demand.
+
+This problem is called linear because every relationship is proportional. For both plants, producing 100MW costs twice as much as producing 50MW. This sounds restrictive: for example we can't include startup costs because we'll break the proportionality. However, it's precisely what makes the problem solvable at scale for a good geometric reason.
+
+This reason is that every constraint in a linear problem draws a straight line (in 2D) or a flat plane (in higher dimensions) across the space of possible decisions. It defines a region of valid solutions : the feasible set which, because all boundaries are straight, always forms a convex polygon. **Convexity** is the crucial property here: 
+
+> Because the problem is convex, if two solutions are feasible, then every weighted average of those solutions is also feasible. This geometric structure is what makes linear optimisation tractable and gives dual prices their meaning.
 
 Let's take our dispatch problem again and try to visualise it geometrically :
 
@@ -18,17 +26,21 @@ First we draw the capacity constraints for plant A and B :
 Second, we add the demand constraint to obtain the feasible region (here we accept overproduction then, unlike in the next sections, our demand constraint is an inequality : $$p_A + p_B \geq 200$$)
 ![Feasible region](/images/lp_note/lp_step2_feasible.png)
 
-The feasible region is the green area. We have the following first critical property :
+The feasible region is the green area. We have the following critical property :
 
-> **The optimum is always at a corner of this region.**
+> **If a linear problem has a finite optimum, at least one optimum is always located at a corner of the feasible region.**
 
-Indeed, an objective function has a direction of improvement "go this way and the cost decreases". As long as you are in the interior of the feasible region, you can always take a small step in that direction and stay feasible. So the interior is never optimal, you can always do better. When you hit an edge of the region, you're constrained on one side but can still slide along the edge. as long as the edge is not perpendicular to the direction of improvement, sliding along in the correct direction keeps reducing the cost. You stop only when you hit a corner, because every direction that would further reduce the cost takes you outside the feasible region. You've reached the optimum (or at least a candidate optimum).
+Indeed, an objective function has a direction of improvement "go this way and the cost decreases". As long as you are in the interior of the feasible region, you can always take a small step in that direction and stay feasible. So the interior is never optimal, you can always do better. When you hit an edge of the region, you're constrained on one side but can still slide along the edge. As long as the edge is not perpendicular to the direction of improvement, sliding along in the correct direction keeps reducing the cost. You stop only when you hit a corner, because every direction that would further reduce the cost takes you outside the feasible region. You've reached the optimum (or at least a candidate optimum).
 
 Using the cost decreasing direction, the cost is evaluated at several corners of the feasible region, finding that point C1 is the optimum (with cost = 700€).
 ![Optimum](/images/lp_note/lp_step3_optimum.png)
 
 
-It's more or less how the Simplex algorithm, used by a lot of solvers, works. At each step, it does not search blindly : it knows exactly which direction to go and it follows this direction along each edge until it hits the next corner, then reassesses.
+This is roughly how the Simplex algorithm works : it moves from corner to corner along the edges of the feasible region while continuously improving the objective.
+
+*Nota Bene*: Modern solvers do not necessarily work this way. Many large-scale optimisation problems are instead solved using interior-point methods, which move through the interior of the feasible region rather than along its edges. However, the same geometric structure still underlies the problem : convexity, feasible regions and duality remain the key ingredients.
+
+---
 
 ## The primal problem
 
@@ -56,17 +68,38 @@ $$\quad 0 \leq p_A \leq 100 \quad [\mu_A]$$
 
 $$\quad 0 \leq p_B \leq 300 \quad [\mu_B]$$
 
+The symbols in brackets are called **dual variables** (or Lagrange multipliers). They measure how valuable each constraint is at the optimum.
 
+- $$\lambda$$ is associated with the demand balance constraint. Economically, it will become the electricity price : the value of supplying one additional MWh of demand.
+- $$\mu_A$$ and $$\mu_B$$ are associated with the capacity constraints. They measure the scarcity value of each plant's capacity : how much the system would benefit from one additional MW of available capacity.
+
+At this stage they are just unknown variables attached to the constraints. Their economic meaning will emerge naturally once we construct the dual problem.
+
+---
 
 ## The Lagrangian
 
-We can now introduce the Lagrangian which is basically a trick to remove the wall caused by the constraints. Instead of saying "you cannot exceed 100MW", you say "you can exceed 100MW, but every MW above 100 incurs an extra cost of $$\mu$$ euros". If $$\mu$$ is small, you're happy to violate the constraint, when it's large you are afraid to do it. 
+We can now introduce the Lagrangian which is basically a trick to remove the wall caused by the constraints. Instead of forbidding infeasible solutions completely, we temporarily allow them but attach a penalty to each violation. For example, exceeding the capacity of plant A by 1MW introduces an additional term proportional to $$\mu_A$$. If $$\mu_A$$ is small, violating the constraint is cheap. If it is large, violating the constraint becomes very expensive.
+
+The Lagrangian of our dispatch problem is :
 
 $$\mathcal{L} = \underbrace{2p_A + 5p_B}_{\text{original cost}} + \underbrace{\mu_A(p_A - 100)}_{\text{penalty for exceeding A's capacity}} + \underbrace{\mu_B(p_B - 300)}_{\text{penalty for exceeding B's capacity}} - \underbrace{\lambda(p_A + p_B - 200)}_{\text{penalty for missing demand}}$$
 
-Note something very important : the Lagrangian includes the original component and other components which are all negative (the two penalties for the capacity constraints because $$0 \leq p_A \leq 100$$ and $$0 \leq p_B \leq 300$$) or zero (the penalty for missing demand because $$p_A + p_B = 200$$)
+Now suppose that :
+- the primal variables satisfy the original constraints,
+- and the multipliers satisfy $$\mu_A, \mu_B \geq 0$$.
 
-> The Lagrangian is always less than or equal to the true primal cost. Then minimising L over $$p_A$$ and $$p_B$$ gives you a number which is always below the true optimal cost or in other words : **a lower bound**.
+Then the additional terms are always non-positive :
+- if $$p_A \leq 100$$ then $$\mu_A(p_A - 100) \leq 0$$,
+- if $$p_B \leq 300$$ then $$\mu_B(p_B - 300) \leq 0$$,
+- and if demand is exactly met then $$p_A + p_B - 200 = 0$$.
+
+This gives the key property :
+
+> **For feasible primal solutions, the Lagrangian is always less than or equal to the primal cost.**
+
+So if we minimise the Lagrangian over $$p_A$$ and $$p_B$$, the result can never exceed the true optimal value of the primal problem. The Lagrangian therefore provides a **lower bound** on the primal optimum.
+
 
 We can rearrange the Lagrangian :
 
@@ -81,6 +114,8 @@ The minimum over $$p_A$$ and $$p_B$$ is:
 - $$200\lambda - 100\mu_A - 300\mu_B$$ if $$(2 - \lambda + \mu_A) \geq 0$$ and $$(5 - \lambda + \mu_B) \geq 0$$
 
 So g is only useful in the third case when both constraints over $$\mu_A$$ and $$\mu_B$$ are satisfied.
+
+---
 
 ## The dual problem
 
@@ -116,6 +151,8 @@ Plant A produces at 2€/MWh but sells at 5€/MWh. the difference (3€/MWh) is
 
 This is the economic mechanism behind the merit order effect of renewables for example : adding zero-cost solar capacity is equivalent to adding more cheap plant. It pushes more expensive plants off the margin, destroys their role as price setter and collapses both the price and the infra-marginal rents of all other generators simultaneously. 
 
+---
+
 ## The KKT conditions
 
 We now have all the pieces : the primal dispatch problem, the dual price system, the Lagrangian that connects them. The KKT conditions are the three rules that any optimal solution must satisfy simultaneously. They are properties that emerge automatically at the optimum, not additional constraints.
@@ -133,7 +170,7 @@ $$\lambda = c_B + \mu_B$$
 
 That means : the electricity price equals the marginal cost of each plant plus its scarcity rent.
 
-For plant B, which is not capacity-constrained, $$\mu_B = 0$$ and the condition becomes $$\lambda = c_B = 5$$. The price is exactly plant B's marginal cost, and that makes sense because plant B is the marginal unit (the last one called which then sets the price).
+For plant B, which is not capacity-constrained, $$\mu_B = 0$$ and the condition becomes $$\lambda = c_B = 5$$. The price is exactly plant B's marginal cost, and that makes sense because plant B is the marginal unit (the last one dispatched which therefore sets the price).
 
 For plant A, which is at full capacity, $$\mu_A = 3$$ and the condition gives $$\lambda = 2 + 3 = 5$$. Plant A's cost plus its scarcity rent equals the market price. The scarcity rent is exactly the gap between what plant A costs and what the market pays : it's the infra-marginal rent that plant A earns by being cheaper than the price-setter.
 
@@ -186,8 +223,9 @@ During the solve, they serve as the **stopping criterion**. At each iteration, t
 
 After the solve, they serve as a **validation tool**. When your model produces an unexpected price the KKT conditions give you a systematic diagnostic protocol. You find the plant satisfying $$\lambda = c_g$$ (the marginal unit), verify that all cheaper plants satisfy $$\mu_g > 0$$ and are running at capacity, and verify that all more expensive plants satisfy $$p_g = 0$$. If any of these checks fail, there is a bug in your formulation. The KKT conditions turn a black-box output into an auditable economic narrative.
 
+---
 
-## When the framework breaks : adding integer variables
+## Bonus section — When the framework breaks : adding integer variables
 
 Everything we have built so far relies on one assumption: all decision variables are continuous. 
 Production can be set to any value between 0 and $$\overline{P}_g$$. This is what makes the problem 
