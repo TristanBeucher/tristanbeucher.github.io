@@ -1,0 +1,98 @@
+<svg width="100%" viewBox="0 0 620 440" role="img" style="" xmlns="http://www.w3.org/2000/svg">
+  <title style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">Step 3 — iso-cost lines and optimum at C1</title>
+  <desc style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">Full figure with feasible polygon, iso-cost lines, and optimal corner C1 highlighted.</desc>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  <mask id="imagine-text-gaps-9t5o8l" maskUnits="userSpaceOnUse"><rect x="0" y="0" width="620" height="440" fill="white"/><rect x="546" y="368" width="33.76397705078125" height="22" fill="black" rx="2"/><rect x="54" y="18" width="35.76399230957031" height="22" fill="black" rx="2"/><rect x="173.5234375" y="384" width="28.699981689453125" height="19" fill="black" rx="2"/><rect x="280.265625" y="384" width="31.2139892578125" height="19" fill="black" rx="2"/><rect x="388.40625" y="384" width="30.92596435546875" height="19" fill="black" rx="2"/><rect x="46.046875" y="262" width="28.699981689453125" height="19" fill="black" rx="2"/><rect x="43.53125" y="154" width="31.213973999023438" height="19" fill="black" rx="2"/><rect x="202.0625" y="198" width="72.6859130859375" height="19" fill="black" rx="2"/><rect x="137.5625" y="144" width="73.18389892578125" height="19" fill="black" rx="2"/><rect x="107.34375" y="242" width="78.6658935546875" height="19" fill="black" rx="2"/><rect x="459" y="182" width="99.53387451171875" height="19" fill="black" rx="2"/><rect x="295" y="359" width="26.13800048828125" height="19" fill="black" rx="2"/><rect x="403" y="359" width="26.13800048828125" height="19" fill="black" rx="2"/><rect x="403" y="254" width="27.13800048828125" height="19" fill="black" rx="2"/><rect x="197" y="252" width="104.8939208984375" height="22" fill="black" rx="2"/><rect x="198" y="268" width="121.14984130859375" height="19" fill="black" rx="2"/><rect x="197" y="282" width="89.36587524414062" height="19" fill="black" rx="2"/></mask></defs>
+
+  <!-- Axes -->
+  <line x1="80" y1="380" x2="540" y2="380" stroke="var(--t)" stroke-width="1" marker-end="url(#arr)" style="fill:rgb(0, 0, 0);stroke:rgb(115, 114, 108);color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <line x1="80" y1="380" x2="80" y2="40" stroke="var(--t)" stroke-width="1" marker-end="url(#arr)" mask="url(#imagine-text-gaps-9t5o8l)" style="fill:rgb(0, 0, 0);stroke:rgb(115, 114, 108);color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="550" y="384" style="fill:rgb(20, 20, 19);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:start;dominant-baseline:auto">p_B</text>
+  <text x="58" y="34" style="fill:rgb(20, 20, 19);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:start;dominant-baseline:auto">p_A</text>
+
+  <!-- Ticks pB -->
+  <line x1="188" y1="376" x2="188" y2="384" stroke="var(--t)" stroke-width="1" style="fill:rgb(0, 0, 0);stroke:rgb(115, 114, 108);color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="188" y="398" text-anchor="middle" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:auto">100</text>
+  <line x1="296" y1="376" x2="296" y2="384" stroke="var(--t)" stroke-width="1" style="fill:rgb(0, 0, 0);stroke:rgb(115, 114, 108);color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="296" y="398" text-anchor="middle" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:auto">200</text>
+  <line x1="404" y1="376" x2="404" y2="384" stroke="var(--t)" stroke-width="1" style="fill:rgb(0, 0, 0);stroke:rgb(115, 114, 108);color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="404" y="398" text-anchor="middle" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:middle;dominant-baseline:auto">300</text>
+
+  <!-- Ticks pA -->
+  <line x1="76" y1="272" x2="84" y2="272" stroke="var(--t)" stroke-width="1" style="fill:rgb(0, 0, 0);stroke:rgb(115, 114, 108);color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="70" y="276" text-anchor="end" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:end;dominant-baseline:auto">100</text>
+  <line x1="76" y1="164" x2="84" y2="164" stroke="var(--t)" stroke-width="1" style="fill:rgb(0, 0, 0);stroke:rgb(115, 114, 108);color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="70" y="168" text-anchor="end" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:end;dominant-baseline:auto">200</text>
+
+  <!-- Capacity constraints (faint, for context) -->
+  <line x1="80" y1="272" x2="490" y2="272" stroke="var(--s)" stroke-width="1" stroke-dasharray="7 4" opacity="0.4" mask="url(#imagine-text-gaps-9t5o8l)" style="fill:rgb(0, 0, 0);stroke:rgb(61, 61, 58);color:rgb(0, 0, 0);stroke-width:1px;stroke-dasharray:7px, 4px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.4;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <line x1="404" y1="380" x2="404" y2="55" stroke="var(--s)" stroke-width="1" stroke-dasharray="7 4" opacity="0.4" mask="url(#imagine-text-gaps-9t5o8l)" style="fill:rgb(0, 0, 0);stroke:rgb(61, 61, 58);color:rgb(0, 0, 0);stroke-width:1px;stroke-dasharray:7px, 4px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.4;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Demand constraint (faint) -->
+  <line x1="80" y1="164" x2="296" y2="380" stroke="var(--s)" stroke-width="1" stroke-dasharray="7 4" opacity="0.4" mask="url(#imagine-text-gaps-9t5o8l)" style="fill:rgb(0, 0, 0);stroke:rgb(61, 61, 58);color:rgb(0, 0, 0);stroke-width:1px;stroke-dasharray:7px, 4px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.4;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Feasible polygon -->
+  <polygon points="188,272 296,380 404,380 404,272" fill="#1D9E75" opacity="0.13" style="fill:rgb(29, 158, 117);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.13;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <polygon points="188,272 296,380 404,380 404,272" fill="none" stroke="#1D9E75" stroke-width="1.5" opacity="0.6" style="fill:none;stroke:rgb(29, 158, 117);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.6;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!--
+    Iso-cost lines: 2pA + 5pB = k
+    pA = (k - 5pB) / 2
+    y = 380 - 1.08*pA = 380 - 0.54*(k - 5pB) = 380 - 0.54k + 2.7pB
+    x = 80 + 1.08*pB
+
+    k=700 (optimal, through C1 at pB=100,pA=100):
+      pB=100 → x=188, y=272  (C1) ✓
+      pB=140 → pA=0 → x=231, y=380
+      Draw: (188,272) to (231,380)
+
+    k=1000:
+      pB=120 → pA=200 → x=210, y=164
+      pB=200 → pA=0   → x=296, y=380
+      Draw: (210,164) to (296,380)
+
+    k=1500:
+      pB=180 → pA=150 → x=274, y=218
+      pB=300 → pA=0   → x=404, y=380
+      Draw: (274,218) to (404,380)
+  -->
+
+  <!-- k=1500 -->
+  <line x1="274" y1="218" x2="404" y2="380" stroke="var(--s)" stroke-width="1" stroke-dasharray="5 3" opacity="0.3" mask="url(#imagine-text-gaps-9t5o8l)" style="fill:rgb(0, 0, 0);stroke:rgb(61, 61, 58);color:rgb(0, 0, 0);stroke-width:1px;stroke-dasharray:5px, 3px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.3;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <!-- label at top of line, well clear -->
+  <text x="270" y="212" text-anchor="end" opacity="0.4" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.4;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:end;dominant-baseline:auto">cost = 1500</text>
+
+  <!-- k=1000 -->
+  <line x1="210" y1="164" x2="296" y2="380" stroke="var(--s)" stroke-width="1" stroke-dasharray="5 3" opacity="0.45" mask="url(#imagine-text-gaps-9t5o8l)" style="fill:rgb(0, 0, 0);stroke:rgb(61, 61, 58);color:rgb(0, 0, 0);stroke-width:1px;stroke-dasharray:5px, 3px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.45;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <!-- label at top of line -->
+  <text x="206" y="158" text-anchor="end" opacity="0.55" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.55;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:end;dominant-baseline:auto">cost = 1000</text>
+
+  <!-- k=700 optimal — through C1 exactly -->
+  <line x1="188" y1="272" x2="231" y2="380" stroke="#1D9E75" stroke-width="2.5" stroke-dasharray="5 3" mask="url(#imagine-text-gaps-9t5o8l)" style="fill:rgb(0, 0, 0);stroke:rgb(29, 158, 117);color:rgb(0, 0, 0);stroke-width:2.5px;stroke-dasharray:5px, 3px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <!-- label left of line start, above C1 dot -->
+  <text x="182" y="256" text-anchor="end" fill="#1D9E75" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:end;dominant-baseline:auto">cost = 700 ✓</text>
+
+  <!-- Decreasing cost arrow — top right, clear of all labels -->
+  <line x1="460" y1="200" x2="410" y2="150" stroke="#1D9E75" stroke-width="1.5" marker-end="url(#arr)" opacity="0.75" mask="url(#imagine-text-gaps-9t5o8l)" style="fill:rgb(0, 0, 0);stroke:rgb(29, 158, 117);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.75;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="464" y="196" text-anchor="start" opacity="0.8" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.8;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:start;dominant-baseline:auto">decreasing cost</text>
+
+  <!-- Non-optimal corners (small, faint) -->
+  <circle cx="296" cy="380" r="5" fill="var(--color-background-primary)" stroke="var(--t)" stroke-width="1.5" style="fill:rgb(255, 255, 255);stroke:rgb(115, 114, 108);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="300" y="373" text-anchor="start" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:start;dominant-baseline:auto">C2</text>
+
+  <circle cx="404" cy="380" r="5" fill="var(--color-background-primary)" stroke="var(--t)" stroke-width="1.5" style="fill:rgb(255, 255, 255);stroke:rgb(115, 114, 108);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="408" y="373" text-anchor="start" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:start;dominant-baseline:auto">C3</text>
+
+  <circle cx="404" cy="272" r="5" fill="var(--color-background-primary)" stroke="var(--t)" stroke-width="1.5" style="fill:rgb(255, 255, 255);stroke:rgb(115, 114, 108);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="408" y="268" text-anchor="start" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:start;dominant-baseline:auto">C4</text>
+
+  <!-- C1 optimum — prominent, label to the right and below to avoid iso-cost label above -->
+  <circle cx="188" cy="272" r="9" fill="#1D9E75" stroke="var(--color-background-primary)" stroke-width="2" style="fill:rgb(29, 158, 117);stroke:rgb(255, 255, 255);color:rgb(0, 0, 0);stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <!-- label block to the right of the dot, vertically centered on it -->
+  <text x="202" y="268" text-anchor="start" style="fill:rgb(20, 20, 19);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500;text-anchor:start;dominant-baseline:auto">C1 — optimum</text>
+  <text x="202" y="282" text-anchor="start" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:start;dominant-baseline:auto">p_A = 100, p_B = 100</text>
+  <text x="202" y="296" text-anchor="start" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400;text-anchor:start;dominant-baseline:auto">cost = 700 €/h</text>
+</svg>
