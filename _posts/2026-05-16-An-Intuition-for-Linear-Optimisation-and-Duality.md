@@ -1,8 +1,3 @@
----
-layout: post
-title: Note on Linear Optimisation problems
-date: 2026-05-16
----
 
 This note introduces the main ideas behind linear optimisation through a simple electricity dispatch problem. The goal is not to provide a rigorous optimisation course, but to build an intuitive understanding of primal problems, duality, shadow prices and the KKT conditions, and to show how they naturally lead to the economic logic of electricity markets.
 
