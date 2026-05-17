@@ -38,7 +38,7 @@ $$0 \leq p_A \leq 100$$
 
 $$0 \leq p_B \leq 300$$
 
-producing one MWh has a cost $$c_A = 2€/MWh$$ using plant A and $$c_B = 5€/MWh$$ using plant B. We want to minimise the total cost, that's the **objective function**:
+producing one MWh has a cost $$c_A = 2$$€/MWh using plant A and $$c_B = 5$$€/MWh using plant B. We want to minimise the total cost, that's the **objective function**:
 
 $$\min_{p_A, p_B} \quad 2p_A + 5p_B$$
 
@@ -80,7 +80,7 @@ The minimum over $p_A$ and $p_B$ is:
 - $-\infty$ if $(5 - \lambda + \mu_B) < 0$ (same reason)
 - $200\lambda - 100\mu_A - 300\mu_B$ if $(2 - \lambda + \mu_A) \geq 0$ and $(5 - \lambda + \mu_B) \geq 0$
 
-So g is only useful in the third case when both constraints over $$mu_A$$ and $$mu_B$$ are satisfied.
+So g is only useful in the third case when both constraints over $$\mu_A$$ and $$\mu_B$$ are satisfied.
 
 ## The dual problem
 
@@ -108,9 +108,9 @@ This equality is not a coincidence. It says that in a competitive market, the mi
 
 | Dual variable | Value | Meaning |
 |---|---|---|
-| $\lambda$ | $5$ €/MWh | Plant B sets the price — it's the marginal unit |
-| $\mu_A$ | $3$ €/MWh | Plant A earns 3 €/MWh above its cost because it's capacity-constrained |
-| $\mu_B$ | $0$ | Plant B has spare capacity — it's not scarce |
+| $$\lambda$$ | $$5$$ €/MWh | Plant B sets the price — it's the marginal unit |
+| $$\mu_A$$ | $$3$$ €/MWh | Plant A earns 3 €/MWh above its cost because it's capacity-constrained |
+| $$\mu_B$$ | $$0$$ | Plant B has spare capacity — it's not scarce |
 
 Plant A produces at 2€/MWh but sells at 5€/MWh. the difference (3€/MWh) is its infra-marginal rent. it exists not because plant A is doing anything special but because its capacity is scarce. If you boult more of plant A, the rent would shrink. if you built enough to fully replace plant B, the rent would disappear and the price would fall to 2€/MWh.
 
@@ -123,7 +123,7 @@ We now have all the pieces : the primal dispatch problem, the dual price system,
 
 ### Condition 1 — Stationarity : the price is pinned by the marginal plant
 
-At the optimum, the Lagrangian cannot be improved by nudging any production variable. Mathematically this means the derivative of the Lagrangian with respect to each $p_g$ is zero. For plant A this gives :
+At the optimum, the Lagrangian cannot be improved by nudging any production variable. Mathematically this means the derivative of the Lagrangian with respect to each $$p_g$$ is zero. For plant A this gives :
 
 $$\lambda = c_A + \mu_A$$
 
@@ -133,9 +133,9 @@ $$\lambda = c_B + \mu_B$$
 
 That means : the electricity price equals the marginal cost of each plant plus its scarcity rent.
 
-For plant B, which is not capacity-constrained, $\mu_B = 0$ and the condition becomes $\lambda = c_B = 5$. The price is exactly plant B's marginal cost, and that makes sense because plant B is the marginal unit (the last one called which then sets the price).
+For plant B, which is not capacity-constrained, $$\mu_B = 0$$ and the condition becomes $$\lambda = c_B = 5$$. The price is exactly plant B's marginal cost, and that makes sense because plant B is the marginal unit (the last one called which then sets the price).
 
-For plant A, which is at full capacity, $\mu_A = 3$ and the condition gives $\lambda = 2 + 3 = 5$. Plant A's cost plus its scarcity rent equals the market price. The scarcity rent is exactly the gap between what plant A costs and what the market pays : it's the infra-marginal rent that plant A earns by being cheaper than the price-setter.
+For plant A, which is at full capacity, $$\mu_A = 3$$ and the condition gives $$\lambda = 2 + 3 = 5$$. Plant A's cost plus its scarcity rent equals the market price. The scarcity rent is exactly the gap between what plant A costs and what the market pays : it's the infra-marginal rent that plant A earns by being cheaper than the price-setter.
 
 This condition is the mathematical statement of the merit order : the price is always set by the marginal unit, and every cheaper unit earns a rent equal to the difference between the price and its own cost.
 
@@ -146,16 +146,16 @@ For each capacity constraint, the following must hold :
 
 $$\mu_g \cdot (\overline{P}_g - p_g) = 0$$
 
-This says : either the plant is at full capacity ($\overline{P}_g - p_g = 0$) or its scarcity rent is zero ($\mu_g = 0$). Both cannot be non-zero simultaneously.
+This says : either the plant is at full capacity ($$\overline{P}_g - p_g = 0$$) or its scarcity rent is zero ($$\mu_g = 0$$). Both cannot be non-zero simultaneously.
 
-The economic logic is immediate. If a plant has spare capacity (is producing below its maximum) then one more MW from that plant costs nothing extra to unlock. Its capacity is not the binding constraint. It has no scarcity value, so $\mu_g = 0$.
+The economic logic is immediate. If a plant has spare capacity (is producing below its maximum) then one more MW from that plant costs nothing extra to unlock. Its capacity is not the binding constraint. It has no scarcity value, so $$\mu_g = 0$$.
 
 If a plant has a positive scarcity rent (its capacity is genuinely valuable) then it must be running at its limit. If it weren't, you could produce more from it and save money, which contradicts optimality.
 
 In our example :
 
-- Plant A : running at 100 MW $= \overline{P}_A$, so $\mu_A = 3 > 0$ ✓
-- Plant B : running at 100 MW $< \overline{P}_B = 300$, so $\mu_B = 0$ ✓
+- Plant A : running at 100 MW $$= \overline{P}_A$, so $\mu_A = 3 > 0$$ ✓
+- Plant B : running at 100 MW $$< \overline{P}_B = 300$, so $\mu_B = 0$$ ✓
 
 This condition is what connects the primal dispatch to the dual prices. It tells you exactly which constraints are "active" and which are slack. An active constraint has a positive dual variable. A slack constraint has a zero dual variable. This is how you read the economics of the whole system at a glance.
 
@@ -182,18 +182,18 @@ This is precisely a simplified merit order which appears as the unique solution 
 
 The KKT conditions play a double role in practice.
 
-During the solve, they serve as the **stopping criterion**. At each iteration, the solver checks whether the current solution satisfies the KKT conditions to within a numerical tolerance (typically $10^{-7}$). As long as any condition is violated, the algorithm keeps iterating. The moment all three are satisfied within tolerance, the solver stops and declares the solution optimal. This is why you see parameters like `primal_feasibility_tolerance` and `dual_feasibility_tolerance` in HiGHS.
+During the solve, they serve as the **stopping criterion**. At each iteration, the solver checks whether the current solution satisfies the KKT conditions to within a numerical tolerance (typically $$10^{-7}$$). As long as any condition is violated, the algorithm keeps iterating. The moment all three are satisfied within tolerance, the solver stops and declares the solution optimal. This is why you see parameters like `primal_feasibility_tolerance` and `dual_feasibility_tolerance` in HiGHS.
 
-After the solve, they serve as a **validation tool**. When your model produces a surprising price the KKT conditions give you a systematic diagnostic protocol. You find the plant satisfying $\lambda = c_g$ (the marginal unit), verify that all cheaper plants satisfy $\mu_g > 0$ and are running at capacity, and verify that all more expensive plants satisfy $p_g = 0$. If any of these checks fail, there is a bug in your formulation. The KKT conditions transform a black-box output into an auditable economic narrative.
+After the solve, they serve as a **validation tool**. When your model produces a surprising price the KKT conditions give you a systematic diagnostic protocol. You find the plant satisfying $$\lambda = c_g$$ (the marginal unit), verify that all cheaper plants satisfy $$\mu_g > 0$$ and are running at capacity, and verify that all more expensive plants satisfy $$p_g = 0$$. If any of these checks fail, there is a bug in your formulation. The KKT conditions transform a black-box output into an auditable economic narrative.
 
 
 ## When the framework breaks : adding integer variables
 
 Everything we have built so far relies on one assumption : all decision variables are continuous. 
-Production can be set to any value between 0 and $\overline{P}_g$. This is what makes the problem 
+Production can be set to any value between 0 and $$\overline{P}_g$$. This is what makes the problem 
 linear, the feasible set convex, and the dual prices meaningful.
 
-This assumption breaks the moment you introduce non-linearities such as **startup costs**. A startup cost is only paid if a plant actually starts then it requires a variable that captures the on/off decision : $u_g \in \{0, 1\}$. One binary variable is enough to destroy the entire LP structure.
+This assumption breaks the moment you introduce non-linearities such as **startup costs**. A startup cost is only paid if a plant actually starts then it requires a variable that captures the on/off decision : $$u_g \in \{0, 1\}$$. One binary variable is enough to destroy the entire LP structure.
 
 Indeed, binary variables turn the feasible set from a convex polygon into a collection of discrete points. The Simplex has no edges to slide along. Strong duality no longer holds (the primal and dual optimal values are no longer guaranteed to be equal). The KKT conditions do not apply. 
 
