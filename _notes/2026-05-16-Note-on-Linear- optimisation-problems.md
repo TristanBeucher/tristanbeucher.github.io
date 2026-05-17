@@ -72,13 +72,13 @@ We can rearrange the Lagrangian :
 
 $$\mathcal{L} = \underbrace{(2 - \lambda + \mu_A)}_{\text{coefficient of } p_A} p_A + \underbrace{(5 - \lambda + \mu_B)}_{\text{coefficient of } p_B} p_B + 200\lambda - 100\mu_A - 300\mu_B$$
 
-We note $g(\lambda, \mu_A, \mu_B) = \min_{p_A, p_B \geq 0} \mathcal{L}(p_A, p_B, \lambda, \mu_A, \mu_B)$
+We note $$g(\lambda, \mu_A, \mu_B) = \min_{p_A, p_B \geq 0} \mathcal{L}(p_A, p_B, \lambda, \mu_A, \mu_B)$$
 
 The minimum over $p_A$ and $p_B$ is:
 
-- $-\infty$ if $(2 - \lambda + \mu_A) < 0$ (you'd push $p_A$ to $+\infty$)
-- $-\infty$ if $(5 - \lambda + \mu_B) < 0$ (same reason)
-- $200\lambda - 100\mu_A - 300\mu_B$ if $(2 - \lambda + \mu_A) \geq 0$ and $(5 - \lambda + \mu_B) \geq 0$
+- $$-\infty$$ if $$(2 - \lambda + \mu_A) < 0$$ (you'd push $$p_A$$ to $$+\infty$$)
+- $$-\infty$$ if $$(5 - \lambda + \mu_B) < 0$$ (same reason)
+- $$200\lambda - 100\mu_A - 300\mu_B$$ if $$(2 - \lambda + \mu_A) \geq 0$$ and $$(5 - \lambda + \mu_B) \geq 0$$
 
 So g is only useful in the third case when both constraints over $$\mu_A$$ and $$\mu_B$$ are satisfied.
 
