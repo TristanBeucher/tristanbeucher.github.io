@@ -64,7 +64,7 @@ We can now introduce the lagrangian which is basically a trick to get rid of the
 
 $$\mathcal{L} = \underbrace{2p_A + 5p_B}_{\text{original cost}} + \underbrace{\mu_A(p_A - 100)}_{\text{penalty for exceeding A's capacity}} + \underbrace{\mu_B(p_B - 300)}_{\text{penalty for exceeding B's capacity}} - \underbrace{\lambda(p_A + p_B - 200)}_{\text{penalty for missing demand}}$$
 
-Note something very important : the lagragian includes the original and other components which are all negative (the two penalty for capacity constraints because $$0 \leq p_A \leq 100$$ and $$0 \leq p_B \leq 300$$) or zero (the penalty for missing demand because $$p_A + p_B = 200$$)
+Note something very important : the lagrangian includes the original and other components which are all negative (the two penalty for capacity constraints because $$0 \leq p_A \leq 100$$ and $$0 \leq p_B \leq 300$$) or zero (the penalty for missing demand because $$p_A + p_B = 200$$)
 
 > The Lagrangian is always less than or equal to the true primal cost. Then minimising L over $$p_A$$ and $$p_B$$ gives you a number which is always below the true optimal cost or in other words : **a lower bound**.
 
